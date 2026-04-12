@@ -1,11 +1,6 @@
 .venv/
 __pycache__/
 *.py[cod]
-data/sources/**/*.csv
 data/sources/**/*.manifest.json
-data/sources/**/*.pdf
 data/sources/**/*.jpg
-data/sources/**/*.json
-data/sources/**/.export_state.json
-data/sources/**/.retailer_state.json
-data/sources/**/daily_status.json
+
