@@ -1,0 +1,52 @@
+name: Daily NAFSI exports
+
+on:
+  schedule:
+    - cron: "15 12 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        source_id: [snap_retailer_locator, caroline_food_pantries_flyer]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Prepare data directory
+        run: mkdir -p "data/sources/${{ matrix.source_id }}"
+
+      - name: Restore export checkpoint
+        uses: actions/cache@v4
+        with:
+          path: |
+            data/sources/${{ matrix.source_id }}/.export_state.json
+            data/sources/${{ matrix.source_id }}/.retailer_state.json
+          key: nafsi-export-${{ matrix.source_id }}-${{ runner.os }}-v1
+
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+
+      - name: Install Playwright (Chromium)
+        run: python -m playwright install chromium --with-deps
+
+      - name: Run source
+        env:
+          PYTHONPATH: scrappers
+        run: python -m nafsi.cli --config config/sources.yaml --source "${{ matrix.source_id }}"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: nafsi-${{ matrix.source_id }}-${{ github.run_id }}
+          path: data/sources/${{ matrix.source_id }}/
+          if-no-files-found: error

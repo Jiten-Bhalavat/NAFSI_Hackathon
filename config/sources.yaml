@@ -1,0 +1,32 @@
+# Registry of data sources. Extend this file as you add more of the 25 sites.
+#
+# SNAP Retailer Locator — State field (verified against ArcGIS API, 2026-04):
+#   - Maryland rows use State = 'MD'
+#   - District of Columbia rows use State = 'DC' (not "District of Columbia")
+#   Combined filter State IN ('MD','DC') returned 4203 features (MD: 3804, DC: 399).
+
+output_root: data/sources
+
+sources:
+  - id: snap_retailer_locator
+    name: "SNAP Retailer Locator (USDA FNS)"
+    type: arcgis_feature_layer
+    # Web app used only to read the header "Retailer data updated: MM/DD/YYYY" before exporting.
+    locator_page_url: >-
+      https://usda-fns.maps.arcgis.com/apps/webappviewer/index.html?id=15e1c457b56c4a729861d015cd626a23
+    layer_url: >-
+      https://services1.arcgis.com/RLQu0rK7h4kbsBq5/arcgis/rest/services/snap_retailer_location_data/FeatureServer/0
+    where: "State IN ('MD','DC')"
+    out_fields: "*"
+    page_size: null
+    return_geometry: false
+    order_by_fields: "ObjectId ASC"
+
+  - id: caroline_food_pantries_flyer
+    name: "Caroline Better Together — Food Pantries Flyer"
+    type: flyer_pdf_page
+    page_url: https://carolinebettertogether.org/food-pantries/
+    # PDF page 0 = English; page 1 = Spanish — do not extract Spanish.
+    pdf_text_pages: [0]
+    # Heuristic columns: place_name, address, phone, hours, notes (see content.locations_meta disclaimer).
+    flyer_structured_rows: true
