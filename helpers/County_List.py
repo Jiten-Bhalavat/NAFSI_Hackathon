@@ -7,7 +7,7 @@ STATE_COUNTIES: dict[str, list[str]] = {
     "maryland": [
         "Allegany",
         "Anne Arundel",
-        "Baltimore County",
+        "Baltimore",
         "Baltimore City",
         "Calvert",
         "Caroline",
