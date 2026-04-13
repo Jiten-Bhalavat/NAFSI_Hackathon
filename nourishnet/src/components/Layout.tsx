@@ -99,10 +99,9 @@ export default function Layout() {
             <span className="text-lg">🥦</span>
             <span className="text-sm font-medium text-gray-300">NourishNet</span>
           </div>
-          <p className="text-xs text-center">Open-source class project · Data may be incomplete · Always confirm with the organization</p>
           <div className="flex gap-4 text-xs">
             <Link to="/about" className="hover:text-white transition-colors">About</Link>
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">GitHub</a>
+            <a href="https://github.com/protocorn/NAFSI_Track2" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">GitHub</a>
           </div>
         </div>
       </footer>
