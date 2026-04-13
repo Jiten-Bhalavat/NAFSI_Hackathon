@@ -11,6 +11,7 @@ import SurplusFoodBoard from "../components/SurplusFoodBoard";
 import CommunityNeedsBoard from "../components/CommunityNeedsBoard";
 import DonorImpactPanel from "../components/DonorImpactPanel";
 import NeighborhoodDonation from "../components/NeighborhoodDonation";
+import DonorChatbot from "../components/DonorChatbot";
 
 const DONOR_TYPES = ["", "pantry", "food-bank"] as const;
 const TYPE_LABELS: Record<string, string> = {
@@ -400,6 +401,9 @@ export default function Donor() {
           }}
         />
       </div>
+
+      {/* RAG Chatbot — donor only */}
+      <DonorChatbot />
     </div>
   );
 }
