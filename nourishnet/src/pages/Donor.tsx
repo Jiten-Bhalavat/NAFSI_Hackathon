@@ -8,6 +8,7 @@ import NourishMap, { type MapPoint, type AddressLookup } from "../components/Nou
 import FoodInsecurityOverlay, { InsecurityLegend } from "../components/FoodInsecurityOverlay";
 import type { DonorPlace } from "../types";
 import NeighborhoodDonation from "../components/NeighborhoodDonation";
+import VolunteerCoordination from "../components/VolunteerCoordination";
 import DonorChatbot from "../components/DonorChatbot";
 
 const DONOR_TYPES = ["", "pantry", "food-bank"] as const;
@@ -323,6 +324,9 @@ export default function Donor() {
           highlightedCounty={selectedHeatmapCounty}
           onSelectCounty={(c) => setSelectedHeatmapCounty(c)}
         />
+
+        {/* Volunteer coordination section */}
+        <VolunteerCoordination />
       </div>
 
       <DonorChatbot />

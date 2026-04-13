@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import type { Opportunity, Place } from "../types";
+import { insertVolunteer } from "../lib/volunteer-db";
 
 interface Props {
   opportunity?: (Opportunity & { place?: Place }) | null;
@@ -10,43 +11,26 @@ interface FormData {
   name: string;
   email: string;
   phone: string;
+  zip: string;
   availability: string[];
   interests: string;
   message: string;
 }
 
-const STORAGE_KEY = "nourishnet-volunteer-draft";
 const DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
-function loadDraft(): FormData {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) return JSON.parse(raw);
-  } catch { /* ignore */ }
-  return { name: "", email: "", phone: "", availability: [], interests: "", message: "" };
-}
-
 export default function VolunteerForm({ opportunity, onClose }: Props) {
-  const [form, setForm] = useState<FormData>(loadDraft);
+  const [form, setForm] = useState<FormData>({
+    name: "", email: "", phone: "", zip: "", availability: [], interests: "", message: "",
+  });
+  const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState("");
   const dialogRef = useRef<HTMLDivElement>(null);
 
-  // Save draft to localStorage
+  useEffect(() => { dialogRef.current?.focus(); }, []);
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(form));
-  }, [form]);
-
-  // Trap focus inside modal
-  useEffect(() => {
-    const el = dialogRef.current;
-    if (el) el.focus();
-  }, []);
-
-  // Close on Escape
-  useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    };
+    const handler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
   }, [onClose]);
@@ -63,50 +47,29 @@ export default function VolunteerForm({ opportunity, onClose }: Props) {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError("");
+    if (!form.name.trim()) return setError("Please enter your name.");
+    if (!form.email.trim()) return setError("Please enter your email.");
 
-    // Build mailto body
-    const oppLine = opportunity
-      ? `Opportunity: ${opportunity.title} at ${opportunity.place?.name ?? "N/A"}\n`
-      : "";
-    const body = [
-      `Name: ${form.name}`,
-      `Email: ${form.email}`,
-      form.phone ? `Phone: ${form.phone}` : "",
-      `Availability: ${form.availability.join(", ") || "Flexible"}`,
-      form.interests ? `Interests: ${form.interests}` : "",
-      oppLine,
-      form.message ? `Message:\n${form.message}` : "",
-    ]
-      .filter(Boolean)
-      .join("\n");
+    setSubmitting(true);
+    const result = await insertVolunteer({
+      name: form.name.trim(),
+      email: form.email.trim(),
+      phone: form.phone.trim(),
+      zip: form.zip.trim(),
+      availability: form.availability,
+      interests: form.interests.trim(),
+      message: form.message.trim(),
+      opportunityId: opportunity?.id ?? null,
+      opportunityTitle: opportunity?.title ?? null,
+      placeName: opportunity?.place?.name ?? null,
+    });
+    setSubmitting(false);
 
-    const subject = opportunity
-      ? `Volunteer Interest: ${opportunity.title}`
-      : "Volunteer Interest — NourishNet";
-
-    const contactEmail = opportunity?.contactEmail ?? "volunteer@nourishnet.example.org";
-    const mailto = `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-
-    window.open(mailto, "_blank");
-    localStorage.removeItem(STORAGE_KEY);
+    if (!result) return setError("Something went wrong — please try again.");
     setSubmitted(true);
-  };
-
-  const handleDownload = () => {
-    const data = {
-      ...form,
-      opportunity: opportunity ? { id: opportunity.id, title: opportunity.title } : null,
-      submittedAt: new Date().toISOString(),
-    };
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `volunteer-interest-${Date.now()}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
   };
 
   return (
@@ -124,7 +87,7 @@ export default function VolunteerForm({ opportunity, onClose }: Props) {
         <div className="bg-gradient-to-r from-blue-600 to-blue-500 text-white p-6 rounded-t-2xl">
           <div className="flex justify-between items-start">
             <div>
-              <h2 className="text-xl font-bold">Submit Your Interest</h2>
+              <h2 className="text-xl font-bold">Register as Volunteer</h2>
               {opportunity && (
                 <p className="text-blue-100 text-sm mt-1">
                   For: {opportunity.title}
@@ -132,164 +95,64 @@ export default function VolunteerForm({ opportunity, onClose }: Props) {
                 </p>
               )}
             </div>
-            <button
-              onClick={onClose}
-              aria-label="Close form"
-              className="w-8 h-8 flex items-center justify-center rounded-lg text-white/70 hover:text-white hover:bg-white/20"
-            >
-              ✕
-            </button>
+            <button onClick={onClose} aria-label="Close form" className="w-8 h-8 flex items-center justify-center rounded-lg text-white/70 hover:text-white hover:bg-white/20">✕</button>
           </div>
         </div>
 
         {submitted ? (
           <div className="p-8 text-center">
             <div className="text-5xl mb-4">🎉</div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">Thank You!</h3>
+            <h3 className="text-xl font-bold text-gray-900 mb-2">You're Registered!</h3>
             <p className="text-sm text-gray-600 mb-4">
-              Your email client should have opened with your interest details.
-              If it didn't, you can download your submission as a file.
+              Your volunteer profile is now visible to food banks and pantries looking for help.
+              They can reach out to coordinate with you directly.
             </p>
-            <div className="flex flex-col gap-2">
-              <button
-                onClick={handleDownload}
-                className="bg-blue-600 text-white font-medium px-4 py-2 rounded-xl hover:bg-blue-700"
-              >
-                📥 Download as JSON
-              </button>
-              <button
-                onClick={onClose}
-                className="text-gray-500 text-sm hover:text-gray-700"
-              >
-                Close
-              </button>
-            </div>
+            <button onClick={onClose} className="bg-blue-600 text-white font-medium px-6 py-2.5 rounded-xl hover:bg-blue-700">
+              Done
+            </button>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="p-6 space-y-5">
-            {/* Name */}
             <div>
-              <label htmlFor="vol-name" className="block text-sm font-semibold text-gray-700 mb-1">
-                Full Name <span className="text-red-500">*</span>
-              </label>
-              <input
-                id="vol-name"
-                type="text"
-                required
-                value={form.name}
-                onChange={(e) => update("name", e.target.value)}
-                className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
-                placeholder="Jane Doe"
-              />
+              <label htmlFor="vol-name" className="block text-sm font-semibold text-gray-700 mb-1">Full Name <span className="text-red-500">*</span></label>
+              <input id="vol-name" type="text" required value={form.name} onChange={(e) => update("name", e.target.value)} className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-100" placeholder="Jane Doe" />
             </div>
-
-            {/* Email */}
             <div>
-              <label htmlFor="vol-email" className="block text-sm font-semibold text-gray-700 mb-1">
-                Email <span className="text-red-500">*</span>
-              </label>
-              <input
-                id="vol-email"
-                type="email"
-                required
-                value={form.email}
-                onChange={(e) => update("email", e.target.value)}
-                className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
-                placeholder="jane@example.com"
-              />
+              <label htmlFor="vol-email" className="block text-sm font-semibold text-gray-700 mb-1">Email <span className="text-red-500">*</span></label>
+              <input id="vol-email" type="email" required value={form.email} onChange={(e) => update("email", e.target.value)} className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-100" placeholder="jane@example.com" />
             </div>
-
-            {/* Phone */}
-            <div>
-              <label htmlFor="vol-phone" className="block text-sm font-semibold text-gray-700 mb-1">
-                Phone <span className="text-gray-400 font-normal">(optional)</span>
-              </label>
-              <input
-                id="vol-phone"
-                type="tel"
-                value={form.phone}
-                onChange={(e) => update("phone", e.target.value)}
-                className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
-                placeholder="(301) 555-0123"
-              />
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label htmlFor="vol-phone" className="block text-sm font-semibold text-gray-700 mb-1">Phone <span className="text-gray-400 font-normal">(optional)</span></label>
+                <input id="vol-phone" type="tel" value={form.phone} onChange={(e) => update("phone", e.target.value)} className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-100" placeholder="(301) 555-0123" />
+              </div>
+              <div>
+                <label htmlFor="vol-zip" className="block text-sm font-semibold text-gray-700 mb-1">ZIP Code <span className="text-gray-400 font-normal">(optional)</span></label>
+                <input id="vol-zip" type="text" inputMode="numeric" maxLength={5} value={form.zip} onChange={(e) => update("zip", e.target.value.replace(/\D/g, "").slice(0, 5))} className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-100" placeholder="20743" />
+              </div>
             </div>
-
-            {/* Availability */}
             <fieldset>
-              <legend className="text-sm font-semibold text-gray-700 mb-2">
-                Availability <span className="text-gray-400 font-normal">(select all that apply)</span>
-              </legend>
+              <legend className="text-sm font-semibold text-gray-700 mb-2">Availability <span className="text-gray-400 font-normal">(select all that apply)</span></legend>
               <div className="flex flex-wrap gap-2">
-                {DAYS.map((day) => {
-                  const active = form.availability.includes(day);
-                  return (
-                    <button
-                      key={day}
-                      type="button"
-                      onClick={() => toggleDay(day)}
-                      className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition-colors ${
-                        active
-                          ? "bg-blue-600 text-white border-blue-600"
-                          : "bg-white text-gray-600 border-gray-300 hover:border-blue-300"
-                      }`}
-                    >
-                      {day.slice(0, 3)}
-                    </button>
-                  );
-                })}
+                {DAYS.map((day) => (
+                  <button key={day} type="button" onClick={() => toggleDay(day)} className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition-colors ${form.availability.includes(day) ? "bg-blue-600 text-white border-blue-600" : "bg-white text-gray-600 border-gray-300 hover:border-blue-300"}`}>
+                    {day.slice(0, 3)}
+                  </button>
+                ))}
               </div>
             </fieldset>
-
-            {/* Interests */}
             <div>
-              <label htmlFor="vol-interests" className="block text-sm font-semibold text-gray-700 mb-1">
-                Areas of Interest <span className="text-gray-400 font-normal">(optional)</span>
-              </label>
-              <input
-                id="vol-interests"
-                type="text"
-                value={form.interests}
-                onChange={(e) => update("interests", e.target.value)}
-                className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
-                placeholder="e.g. sorting, gardening, client services"
-              />
+              <label htmlFor="vol-interests" className="block text-sm font-semibold text-gray-700 mb-1">Areas of Interest <span className="text-gray-400 font-normal">(optional)</span></label>
+              <input id="vol-interests" type="text" value={form.interests} onChange={(e) => update("interests", e.target.value)} className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-100" placeholder="e.g. sorting, gardening, client services" />
             </div>
-
-            {/* Message */}
             <div>
-              <label htmlFor="vol-message" className="block text-sm font-semibold text-gray-700 mb-1">
-                Additional Message <span className="text-gray-400 font-normal">(optional)</span>
-              </label>
-              <textarea
-                id="vol-message"
-                rows={3}
-                value={form.message}
-                onChange={(e) => update("message", e.target.value)}
-                className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-100 resize-none"
-                placeholder="Anything else you'd like to share…"
-              />
+              <label htmlFor="vol-message" className="block text-sm font-semibold text-gray-700 mb-1">Additional Message <span className="text-gray-400 font-normal">(optional)</span></label>
+              <textarea id="vol-message" rows={3} value={form.message} onChange={(e) => update("message", e.target.value)} className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-100 resize-none" placeholder="Anything else you'd like to share…" />
             </div>
-
-            <p className="text-xs text-gray-400">
-              This opens your email client with a pre-filled message. No data is sent to any server.
-            </p>
-
-            <div className="flex gap-3">
-              <button
-                type="submit"
-                className="flex-1 bg-blue-600 text-white font-semibold py-3 rounded-xl hover:bg-blue-700 transition-colors shadow-md shadow-blue-200"
-              >
-                ✉️ Submit via Email
-              </button>
-              <button
-                type="button"
-                onClick={handleDownload}
-                className="px-4 py-3 rounded-xl border border-gray-300 text-gray-600 text-sm hover:bg-gray-50"
-                title="Download as JSON file"
-              >
-                📥
-              </button>
-            </div>
+            {error && <p className="text-red-500 text-sm">{error}</p>}
+            <button type="submit" disabled={submitting} className="w-full bg-blue-600 text-white font-semibold py-3 rounded-xl hover:bg-blue-700 transition-colors shadow-md shadow-blue-200 disabled:opacity-50">
+              {submitting ? "Registering…" : "✋ Register as Volunteer"}
+            </button>
           </form>
         )}
       </div>
