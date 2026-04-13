@@ -9,6 +9,112 @@ import { useRef, useEffect, useMemo, useCallback, useState } from "react";
 import Map, { Marker, Popup, Source, Layer, type MapRef } from "react-map-gl/maplibre";
 import Supercluster from "supercluster";
 import type { GeocodeResult } from "../hooks/useGeocode";
+import { directionsUrl } from "../utils/geo";
+
+// ── Type label + icon per place type ─────────────────────────────────────────
+const TYPE_LABEL: Record<string, { icon: string; label: string }> = {
+  "pantry":         { icon: "🥫", label: "Food Pantry" },
+  "food-bank":      { icon: "🏦", label: "Food Bank" },
+  "snap-store":     { icon: "🛒", label: "SNAP Store" },
+  "farmers-market": { icon: "🌽", label: "Farmers Market" },
+};
+
+const MODEL_ICONS: Record<string, string> = {
+  "drive-through": "🚗", "walk-in": "🚶", "home-delivery": "🏠",
+  "by-appointment": "📱", "mobile-pantry": "🚚",
+};
+
+// ── Rich popup rendered inside the MapLibre Popup ────────────────────────────
+function RichPopup({ point, color }: { point: MapPoint; color: string }) {
+  const typeMeta = point.placeType ? TYPE_LABEL[point.placeType] : null;
+  const models: string[] = (() => { try { return JSON.parse(point.distributionModel as unknown as string ?? "[]"); } catch { return []; } })();
+  const formats: string[] = (() => { try { return JSON.parse(point.foodFormats as unknown as string ?? "[]"); } catch { return []; } })();
+  const dirUrl = point.directionsUrl || (point.sublabel ? directionsUrl(point.sublabel, "", "", "") : null);
+
+  return (
+    <div className="text-xs" style={{ minWidth: 220, maxWidth: 280 }}>
+      {/* Accent bar */}
+      <div className="h-1 -mx-3 -mt-3 mb-2 rounded-t" style={{ backgroundColor: color }} />
+
+      {/* Type badge + name */}
+      {typeMeta && (
+        <span className="inline-flex items-center gap-1 text-[10px] font-semibold px-1.5 py-0.5 rounded mb-1"
+          style={{ backgroundColor: color + "22", color }}>
+          {typeMeta.icon} {typeMeta.label}
+        </span>
+      )}
+      <p className="font-bold text-sm text-gray-900 leading-tight mb-0.5">{point.label}</p>
+      {point.sublabel && <p className="text-gray-500 mb-1">{point.sublabel}</p>}
+
+      {/* Hours */}
+      {point.hours && point.hours !== "Hours not available" && (
+        <p className="text-gray-600 mb-1">🕐 {point.hours}</p>
+      )}
+
+      {/* Eligibility */}
+      {point.eligibility && (
+        <p className="text-gray-600 mb-1">✅ {point.eligibility}</p>
+      )}
+
+      {/* SNAP / WIC */}
+      {(point.acceptsSnap || point.acceptsWic) && (
+        <div className="flex gap-1 mb-1.5">
+          {point.acceptsSnap && <span className="bg-violet-100 text-violet-700 px-1.5 py-0.5 rounded-full font-medium">💳 SNAP</span>}
+          {point.acceptsWic  && <span className="bg-pink-100 text-pink-700 px-1.5 py-0.5 rounded-full font-medium">🍼 WIC</span>}
+        </div>
+      )}
+
+      {/* Distribution models */}
+      {models.length > 0 && (
+        <div className="flex flex-wrap gap-1 mb-1.5">
+          {models.map((m) => (
+            <span key={m} className="bg-blue-50 text-blue-700 px-1.5 py-0.5 rounded-full">
+              {MODEL_ICONS[m] ?? "📦"} {m}
+            </span>
+          ))}
+        </div>
+      )}
+
+      {/* Food formats */}
+      {formats.length > 0 && (
+        <div className="flex flex-wrap gap-1 mb-1.5">
+          {formats.map((f) => (
+            <span key={f} className="bg-amber-50 text-amber-700 px-1.5 py-0.5 rounded-full">{f}</span>
+          ))}
+        </div>
+      )}
+
+      {/* Action buttons */}
+      <div className="flex flex-wrap gap-1 pt-1 border-t border-gray-100 mt-1">
+        {point.phone && (
+          <a href={`tel:${point.phone}`}
+            className="inline-flex items-center gap-1 text-white text-[10px] font-semibold px-2 py-1 rounded-lg"
+            style={{ backgroundColor: color }}>
+            📞 {point.phone}
+          </a>
+        )}
+        {dirUrl && (
+          <a href={dirUrl} target="_blank" rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 bg-gray-100 text-gray-700 text-[10px] font-medium px-2 py-1 rounded-lg hover:bg-gray-200">
+            🗺️ Directions
+          </a>
+        )}
+        {point.website && (
+          <a href={point.website} target="_blank" rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 bg-gray-100 text-gray-700 text-[10px] font-medium px-2 py-1 rounded-lg hover:bg-gray-200">
+            🌐 Website
+          </a>
+        )}
+        {point.email && (
+          <a href={`mailto:${point.email}`}
+            className="inline-flex items-center gap-1 bg-gray-100 text-gray-700 text-[10px] font-medium px-2 py-1 rounded-lg hover:bg-gray-200">
+            ✉️ Email
+          </a>
+        )}
+      </div>
+    </div>
+  );
+}
 
 export interface MapPoint {
   id: string;
@@ -20,6 +126,17 @@ export interface MapPoint {
   hours?: string;
   website?: string;
   email?: string;
+  placeType?: string;
+  // Rich detail fields for full popup
+  eligibility?: string;
+  county?: string;
+  zip?: string;
+  state?: string;
+  acceptsSnap?: boolean;
+  acceptsWic?: boolean;
+  distributionModel?: string[];
+  foodFormats?: string[];
+  directionsUrl?: string;
 }
 
 /** Items without coords: id → "address, city, state zip" */
@@ -45,6 +162,14 @@ const VARIANT_COLOR: Record<MarkerVariant, string> = {
   consumer: "#059669",
   donor:    "#d97706",
   planner:  "#2563eb",
+};
+
+// Per-type pin colors for consumer map
+export const PLACE_TYPE_COLOR: Record<string, string> = {
+  "pantry":         "#059669", // emerald
+  "food-bank":      "#2563eb", // blue
+  "snap-store":     "#7c3aed", // violet
+  "farmers-market": "#d97706", // amber
 };
 
 function clusterClass(count: number) {
@@ -94,6 +219,17 @@ export default function NourishMap({
         properties: {
           id: p.id, label: p.label, sublabel: p.sublabel ?? "",
           phone: p.phone ?? "", hours: p.hours ?? "", website: p.website ?? "",
+          email: p.email ?? "",
+          placeType: p.placeType ?? "",
+          eligibility: p.eligibility ?? "",
+          county: p.county ?? "",
+          zip: p.zip ?? "",
+          state: p.state ?? "",
+          acceptsSnap: p.acceptsSnap ?? false,
+          acceptsWic: p.acceptsWic ?? false,
+          distributionModel: JSON.stringify(p.distributionModel ?? []),
+          foodFormats: JSON.stringify(p.foodFormats ?? []),
+          directionsUrl: p.directionsUrl ?? "",
         },
       }))
     );
@@ -236,6 +372,10 @@ export default function NourishMap({
         const props = feature.properties as {
           cluster?: boolean; cluster_id?: number; point_count?: number;
           id?: string; label?: string; sublabel?: string; phone?: string; hours?: string; website?: string;
+          placeType?: string;
+          email?: string; eligibility?: string; county?: string; zip?: string; state?: string;
+          acceptsSnap?: boolean; acceptsWic?: boolean;
+          distributionModel?: string; foodFormats?: string; directionsUrl?: string;
         };
 
         if (props.cluster) {
@@ -254,13 +394,16 @@ export default function NourishMap({
         }
 
         const isSelected = props.id === selectedId;
+        const pinColor = props.placeType && PLACE_TYPE_COLOR[props.placeType]
+          ? PLACE_TYPE_COLOR[props.placeType]
+          : color;
         return (
           <Marker key={props.id} longitude={lng} latitude={lat} anchor="bottom"
             onClick={(e) => { e.originalEvent.stopPropagation(); onSelect(props.id!); }}
           >
             <div
               className={`nn-pin nn-pin-${variant}${isSelected ? " nn-pin-selected" : ""}`}
-              style={{ background: isSelected ? color : undefined }}
+              style={{ background: isSelected ? pinColor : pinColor, opacity: isSelected ? 1 : 0.85 }}
               role="button" aria-label={props.label} aria-pressed={isSelected}
             />
           </Marker>
@@ -272,7 +415,7 @@ export default function NourishMap({
         <Marker key={`temp-${tempPin.id}`} longitude={tempPin.lng} latitude={tempPin.lat} anchor="bottom">
           <div
             className={`nn-pin nn-pin-${variant} nn-pin-selected`}
-            style={{ background: color }}
+            style={{ background: tempPin.placeType && PLACE_TYPE_COLOR[tempPin.placeType] ? PLACE_TYPE_COLOR[tempPin.placeType] : color }}
             role="img"
             aria-label={tempPin.label}
           />
@@ -288,25 +431,9 @@ export default function NourishMap({
           onClose={() => { setPopupPoint(null); setTempPin(null); }}
           closeButton
           closeOnClick={false}
-          maxWidth="260px"
+          maxWidth="300px"
         >
-          <div className="text-xs space-y-1 p-1">
-            <p className="font-semibold text-sm text-gray-900 leading-tight">{popupPoint.label}</p>
-            {popupPoint.sublabel && <p className="text-gray-500">{popupPoint.sublabel}</p>}
-            {popupPoint.hours && <p className="text-gray-600">🕐 {popupPoint.hours}</p>}
-            <div className="flex flex-wrap gap-1.5 pt-1">
-              {popupPoint.phone && (
-                <a href={`tel:${popupPoint.phone}`} className="bg-amber-600 text-white px-2 py-0.5 rounded text-xs font-medium hover:bg-amber-700">
-                  📞 Call
-                </a>
-              )}
-              {popupPoint.website && (
-                <a href={popupPoint.website} target="_blank" rel="noopener noreferrer" className="bg-gray-100 text-gray-700 px-2 py-0.5 rounded text-xs hover:bg-gray-200">
-                  🌐 Website
-                </a>
-              )}
-            </div>
-          </div>
+          <RichPopup point={popupPoint} color={popupPoint.placeType && PLACE_TYPE_COLOR[popupPoint.placeType] ? PLACE_TYPE_COLOR[popupPoint.placeType] : color} />
         </Popup>
       )}
     </Map>

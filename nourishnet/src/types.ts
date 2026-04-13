@@ -13,8 +13,11 @@ export interface SourceMeta {
   lastUpdated: string;
 }
 
+export type PlaceType = "pantry" | "food-bank" | "snap-store" | "farmers-market";
+
 export interface Place {
   id: string;
+  type: PlaceType;
   name: string;
   address: string;
   city: string;
@@ -36,6 +39,8 @@ export interface Place {
   email: string | null;
   website: string | null;
   hoursStructured: DayHours[] | null;
+  acceptsSnap?: boolean;
+  acceptsWic?: boolean;
 }
 
 export interface Opportunity {

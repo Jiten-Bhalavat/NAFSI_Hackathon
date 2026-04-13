@@ -1,27 +1,40 @@
-import { useState, useMemo, useRef } from "react";
+import { useState, useMemo, useCallback, useRef, useTransition, useEffect } from "react";
 import { useCatalog } from "../hooks/useCatalog";
 import { useGeolocation } from "../hooks/useGeolocation";
 import { useGeocode } from "../hooks/useGeocode";
-import { distanceMiles } from "../utils/geo";
+import { distanceMiles, directionsUrl } from "../utils/geo";
 import { pointInGeoJSON } from "../utils/pointInPolygon";
-import NourishMap, { type MapPoint, type AddressLookup } from "../components/NourishMap";
+import NourishMap, { type MapPoint, type AddressLookup, PLACE_TYPE_COLOR } from "../components/NourishMap";
 import PlaceCard from "../components/PlaceCard";
 import PlaceDetail from "../components/PlaceDetail";
 import EmergencyFoodModal from "../components/EmergencyFoodModal";
 import SurplusFoodBoard from "../components/SurplusFoodBoard";
 import LivePantryStatus from "../components/LivePantryStatus";
 import QuickFoodRequest from "../components/QuickFoodRequest";
-import type { Place } from "../types";
+import type { Place, PlaceType } from "../types";
+
+const TYPE_CHIPS: { type: PlaceType; icon: string; label: string }[] = [
+  { type: "pantry",         icon: "🥫", label: "Pantries" },
+  { type: "food-bank",      icon: "🏦", label: "Food Banks" },
+  { type: "snap-store",     icon: "🛒", label: "SNAP Stores" },
+  { type: "farmers-market", icon: "🌽", label: "Farmers Markets" },
+];
 
 export default function Consumer() {
   const { catalog, error } = useCatalog();
   const geo = useGeolocation();
+  const [isPending, startTransition] = useTransition();
+
   const [search, setSearch] = useState("");
   const [countyFilter, setCountyFilter] = useState("");
   const [dayFilter, setDayFilter] = useState("");
+  const [typeFilters, setTypeFilters] = useState<Set<PlaceType>>(new Set());
+  const [snapOnly, setSnapOnly] = useState(false);
+  const [wicOnly, setWicOnly] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [showEmergency, setShowEmergency] = useState(false);
   const [showQuickRequest, setShowQuickRequest] = useState(false);
+  const [showLegend, setShowLegend] = useState(true);
   const listRef = useRef<HTMLDivElement>(null);
 
   const geocode = useGeocode(search);
@@ -40,45 +53,95 @@ export default function Consumer() {
 
   const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
-  const filtered = useMemo(() => {
+  // Wrap all filter setters in startTransition so React defers the heavy re-render
+  const setCountyFilterT  = useCallback((v: string) => startTransition(() => setCountyFilter(v)), []);
+  const setDayFilterT     = useCallback((v: string) => startTransition(() => setDayFilter(v)), []);
+  const setSnapOnlyT      = useCallback((v: boolean) => startTransition(() => setSnapOnly(v)), []);
+  const setWicOnlyT       = useCallback((v: boolean) => startTransition(() => setWicOnly(v)), []);
+
+  const toggleType = useCallback((t: PlaceType) => {
+    startTransition(() => {
+      setTypeFilters((prev) => {
+        const next = new Set(prev);
+        next.has(t) ? next.delete(t) : next.add(t);
+        return next;
+      });
+    });
+  }, []);
+
+  // Stage 1: geo-boundary (expensive — cached independently)
+  const geoFiltered = useMemo(() => {
     if (!catalog) return [];
-    let list = catalog.places;
+    if (!geocode.result?.boundary) return catalog.places;
+    return catalog.places.filter((p) => {
+      if (p.lat == null || p.lng == null) return true;
+      return pointInGeoJSON(p.lat, p.lng, geocode.result!.boundary);
+    });
+  }, [catalog, geocode.result]);
 
-    if (geocode.result?.boundary) {
-      list = list.filter((p) => {
-        if (p.lat == null || p.lng == null) return true;
-        return pointInGeoJSON(p.lat, p.lng, geocode.result!.boundary);
-      });
-    }
+  // Stage 2: discrete filters
+  const filtered = useMemo(() => {
+    let list = geoFiltered;
     if (countyFilter) list = list.filter((p) => p.county === countyFilter);
-    if (dayFilter) list = list.filter((p) => p.hours.toLowerCase().includes(dayFilter.toLowerCase()));
-
-    if (userCoords) {
-      list = [...list].sort((a, b) => {
-        const da = a.lat != null && a.lng != null ? distanceMiles(userCoords[0], userCoords[1], a.lat, a.lng) : Infinity;
-        const db = b.lat != null && b.lng != null ? distanceMiles(userCoords[0], userCoords[1], b.lat, b.lng) : Infinity;
-        return da - db;
-      });
-    }
+    if (dayFilter)    list = list.filter((p) => p.hours.toLowerCase().includes(dayFilter.toLowerCase()));
+    if (typeFilters.size > 0) list = list.filter((p) => typeFilters.has(p.type as PlaceType));
+    if (snapOnly)     list = list.filter((p) => p.acceptsSnap);
+    if (wicOnly)      list = list.filter((p) => p.acceptsWic);
     return list;
-  }, [catalog, geocode.result, countyFilter, dayFilter, userCoords]);
+  }, [geoFiltered, countyFilter, dayFilter, typeFilters, snapOnly, wicOnly]);
 
-  const selected = catalog?.places.find((p) => p.id === selectedId) ?? null;
+  // Stage 3: distance sort
+  const sorted = useMemo(() => {
+    if (!userCoords) return filtered;
+    return [...filtered].sort((a, b) => {
+      const da = a.lat != null && a.lng != null ? distanceMiles(userCoords[0], userCoords[1], a.lat, a.lng) : Infinity;
+      const db = b.lat != null && b.lng != null ? distanceMiles(userCoords[0], userCoords[1], b.lat, b.lng) : Infinity;
+      return da - db;
+    });
+  }, [filtered, userCoords]);
 
+  // Scroll list to top whenever the filtered set changes
+  useEffect(() => {
+    listRef.current?.scrollTo({ top: 0 });
+    setSelectedId(null);
+  }, [countyFilter, dayFilter, typeFilters, snapOnly, wicOnly, geocode.result]);
+
+  const selected = useMemo(
+    () => catalog?.places.find((p) => p.id === selectedId) ?? null,
+    [catalog, selectedId]
+  );
+
+  // Map points — carry full rich data for popup
   const mapPoints = useMemo<MapPoint[]>(() =>
-    filtered
+    sorted
       .filter((p): p is Place & { lat: number; lng: number } => p.lat != null && p.lng != null)
       .map((p) => ({
-        id: p.id, lat: p.lat, lng: p.lng, label: p.name,
+        id: p.id,
+        lat: p.lat,
+        lng: p.lng,
+        label: p.name,
         sublabel: p.address ? `${p.address}, ${p.city}` : p.city,
-        phone: p.phone, hours: p.hours,
+        phone: p.phone || undefined,
+        hours: p.hours || undefined,
+        website: p.website || undefined,
+        email: p.email || undefined,
+        placeType: p.type,
+        eligibility: p.eligibility || undefined,
+        county: p.county || undefined,
+        zip: p.zip || undefined,
+        state: p.state || undefined,
+        acceptsSnap: p.acceptsSnap,
+        acceptsWic: p.acceptsWic,
+        distributionModel: p.distributionModel,
+        foodFormats: p.foodFormats,
+        directionsUrl: directionsUrl(p.address, p.city, p.state, p.zip),
       })),
-    [filtered]
+    [sorted]
   );
 
   const addressLookup = useMemo<AddressLookup>(() => {
     const lookup: AddressLookup = {};
-    for (const p of filtered) {
+    for (const p of sorted) {
       if (p.lat == null && p.address) {
         lookup[p.id] = {
           label: p.name,
@@ -89,68 +152,84 @@ export default function Consumer() {
       }
     }
     return lookup;
-  }, [filtered]);
+  }, [sorted]);
+
+  const distanceFor = useCallback(
+    (p: Place) => {
+      if (!userCoords || p.lat == null || p.lng == null) return null;
+      return distanceMiles(userCoords[0], userCoords[1], p.lat, p.lng);
+    },
+    [userCoords]
+  );
+
+  const hasActiveFilters = typeFilters.size > 0 || snapOnly || wicOnly || !!countyFilter || !!dayFilter;
+  const clearFilters = useCallback(() => {
+    startTransition(() => {
+      setTypeFilters(new Set());
+      setSnapOnly(false);
+      setWicOnly(false);
+      setCountyFilter("");
+      setDayFilter("");
+    });
+  }, []);
 
   if (error) return <p className="p-8 text-red-600">Failed to load data: {error}</p>;
   if (!catalog) return <p className="p-8 text-gray-500 animate-subtle-pulse">Loading…</p>;
 
   return (
     <div>
-      <div className="bg-gradient-to-r from-emerald-600 to-emerald-500 text-white py-8 px-4">
-        <div className="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-4">
+      {/* Hero */}
+      <div className="bg-gradient-to-r from-emerald-600 to-emerald-500 text-white py-6 px-4">
+        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold mb-2">Find Food Near You</h1>
-            <p className="text-emerald-100 max-w-xl">Search by city, ZIP, county, or address to find food pantries, banks, and meal programs in Maryland and DC.</p>
+            <h1 className="text-2xl font-bold mb-1">Find Food Near You</h1>
+            <p className="text-emerald-100 text-sm max-w-xl">
+              Search by city, ZIP, county, or address to find food pantries, banks, SNAP stores, and farmers markets in Maryland.
+            </p>
           </div>
           <div className="flex flex-col sm:flex-row gap-2">
-            <button
-              onClick={() => setShowEmergency(true)}
-              className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white font-bold px-6 py-3 rounded-2xl shadow-lg text-base animate-pulse-slow transition-colors"
-            >
-              🚨 I Need Food Right Now
+            <button onClick={() => setShowEmergency(true)} className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white font-bold px-5 py-2.5 rounded-2xl shadow-lg text-sm animate-pulse-slow transition-colors">
+              🚨 I Need Food Now
             </button>
-            <button
-              onClick={() => setShowQuickRequest(true)}
-              className="flex items-center gap-2 bg-white/20 hover:bg-white/30 text-white font-semibold px-5 py-3 rounded-2xl text-sm border border-white/30 transition-colors"
-            >
-              🍎 Request Food Anonymously
+            <button onClick={() => setShowQuickRequest(true)} className="flex items-center gap-2 bg-white/20 hover:bg-white/30 text-white font-semibold px-4 py-2.5 rounded-2xl text-xs border border-white/30 transition-colors">
+              🍎 Request Anonymously
             </button>
           </div>
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto px-4 -mt-5">
-        <div className="filter-bar rounded-2xl shadow-lg p-4 mb-6 border border-gray-200/50">
-          <div className="flex flex-wrap gap-3">
-            <div className="flex-1 min-w-[220px] relative">
-              <label htmlFor="consumer-search" className="sr-only">Search by city, ZIP, county, or address</label>
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">🔍</span>
+      <div className="max-w-7xl mx-auto px-4">
+        {/* ── Filter bar ── */}
+        <div className="filter-bar rounded-2xl shadow-lg p-4 -mt-5 mb-4 border border-gray-200/50 relative z-10 bg-white">
+          {/* Row 1 */}
+          <div className="flex flex-wrap gap-2">
+            <div className="flex-1 min-w-[200px] relative">
+              <label htmlFor="consumer-search" className="sr-only">Search</label>
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">🔍</span>
               <input
                 id="consumer-search"
                 type="text"
                 autoComplete="off"
-                placeholder="Enter ZIP code to sort by distance…"
+                placeholder="ZIP code or address…"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full border border-gray-200 rounded-xl pl-10 pr-4 py-2.5 text-sm focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 bg-white"
+                className="w-full border border-gray-200 rounded-xl pl-9 pr-3 py-2 text-sm focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 bg-white"
               />
             </div>
             <select
-              id="county-filter"
               aria-label="Filter by county"
               value={countyFilter}
-              onChange={(e) => setCountyFilter(e.target.value)}
-              className="border border-gray-200 rounded-xl px-4 py-2.5 text-sm bg-white"
+              onChange={(e) => setCountyFilterT(e.target.value)}
+              className="border border-gray-200 rounded-xl px-3 py-2 text-sm bg-white"
             >
               <option value="">All counties</option>
               {counties.map((c) => <option key={c} value={c}>{c}</option>)}
             </select>
             <select
-              id="day-filter"
               aria-label="Filter by day"
               value={dayFilter}
-              onChange={(e) => setDayFilter(e.target.value)}
-              className="border border-gray-200 rounded-xl px-4 py-2.5 text-sm bg-white"
+              onChange={(e) => setDayFilterT(e.target.value)}
+              className="border border-gray-200 rounded-xl px-3 py-2 text-sm bg-white"
             >
               <option value="">Any day</option>
               {days.map((d) => <option key={d} value={d}>{d}</option>)}
@@ -158,56 +237,141 @@ export default function Consumer() {
             <button
               onClick={geo.requestLocation}
               disabled={geo.loading}
-              className="bg-emerald-600 text-white px-5 py-2.5 rounded-xl text-sm font-medium hover:bg-emerald-700 disabled:opacity-50 shadow-sm"
+              className="bg-emerald-600 text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-emerald-700 disabled:opacity-50 shadow-sm"
             >
-              {geo.loading ? "Locating…" : "📍 My Location"}
+              {geo.loading ? "…" : "📍 Near Me"}
             </button>
           </div>
-          <div className="mt-3 min-h-[20px]">
-            {geocode.loading && <p className="text-xs text-gray-400 animate-subtle-pulse">Searching…</p>}
-            {geocode.error && <p className="text-xs text-red-500">{geocode.error}</p>}
-            {geocode.result && (
-              <p className="text-xs text-emerald-600">
-                📍 Near <span className="font-semibold">{geocode.result.displayName}</span>
-                {geocode.result.boundary && " — boundary shown on map"}
-              </p>
-            )}
-            {geo.error && <p className="text-xs text-red-500">{geo.error}</p>}
-          </div>
-        </div>
 
-        {/* Live pantry status updates */}
-        <LivePantryStatus />
-
-        {/* Surplus food posted by donors — claim it here */}
-        <SurplusFoodBoard readOnly />
-
-        {selected && <PlaceDetail place={selected} onClose={() => setSelectedId(null)} />}
-
-        <div className="grid lg:grid-cols-5 gap-5 mb-8">
-          <div ref={listRef} className="lg:col-span-2 max-h-[500px] overflow-y-auto space-y-2 styled-scrollbar pr-1" role="list" aria-label="Food assistance locations">
-            <div className="text-xs text-gray-500 font-medium px-1 mb-1">
-              {filtered.length} location{filtered.length !== 1 ? "s" : ""} found
-              {mapPoints.length < filtered.length && ` (${mapPoints.length} on map)`}
-            </div>
-            {filtered.length === 0 && (
-              <div className="text-center py-10">
-                <div className="text-4xl mb-3">🔍</div>
-                <p className="text-sm text-gray-500">No locations match your search.</p>
-              </div>
-            )}
-            {filtered.map((p) => {
-              const dist = userCoords && p.lat != null && p.lng != null
-                ? distanceMiles(userCoords[0], userCoords[1], p.lat, p.lng) : null;
+          {/* Row 2: type chips + SNAP/WIC */}
+          <div className="flex flex-wrap items-center gap-1.5 mt-2.5">
+            {TYPE_CHIPS.map(({ type, icon, label }) => {
+              const active = typeFilters.has(type);
               return (
-                <div key={p.id} role="listitem">
-                  <PlaceCard place={p} selected={selectedId === p.id} onSelect={setSelectedId} distance={dist} />
-                </div>
+                <button
+                  key={type}
+                  onClick={() => toggleType(type)}
+                  aria-pressed={active}
+                  disabled={isPending}
+                  className={`inline-flex items-center gap-1 text-xs font-medium px-2.5 py-1.5 rounded-full border transition-all disabled:opacity-60 ${
+                    active
+                      ? "border-transparent text-white shadow-sm"
+                      : "border-gray-200 bg-white text-gray-600 hover:border-gray-300"
+                  }`}
+                  style={active ? { backgroundColor: PLACE_TYPE_COLOR[type] } : undefined}
+                >
+                  {icon} {label}
+                </button>
               );
             })}
+            <span className="text-gray-300 mx-0.5">|</span>
+            <button
+              onClick={() => setSnapOnlyT(!snapOnly)}
+              aria-pressed={snapOnly}
+              disabled={isPending}
+              className={`inline-flex items-center gap-1 text-xs font-medium px-2.5 py-1.5 rounded-full border transition-all disabled:opacity-60 ${
+                snapOnly ? "bg-violet-600 border-transparent text-white shadow-sm" : "border-gray-200 bg-white text-gray-600 hover:border-violet-300"
+              }`}
+            >
+              💳 SNAP
+            </button>
+            <button
+              onClick={() => setWicOnlyT(!wicOnly)}
+              aria-pressed={wicOnly}
+              disabled={isPending}
+              className={`inline-flex items-center gap-1 text-xs font-medium px-2.5 py-1.5 rounded-full border transition-all disabled:opacity-60 ${
+                wicOnly ? "bg-pink-600 border-transparent text-white shadow-sm" : "border-gray-200 bg-white text-gray-600 hover:border-pink-300"
+              }`}
+            >
+              🍼 WIC
+            </button>
+            {hasActiveFilters && (
+              <button onClick={clearFilters} disabled={isPending} className="text-xs text-gray-400 hover:text-gray-600 underline ml-1 disabled:opacity-50">
+                Clear all
+              </button>
+            )}
+
+            {/* Loading indicator — shown while transition is pending */}
+            {isPending && (
+              <span className="ml-2 inline-flex items-center gap-1.5 text-xs text-gray-400">
+                <span className="w-3 h-3 rounded-full border-2 border-gray-300 border-t-emerald-500 animate-spin inline-block" />
+                Filtering…
+              </span>
+            )}
           </div>
 
-          <div className="lg:col-span-3 h-[500px] rounded-2xl overflow-hidden map-wrapper border border-gray-200">
+          {/* Geocode feedback */}
+          {(geocode.loading || geocode.error || geocode.result || geo.error) && (
+            <div className="mt-2">
+              {geocode.loading && <p className="text-xs text-gray-400 animate-subtle-pulse">Searching…</p>}
+              {geocode.error && <p className="text-xs text-red-500">{geocode.error}</p>}
+              {geocode.result && (
+                <p className="text-xs text-emerald-600">
+                  📍 Near <span className="font-semibold">{geocode.result.displayName}</span>
+                  {geocode.result.boundary && " — boundary shown on map"}
+                </p>
+              )}
+              {geo.error && <p className="text-xs text-red-500">{geo.error}</p>}
+            </div>
+          )}
+        </div>
+
+        {/* ── Main grid: list + map ── */}
+        <div className="grid lg:grid-cols-5 gap-4 mb-6">
+
+          {/* Left: list panel */}
+          <div className="lg:col-span-2 flex flex-col gap-2" style={{ height: 620 }}>
+            {/* Count bar */}
+            <div className="flex items-center justify-between px-1 shrink-0">
+              <span className="text-xs text-gray-500 font-medium">
+                {isPending ? (
+                  <span className="text-gray-400 italic">Updating…</span>
+                ) : (
+                  <>{sorted.length.toLocaleString()} location{sorted.length !== 1 ? "s" : ""}
+                  {mapPoints.length < sorted.length && <span className="text-gray-400"> · {mapPoints.length.toLocaleString()} on map</span>}</>
+                )}
+              </span>
+            </div>
+
+            {/* Inline detail panel */}
+            {selected && (
+              <div className="shrink-0">
+                <PlaceDetail place={selected} onClose={() => setSelectedId(null)} />
+              </div>
+            )}
+
+            {/* Scrollable card list */}
+            <div
+              ref={listRef}
+              className={`flex-1 overflow-y-auto space-y-1.5 styled-scrollbar pr-1 transition-opacity duration-150 ${isPending ? "opacity-40 pointer-events-none" : "opacity-100"}`}
+              role="list"
+              aria-label="Food assistance locations"
+              aria-busy={isPending}
+            >
+              {!isPending && sorted.length === 0 && (
+                <div className="text-center py-12">
+                  <div className="text-4xl mb-3">🔍</div>
+                  <p className="text-sm text-gray-500">No locations match your filters.</p>
+                  {hasActiveFilters && (
+                    <button onClick={clearFilters} className="mt-2 text-xs text-emerald-600 underline">Clear filters</button>
+                  )}
+                </div>
+              )}
+              {sorted.map((p) => (
+                <div key={p.id} role="listitem">
+                  <PlaceCard
+                    place={p}
+                    selected={selectedId === p.id}
+                    onSelect={setSelectedId}
+                    distance={distanceFor(p)}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Right: map with legend overlay */}
+          <div className="lg:col-span-3 relative rounded-2xl overflow-hidden border border-gray-200" style={{ height: 620 }}>
             <NourishMap
               points={mapPoints}
               variant="consumer"
@@ -217,19 +381,69 @@ export default function Consumer() {
               addressLookup={addressLookup}
               initialZoom={9}
             />
+
+            {/* Legend overlay — bottom-left of map */}
+            <div className="absolute bottom-3 left-3 z-10">
+              {showLegend ? (
+                <div className="bg-white/95 backdrop-blur-sm rounded-xl shadow-lg border border-gray-200 p-3 min-w-[160px]">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Legend</span>
+                    <button
+                      onClick={() => setShowLegend(false)}
+                      className="text-gray-400 hover:text-gray-600 text-xs leading-none ml-3"
+                      aria-label="Hide legend"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                  <div className="space-y-1.5">
+                    {TYPE_CHIPS.map(({ type, icon, label }) => {
+                      const color = PLACE_TYPE_COLOR[type];
+                      const active = typeFilters.size === 0 || typeFilters.has(type);
+                      return (
+                        <button
+                          key={type}
+                          onClick={() => toggleType(type)}
+                          className={`flex items-center gap-2 w-full text-left rounded-lg px-1.5 py-1 transition-colors ${
+                            active ? "opacity-100" : "opacity-40"
+                          } hover:bg-gray-50`}
+                          title={`Toggle ${label}`}
+                        >
+                          {/* Pin shape matching the actual map pin */}
+                          <span className="shrink-0 flex flex-col items-center" style={{ width: 14 }}>
+                            <span
+                              className="rounded-full border-2 border-white shadow"
+                              style={{ width: 12, height: 12, backgroundColor: color, display: "block" }}
+                            />
+                            <span style={{ width: 2, height: 5, backgroundColor: color, display: "block", marginTop: -1 }} />
+                          </span>
+                          <span className="text-xs text-gray-700 font-medium">{icon} {label}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              ) : (
+                <button
+                  onClick={() => setShowLegend(true)}
+                  className="bg-white/95 backdrop-blur-sm rounded-xl shadow-lg border border-gray-200 px-3 py-2 text-xs font-medium text-gray-600 hover:text-gray-900 flex items-center gap-1.5"
+                  aria-label="Show legend"
+                >
+                  🗺️ Legend
+                </button>
+              )}
+            </div>
           </div>
         </div>
+
+        {/* Surplus + live status — below the map */}
+        <LivePantryStatus />
+        <SurplusFoodBoard readOnly />
       </div>
 
-      {/* Emergency modal */}
       {showEmergency && catalog && (
-        <EmergencyFoodModal
-          places={catalog.places}
-          onClose={() => setShowEmergency(false)}
-        />
+        <EmergencyFoodModal places={catalog.places} onClose={() => setShowEmergency(false)} />
       )}
-
-      {/* Quick anonymous food request */}
       {showQuickRequest && (
         <QuickFoodRequest onClose={() => setShowQuickRequest(false)} />
       )}
