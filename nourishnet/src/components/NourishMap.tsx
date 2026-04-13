@@ -249,6 +249,7 @@ export default function NourishMap({
       }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
+      attributionControl={false}
       style={{ width: "100%", height: "100%" }}
     >
       {/* Extra overlay layers (e.g. choropleth) — rendered first so pins appear on top */}
