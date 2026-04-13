@@ -97,9 +97,9 @@ def process_food_pantries(rows: list[dict], geocache: dict) -> list[dict]:
         tags = [t.strip() for t in categories.split(";") if t.strip()] if categories else ["pantry"]
 
         # Merge geocache coordinates
-        cached = geocache.get(pid, {})
-        lat = cached.get("lat")
-        lng = cached.get("lng")
+        cached = geocache.get(pid) or {}
+        lat = cached.get("lat") if cached else None
+        lng = cached.get("lng") if cached else None
 
         places.append({
             "id": pid,
@@ -322,7 +322,7 @@ def main():
 
     # Load geocache (built by geocode_pantries.py)
     geocache = load_geocache()
-    geocached_count = sum(1 for v in geocache.values() if v.get("lat") is not None)
+    geocached_count = sum(1 for v in geocache.values() if v is not None and v.get("lat") is not None)
     print(f"  Geocache: {len(geocache)} entries, {geocached_count} with coordinates")
 
     # Donation destinations: pantries + food banks only
