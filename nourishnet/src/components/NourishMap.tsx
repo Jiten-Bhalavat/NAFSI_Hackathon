@@ -6,7 +6,7 @@
  * When selected, the address is geocoded on-the-fly and the map flies there.
  */
 import { useRef, useEffect, useMemo, useCallback, useState } from "react";
-import Map, { Marker, Popup, Source, Layer, type MapRef } from "react-map-gl/maplibre";
+import Map, { Marker, Popup, Source, Layer, type MapRef, type MapLayerMouseEvent } from "react-map-gl/maplibre";
 import Supercluster from "supercluster";
 import type { GeocodeResult } from "../hooks/useGeocode";
 import { directionsUrl } from "../utils/geo";
@@ -154,6 +154,11 @@ interface Props {
   initialZoom?: number;
   /** Extra MapLibre layers to render inside the map (e.g. choropleth overlay) */
   children?: React.ReactNode;
+  /** If provided, we will query these layer ids on mouse move and emit feature properties. */
+  hoverLayerIds?: string[];
+  onHoverFeature?: (props: Record<string, unknown> | null) => void;
+  /** Show a small in-map toggle button for the overlay. */
+  overlayToggle?: { visible: boolean; onToggle: () => void; label?: string };
 }
 
 const STYLE_URL = "https://tiles.openfreemap.org/styles/liberty";
@@ -199,6 +204,9 @@ async function geocodeAddress(address: string): Promise<{ lat: number; lng: numb
 
 export default function NourishMap({
   points, variant, selectedId, onSelect, geocode, addressLookup = {}, initialZoom = 9, children,
+  hoverLayerIds = [],
+  onHoverFeature,
+  overlayToggle,
 }: Props) {
   const mapRef = useRef<MapRef>(null);
   const [zoom, setZoom] = useState(initialZoom);
@@ -345,18 +353,63 @@ export default function NourishMap({
 
   const color = VARIANT_COLOR[variant];
 
+  const handleMouseMove = useCallback(
+    (e: MapLayerMouseEvent) => {
+      if (!onHoverFeature || hoverLayerIds.length === 0) return;
+      const map = mapRef.current?.getMap();
+      if (!map) return;
+      const feats = map.queryRenderedFeatures(e.point, { layers: hoverLayerIds });
+      const f = feats?.[0];
+      // Avoid sending large geometries — only props.
+      onHoverFeature((f?.properties as Record<string, unknown>) ?? null);
+    },
+    [hoverLayerIds, onHoverFeature]
+  );
+
+  const handleMouseLeave = useCallback(() => {
+    if (!onHoverFeature || hoverLayerIds.length === 0) return;
+    onHoverFeature(null);
+  }, [hoverLayerIds.length, onHoverFeature]);
+
   return (
     <Map
       ref={mapRef}
       mapStyle={STYLE_URL}
       initialViewState={{ ...MD_CENTER, zoom: initialZoom }}
-      onLoad={updateViewport}
+      onLoad={() => {
+        updateViewport();
+      }}
       onMoveEnd={updateViewport}
-      onZoomEnd={updateViewport}
+      onZoomEnd={() => {
+        updateViewport();
+      }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      attributionControl={false}
       style={{ width: "100%", height: "100%" }}
     >
       {/* Extra overlay layers (e.g. choropleth) — rendered first so pins appear on top */}
       {children}
+
+      {/* In-map overlay toggle (top-right) */}
+      {overlayToggle && (
+        <div className="absolute top-3 right-3 z-10">
+          <button
+            type="button"
+            onClick={overlayToggle.onToggle}
+            className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold shadow-md border transition-colors ${
+              overlayToggle.visible
+                ? "bg-red-600 text-white border-red-700 hover:bg-red-700"
+                : "bg-white/95 text-gray-700 border-gray-300 hover:bg-gray-50"
+            }`}
+            aria-pressed={overlayToggle.visible}
+            aria-label={overlayToggle.label ?? "Show need in my area"}
+          >
+            <span className="text-sm leading-none">{overlayToggle.visible ? "🔴" : "⚪"}</span>
+            {overlayToggle.visible ? "Hide Hunger Map" : "Show Hunger Map"}
+          </button>
+        </div>
+      )}
 
       {/* Region boundary */}
       {geocode?.boundary && (

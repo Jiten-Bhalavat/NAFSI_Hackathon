@@ -127,7 +127,7 @@ export default function Planner() {
         {/* Search & filters */}
         <div className="filter-bar rounded-2xl shadow-lg p-4 mb-6 border border-gray-200/50">
           <div className="flex flex-wrap gap-3">
-            <div className="flex-1 min-w-[220px] relative">
+            <div className="w-full sm:flex-1 sm:min-w-[220px] relative">
               <label htmlFor="planner-search" className="sr-only">Search by city, ZIP, county, or address</label>
               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">🔍</span>
               <input
@@ -145,12 +145,12 @@ export default function Planner() {
               aria-label="Filter by county"
               value={countyFilter}
               onChange={(e) => setCountyFilter(e.target.value)}
-              className="border border-gray-200 rounded-xl px-4 py-2.5 text-sm bg-white"
+              className="flex-1 min-w-0 border border-gray-200 rounded-xl px-4 py-2.5 text-sm bg-white"
             >
               <option value="">All counties</option>
               {counties.map((c) => <option key={c} value={c}>{c}</option>)}
             </select>
-            <div className="flex gap-1 items-center">
+            <div className="flex gap-1 items-center flex-wrap">
               {(["", "weekday", "weekend"] as const).map((val) => {
                 const labels: Record<string, string> = { "": "Any", weekday: "Weekdays", weekend: "Weekends" };
                 return (
@@ -171,7 +171,7 @@ export default function Planner() {
             <button
               onClick={geo.requestLocation}
               disabled={geo.loading}
-              className="bg-blue-600 text-white px-5 py-2.5 rounded-xl text-sm font-medium hover:bg-blue-700 disabled:opacity-50 shadow-sm"
+              className="w-full sm:w-auto bg-blue-600 text-white px-5 py-2.5 rounded-xl text-sm font-medium hover:bg-blue-700 disabled:opacity-50 shadow-sm"
             >
               {geo.loading ? "Locating…" : "📍 My Location"}
             </button>
@@ -243,9 +243,9 @@ export default function Planner() {
           </div>
         )}
 
-        <div className="grid lg:grid-cols-5 gap-5 mb-8">
+        <div className="flex flex-col lg:grid lg:grid-cols-5 gap-5 mb-8">
           {/* List */}
-          <div className="lg:col-span-2 max-h-[500px] overflow-y-auto space-y-3 styled-scrollbar pr-1" role="list" aria-label="Volunteer opportunities">
+          <div className="order-2 lg:order-none lg:col-span-2 max-h-[60vh] lg:max-h-[500px] overflow-y-auto space-y-3 styled-scrollbar pr-1" role="list" aria-label="Volunteer opportunities">
             <div className="text-xs text-gray-500 font-medium px-1 mb-1">
               {volunteering.length} opportunit{volunteering.length !== 1 ? "ies" : "y"} found
             </div>
@@ -297,7 +297,7 @@ export default function Planner() {
           </div>
 
           {/* Map */}
-          <div className="lg:col-span-3 h-[500px] rounded-2xl overflow-hidden map-wrapper border border-gray-200">
+          <div className="order-1 lg:order-none lg:col-span-3 h-[45vh] sm:h-[50vh] lg:h-[500px] rounded-2xl overflow-hidden map-wrapper border border-gray-200">
             <NourishMap
               points={mapPoints}
               variant="planner"

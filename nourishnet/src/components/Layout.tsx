@@ -2,10 +2,11 @@ import { useState } from "react";
 import { Link, NavLink, Outlet } from "react-router-dom";
 
 const links = [
-  { to: "/find-food", label: "Find Food", icon: "🍎" },
-  { to: "/donate", label: "Donate", icon: "🤲" },
-  { to: "/volunteer", label: "Volunteer", icon: "🙋" },
-  { to: "/about", label: "About", icon: "ℹ️" },
+  { to: "/find-food",  label: "Find Food",   icon: "🍎" },
+  { to: "/donate",     label: "Donate",      icon: "🤲" },
+  { to: "/food-post",  label: "Food Post",   icon: "📋" },
+  { to: "/volunteer",  label: "Volunteer",   icon: "🙋" },
+  { to: "/about",      label: "About",       icon: "ℹ️" },
 ];
 
 export default function Layout() {

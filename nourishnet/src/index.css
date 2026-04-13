@@ -107,3 +107,18 @@
 .animate-pulse-slow {
   animation: pulse-slow 2s ease-in-out infinite;
 }
+
+/* ── Mobile adjustments ── */
+@media (max-width: 640px) {
+  .nn-pin {
+    width: 18px;
+    height: 18px;
+  }
+  .nn-cluster-sm { width: 40px; height: 40px; font-size: 14px; }
+  .nn-cluster-md { width: 50px; height: 50px; font-size: 15px; }
+  .nn-cluster-lg { width: 60px; height: 60px; font-size: 16px; }
+  .maplibregl-popup-content {
+    max-width: 220px !important;
+    font-size: 13px;
+  }
+}
