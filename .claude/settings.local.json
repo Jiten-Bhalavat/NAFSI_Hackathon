@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git pull:*)",
+      "Bash(node:*)",
+      "Bash(wc -l /e/Hackathon/NAFSI/NAFSI_Track2/data/unified/consumer/* /e/Hackathon/NAFSI/NAFSI_Track2/data/unified/donor/*)",
+      "Bash(npx tsc:*)",
+      "Bash(python3 -c ':*)",
+      "Bash(npm run:*)",
+      "Bash(npm install:*)"
+    ]
+  }
+}

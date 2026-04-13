@@ -11,12 +11,10 @@ import EmergencyFoodModal from "../components/EmergencyFoodModal";
 import SurplusFoodBoard from "../components/SurplusFoodBoard";
 import LivePantryStatus from "../components/LivePantryStatus";
 import QuickFoodRequest from "../components/QuickFoodRequest";
-import { useLanguage } from "../contexts/LanguageContext";
 import type { Place } from "../types";
 
 export default function Consumer() {
   const { catalog, error } = useCatalog();
-  const { t } = useLanguage();
   const geo = useGeolocation();
   const [search, setSearch] = useState("");
   const [countyFilter, setCountyFilter] = useState("");
@@ -101,15 +99,15 @@ export default function Consumer() {
       <div className="bg-gradient-to-r from-emerald-600 to-emerald-500 text-white py-8 px-4">
         <div className="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold mb-2">{t.consumerTitle}</h1>
-            <p className="text-emerald-100 max-w-xl">{t.consumerSub}</p>
+            <h1 className="text-3xl font-bold mb-2">Find Food Near You</h1>
+            <p className="text-emerald-100 max-w-xl">Search by city, ZIP, county, or address to find food pantries, banks, and meal programs in Maryland and DC.</p>
           </div>
           <div className="flex flex-col sm:flex-row gap-2">
             <button
               onClick={() => setShowEmergency(true)}
               className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white font-bold px-6 py-3 rounded-2xl shadow-lg text-base animate-pulse-slow transition-colors"
             >
-              {t.consumerEmergencyBtn}
+              🚨 I Need Food Right Now
             </button>
             <button
               onClick={() => setShowQuickRequest(true)}
@@ -131,7 +129,7 @@ export default function Consumer() {
                 id="consumer-search"
                 type="text"
                 autoComplete="off"
-                placeholder={t.consumerSearchPlaceholder}
+                placeholder="Enter ZIP code to sort by distance…"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="w-full border border-gray-200 rounded-xl pl-10 pr-4 py-2.5 text-sm focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 bg-white"
@@ -144,7 +142,7 @@ export default function Consumer() {
               onChange={(e) => setCountyFilter(e.target.value)}
               className="border border-gray-200 rounded-xl px-4 py-2.5 text-sm bg-white"
             >
-              <option value="">{t.consumerAllCounties}</option>
+              <option value="">All counties</option>
               {counties.map((c) => <option key={c} value={c}>{c}</option>)}
             </select>
             <select
@@ -154,7 +152,7 @@ export default function Consumer() {
               onChange={(e) => setDayFilter(e.target.value)}
               className="border border-gray-200 rounded-xl px-4 py-2.5 text-sm bg-white"
             >
-              <option value="">{t.consumerAnyDay}</option>
+              <option value="">Any day</option>
               {days.map((d) => <option key={d} value={d}>{d}</option>)}
             </select>
             <button
@@ -162,7 +160,7 @@ export default function Consumer() {
               disabled={geo.loading}
               className="bg-emerald-600 text-white px-5 py-2.5 rounded-xl text-sm font-medium hover:bg-emerald-700 disabled:opacity-50 shadow-sm"
             >
-              {geo.loading ? t.consumerLocating : t.consumerMyLocation}
+              {geo.loading ? "Locating…" : "📍 My Location"}
             </button>
           </div>
           <div className="mt-3 min-h-[20px]">

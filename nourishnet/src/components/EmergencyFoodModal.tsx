@@ -1,7 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import { distanceMiles, directionsUrl } from "../utils/geo";
 import { getOpenStatus } from "../utils/hours";
-import { useLanguage } from "../contexts/LanguageContext";
 import type { Place } from "../types";
 
 interface Props {
@@ -25,7 +24,6 @@ function StatusBadge({ hours }: { hours: string }) {
 }
 
 export default function EmergencyFoodModal({ places, onClose }: Props) {
-  const { t } = useLanguage();
   const [loc, setLoc] = useState<LocationState>({ status: "idle" });
 
   useEffect(() => {
@@ -73,8 +71,8 @@ export default function EmergencyFoodModal({ places, onClose }: Props) {
         {/* Header — never scrolls */}
         <div className="bg-red-600 text-white px-5 py-3.5 flex items-center justify-between rounded-t-2xl shrink-0">
           <div>
-            <div className="text-base font-bold">{t.emergencyTitle}</div>
-            <p className="text-red-100 text-xs mt-0.5">{t.emergencySub}</p>
+            <div className="text-base font-bold">🚨 I Need Food Right Now</div>
+            <p className="text-red-100 text-xs mt-0.5">Nearest open food locations near you</p>
           </div>
           <button
             onClick={onClose}
@@ -90,8 +88,8 @@ export default function EmergencyFoodModal({ places, onClose }: Props) {
           {loc.status === "idle" || loc.status === "locating" ? (
             <div className="text-center py-10">
               <div className="text-4xl mb-3 animate-bounce">📍</div>
-              <p className="text-gray-600 font-medium">{t.emergencyFinding}</p>
-              <p className="text-xs text-gray-400 mt-1">{t.emergencyFindingNote}</p>
+              <p className="text-gray-600 font-medium">Finding your location…</p>
+              <p className="text-xs text-gray-400 mt-1">Please allow location access when prompted.</p>
             </div>
           ) : loc.status === "error" ? (
             <div className="text-center py-8">
@@ -104,7 +102,7 @@ export default function EmergencyFoodModal({ places, onClose }: Props) {
           ) : nearest.length === 0 ? (
             <div className="text-center py-8">
               <div className="text-4xl mb-3">😔</div>
-              <p className="text-gray-600 font-medium">{t.emergencyNoLocations}</p>
+              <p className="text-gray-600 font-medium">No nearby locations found with coordinates.</p>
               <p className="text-sm text-gray-500 mt-2">
                 Call <a href="tel:211" className="text-blue-600 font-bold underline">211</a> for immediate help.
               </p>
@@ -118,12 +116,12 @@ export default function EmergencyFoodModal({ places, onClose }: Props) {
               >
                 <span className="text-xl">📞</span>
                 <div>
-                  <div className="font-bold text-red-700 text-sm">{t.emergencyCallFree}</div>
-                  <div className="text-xs text-red-500">{t.emergencyCallAvail}</div>
+                  <div className="font-bold text-red-700 text-sm">Call 211 — Free Helpline</div>
+                  <div className="text-xs text-red-500">Available 24/7 · Food, shelter, and crisis help</div>
                 </div>
               </a>
 
-              <p className="text-xs text-gray-400 px-1">{t.emergencyOrVisit}</p>
+              <p className="text-xs text-gray-400 px-1">Or visit one of these locations near you:</p>
 
               {nearest.map((p) => (
                 <div
@@ -164,7 +162,7 @@ export default function EmergencyFoodModal({ places, onClose }: Props) {
                       rel="noopener noreferrer"
                       className="flex-1 bg-blue-600 text-white text-xs font-bold text-center py-2 rounded-lg hover:bg-blue-700 transition-colors"
                     >
-                      {t.emergencyDirections}
+                      🗺 Directions
                     </a>
                   </div>
                 </div>

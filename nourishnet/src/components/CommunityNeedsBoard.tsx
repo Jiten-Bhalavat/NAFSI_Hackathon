@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback } from "react";
-import { useLanguage } from "../contexts/LanguageContext";
 
 export interface NeedPost {
   id: string;
@@ -57,7 +56,6 @@ const URGENCY_COLORS = {
 };
 
 export default function CommunityNeedsBoard({ readOnly = false }: { readOnly?: boolean }) {
-  const { t } = useLanguage();
   const [posts, setPosts] = useState<NeedPost[]>([]);
   const [showForm, setShowForm] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -125,12 +123,12 @@ export default function CommunityNeedsBoard({ readOnly = false }: { readOnly?: b
       <div className="flex items-center justify-between mb-4">
         <div>
           <h3 className="text-lg font-bold text-blue-900 flex items-center gap-2">
-            {t.needsBoardTitle}
+            🤝 Community Needs Board
           </h3>
           <p className="text-sm text-blue-700 mt-0.5">
             {readOnly
               ? "Food requests from people in need — help fulfill them."
-              : t.needsBoardSub}
+              : "Anonymously post what you need — a nearby donor or volunteer may be able to help."}
           </p>
         </div>
         {!readOnly && (
@@ -138,14 +136,14 @@ export default function CommunityNeedsBoard({ readOnly = false }: { readOnly?: b
             onClick={() => setShowForm((v) => !v)}
             className="shrink-0 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-xl text-sm shadow-sm transition-colors"
           >
-            {showForm ? t.needsBoardCancel : t.needsBoardPostBtn}
+            {showForm ? "✕ Cancel" : "+ Post a Need"}
           </button>
         )}
       </div>
 
       {!readOnly && submitted && (
         <div className="bg-green-100 border border-green-300 text-green-800 rounded-xl px-4 py-2 text-sm font-medium mb-4">
-          {t.needsBoardSuccess}
+          ✅ Your request is posted anonymously. A nearby volunteer or donor may reach out.
         </div>
       )}
 
@@ -154,12 +152,12 @@ export default function CommunityNeedsBoard({ readOnly = false }: { readOnly?: b
           onSubmit={handleSubmit}
           className="bg-white rounded-2xl border border-blue-200 p-5 mb-5 shadow-sm"
         >
-          <h4 className="font-semibold text-gray-800 mb-1">{t.needsBoardFormTitle}</h4>
-          <p className="text-xs text-gray-500 mb-4">{t.needsBoardAnon}</p>
+          <h4 className="font-semibold text-gray-800 mb-1">What do you need?</h4>
+          <p className="text-xs text-gray-500 mb-4">No name, no ID, no judgment — completely anonymous.</p>
 
           <div className="grid sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-gray-600 mb-1">{t.needsBoardINeed} *</label>
+              <label className="block text-xs font-semibold text-gray-600 mb-1">I need *</label>
               <select
                 value={needType}
                 onChange={(e) => setNeedType(e.target.value)}
@@ -172,7 +170,7 @@ export default function CommunityNeedsBoard({ readOnly = false }: { readOnly?: b
               </select>
             </div>
             <div>
-              <label className="block text-xs font-semibold text-gray-600 mb-1">{t.needsBoardZip} *</label>
+              <label className="block text-xs font-semibold text-gray-600 mb-1">Near ZIP code *</label>
               <input
                 type="text"
                 value={zip}
@@ -182,35 +180,35 @@ export default function CommunityNeedsBoard({ readOnly = false }: { readOnly?: b
               />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-gray-600 mb-1">{t.needsBoardUrgency}</label>
+              <label className="block text-xs font-semibold text-gray-600 mb-1">How urgent?</label>
               <select
                 value={urgency}
                 onChange={(e) => setUrgency(e.target.value as NeedPost["urgency"])}
                 className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm bg-white focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
               >
-                <option value="today">{t.needsBoardUrgencyToday}</option>
-                <option value="week">{t.needsBoardUrgencyWeek}</option>
-                <option value="flexible">{t.needsBoardUrgencyFlex}</option>
+                <option value="today">⚡ Need today</option>
+                <option value="week">📅 This week</option>
+                <option value="flexible">🕐 Flexible</option>
               </select>
             </div>
             <div>
-              <label className="block text-xs font-semibold text-gray-600 mb-1">{t.needsBoardTravel}</label>
+              <label className="block text-xs font-semibold text-gray-600 mb-1">Can you travel?</label>
               <select
                 value={mobility}
                 onChange={(e) => setMobility(e.target.value as NeedPost["mobility"])}
                 className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm bg-white focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
               >
-                <option value="walk">{t.needsBoardMobilityWalk}</option>
-                <option value="delivery">{t.needsBoardMobilityDelivery}</option>
-                <option value="either">{t.needsBoardMobilityEither}</option>
+                <option value="walk">🚶 Can walk</option>
+                <option value="delivery">🏠 Need delivery</option>
+                <option value="either">🚶/🏠 Either</option>
               </select>
             </div>
             <div className="sm:col-span-2">
-              <label className="block text-xs font-semibold text-gray-600 mb-1">{t.needsBoardDetails}</label>
+              <label className="block text-xs font-semibold text-gray-600 mb-1">Details (optional)</label>
               <textarea
                 value={details}
                 onChange={(e) => setDetails(e.target.value)}
-                placeholder={t.needsBoardDetailsPlaceholder}
+                placeholder="e.g. Halal-certified, for family of 4, infant formula size 1…"
                 rows={2}
                 maxLength={200}
                 className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:border-blue-400 focus:ring-2 focus:ring-blue-100 resize-none"
@@ -224,7 +222,7 @@ export default function CommunityNeedsBoard({ readOnly = false }: { readOnly?: b
             type="submit"
             className="mt-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2.5 rounded-xl text-sm shadow-sm transition-colors"
           >
-            {t.needsBoardSubmit}
+            Post Request
           </button>
         </form>
       )}
@@ -233,18 +231,18 @@ export default function CommunityNeedsBoard({ readOnly = false }: { readOnly?: b
       {activePosts.length === 0 && !showForm ? (
         <div className="text-center py-8 text-gray-400">
           <div className="text-3xl mb-2">🤝</div>
-          <p className="text-sm">{t.needsBoardEmpty}</p>
+          <p className="text-sm">No active requests right now.</p>
           <p className="text-xs mt-1">
             {readOnly
               ? "No requests right now. When someone on the Find Food tab asks for help, it'll appear here."
-              : t.needsBoardEmptySub}
+              : "If you need something specific, click \"Post a Need.\""}
           </p>
         </div>
       ) : (
         <div className="grid sm:grid-cols-2 gap-3">
           {activePosts.map((post) => {
-            const urgencyLabel = post.urgency === "today" ? t.needsBoardUrgencyToday : post.urgency === "week" ? t.needsBoardUrgencyWeek : t.needsBoardUrgencyFlex;
-            const mobilityLabel = post.mobility === "walk" ? t.needsBoardMobilityWalk : post.mobility === "delivery" ? t.needsBoardMobilityDelivery : t.needsBoardMobilityEither;
+            const urgencyLabel = post.urgency === "today" ? "⚡ Need today" : post.urgency === "week" ? "📅 This week" : "🕐 Flexible";
+            const mobilityLabel = post.mobility === "walk" ? "🚶 Can walk" : post.mobility === "delivery" ? "🏠 Need delivery" : "🚶/🏠 Either";
             return (
             <div
               key={post.id}
@@ -272,7 +270,7 @@ export default function CommunityNeedsBoard({ readOnly = false }: { readOnly?: b
                   onClick={() => fulfillPost(post.id)}
                   className="flex-1 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold py-2 rounded-lg transition-colors"
                 >
-                  {t.needsBoardICanHelp}
+                  ✋ I Can Help
                 </button>
                 <button
                   onClick={() => deletePost(post.id)}
@@ -291,7 +289,7 @@ export default function CommunityNeedsBoard({ readOnly = false }: { readOnly?: b
       {/* Fulfilled posts */}
       {fulfilledPosts.length > 0 && (
         <div className="mt-4">
-          <p className="text-xs text-gray-400 font-semibold mb-2 uppercase tracking-wide">{t.needsBoardFulfilled}</p>
+          <p className="text-xs text-gray-400 font-semibold mb-2 uppercase tracking-wide">Recently Fulfilled</p>
           <div className="space-y-2">
             {fulfilledPosts.slice(0, 3).map((post) => (
               <div
