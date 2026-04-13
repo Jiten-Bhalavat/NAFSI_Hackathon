@@ -1,0 +1,535 @@
+type,county,name,address,contact,phone,hours,days
+Food Pantry,Allegany,Salvation Army,"701 E. First St., Cumberland, MD 21502",Bessie Park,(301) 777-7600,8am-4pm,Mon-Fri
+Food Pantry,Allegany,Lavale U.M.C,"565 National Highway, Lavandale, MD 21502",Kent Smith,(301) 722-6800,9:30am-3:30pm,Tue-Fri
+Food Pantry,Allegany,Christ U.M.C.,"4th & Race Street, Cumberland, MD 21502","Florine Taylor, Janet Crabtree",(301) 777-1561,8am-4pm,Mon-Fri
+Food Pantry,Allegany,Frostburgh Pantry,"P.O. Box 301, Frostburgh, MD 21532",Dale Coleman,(301) 689-3660,10am-2pm,Mon-Fri
+Food Pantry,Allegany,Cumberland Church of God,"401 Industrial Blvd., Cumberland, MD 21502",Sue Yeroshefsky,(301) 724-2378,10am-1pm/4-6pm,"Wed,Fri"
+Food Pantry,Allegany,John F. Kennedy (Restricted - tenants only),"Mechanic St., #408, Cumberland, MD 21502",Walter Hite,(301) 777-1592,10am-11am,Mon-Fri
+Food Pantry,Allegany,Cumberland Manor (Restricted - tenants only),"29 Baltimore Ave., Cumberland, MD 21502",Mary Jane Brown,(301) 777-5186,10am-11am,Mon-Fri
+Food Pantry,Allegany,Booth Towers (Restricted - tenants only),"220 Sommerville Ave., Cumberland, MD 21502",Connie Weaver,(301) 722-7603,10am-11am,Mon-Fri
+Food Pantry,Allegany,Queen City Towers (Restricted - tenants only),"235 Paca Street., Cumberland, MD 21502",Joyce Snyder,(301) 777-5807,10am-11am,Mon-Fri
+Food Pantry,Allegany,Interfaith Pantry,"301 Cumberland St., Cumberland, MD 21502",Bob Shipley,(301) 777-7882,9am-2pm,Mon-Fri
+Food Pantry,Allegany,Healing Hunger,"19210 Opessa St. S/E, Oldtown, MD 21555","Robin Sills, Carol Beeman",(301) 478-5448,9am-2pm,Tue & Fri
+Food Pantry,Allegany,Hope Station,"6 Pershing St., Cumberland, MD 21502",Dan Snyder,(301) 722-8266,9am-3pm,Mon-Fri
+Food Pantry,Allegany,Lavale Assembly Church,"525 National Highway, Lavale, MD 21502",Luther Martz,(301) 759-2863,10am-11am,Mon-Fri
+Food Pantry,Allegany,Annapolis Spanish Church,"1840 Margaret Ave., Annapollis, MD 21401",,(410) 626-1700,12pm-2pm,Saturday
+Food Pantry,Allegany,Apostolic House of Prayer,"413 Headquarters Dr., Millersville",,(410) 729-4590,Call,Mon-Fri
+Food Pantry,Allegany,Appalachian Mountain Ministries,"P.O. Box 9794, Arnold, MD 21012",,,,
+Food Pantry,Anne Arundel,Arundel Lodge,"2012 Reynard Ct., Annapolis, MD 21401",,(410) 841-6131,,
+Food Pantry,Anne Arundel,Asbury Broadneck UMC,"657 Broadneck Rd., Annapolis, MD 21401",Carroll Hunt,(410) 757-2995,10-12pm,2nd & 4th Th
+Food Pantry,Anne Arundel,Asbury UMC,"87 West Street, Annapolis, MD 21401",Yvonne Jacobs,(410) 268-9500,1-3pm,"Wed,Fri,Sat"
+Food Pantry,Anne Arundel,Asbury Towneck,"429 Asbury Drive, Severna Park, MD 21146",,(410) 647-7667,,
+Food Pantry,Anne Arundel,Beacon Light 7th Day Advent,"1943 Drew Street, Annapolis, MD 21403",,(410) 268-8436,"7-9:30pm, 9-9:30am","Tue, Sat"
+Food Pantry,Anne Arundel,Birthright,"P.O. Box 4697, Annapolis, MD 21403",,,,
+Food Pantry,Anne Arundel,Brooklyn Church of God,"3800 9th St., Baltimore, MD 21225",,,,
+Food Pantry,Anne Arundel,Brooklyn Heights UMC,"110 Townsend Ave., Brooklyn, MD 21225",,(410) 789-3688,Call,Mon-Fri
+Food Pantry,Anne Arundel,Brooklyn UMC,"4th & Pontiac, Brooklyn MD 21225",,(410) 355-8740,9am-12noon,"Mon,Wed,Th"
+Food Pantry,Anne Arundel,Burwood Gardens,"6652 Shelly Rd., Glen Burnie, MD 21061",,(410) 222-6226,Call,Mon-Fri
+Food Pantry,Anne Arundel,Calvary Chapel International Worship Center,"8064 New Cut Rd., Severn, MD 21144",,(410) 969-5100,,
+Food Pantry,Anne Arundel,Cecil Memorial UMC,"15 Parole Street, Annapolis, MD 21401",,(410) 266-5651,Call,
+Food Pantry,Anne Arundel,Chews Memorial UMC,"492 Owensville Road, Harwood, MD 20776",,(410) 744-9355,1st and 3rd Fri,9am-12pm
+Food Pantry,Anne Arundel,Christian Assistance Program,"1239 Murray Rd, Odenton, MD 21113",Paul Greksa,(410) 551-9238,"11am-1pm, 3pm-5pm","Tue, Th"
+Food Pantry,Anne Arundel,Chrysalis House,"1570 Crownsville Rd., Crownsville, MD 21032",,(410) 974-6829,,
+Food Pantry,Anne Arundel,Church on the Rock,"900 Church Street, Baltimore, MD 21225",,(410) 355-5922,9am-11am,Tue & Th
+Food Pantry,Anne Arundel,Claiborne Place,"130 Hearne Rd., Annapolis, MD 21401",,(410) 266-5730,,
+Food Pantry,Anne Arundel,Community Service Center,"120 Audrey Ave., Brooklyn, MD 21225",,(410) 789-4523,,
+Food Pantry,Anne Arundel,Community UMC,"8680 Fort Smallwood Rd, Pasadenia 21122",,(410) 255-1506,9am-3pm,Mon-Fri (Call first)
+Food Pantry,Anne Arundel,Concerned Citizens for Students,"After school Program, Edgewater MD 21037",,(410) 573-1116,,
+Food Pantry,Anne Arundel,Darlene's Pantry,"10 South River Club House Rd., Edgewater",,(410) 798-5460,,
+Food Pantry,Anne Arundel,Emmanuel Wesleyan Church,"3716 West Bay Ave., Baltimore, MD 21225",,(410) 355-6650,,
+Food Pantry,Anne Arundel,Faith Assembly of God,"250 W. Bayfront Road, Lothian, MD 20711",,(410) 257-2085,Call First,
+Food Pantry,Anne Arundel,Faith Baptist Church,7857 Furnace Branch Rd Glen Burnie MD 21061,Dottie Millham,(410) 761-5346,9:30am-3:30pm,Mon-Fri
+Food Pantry,Anne Arundel,Faith Community,"212 B Street, Lothian, MD 20711",,(410) 741-0647,9:00-12:00pm,Friday
+Food Pantry,Anne Arundel,First Baptist of Eastport,"206 Chesapeake Ave., Annapolis, MD 21403",,(410) 268-7378,10am-12noon,Tue
+Food Pantry,Anne Arundel,First Baptist of Edgewater,"38 W. Central Ave., Edgewater, MD 21037",Pat Conner,(410) 956-3142,9:30am-2:30am,Mon-Fri
+Food Pantry,Anne Arundel,First Baptist of Annapolis,"31 W. Washington St., Annapolis, MD 21401",Booker Williams,(410) 268-8987,11am-1pm,Sat
+Food Pantry,Anne Arundel,Food Link,2666 Riva Road 3rd Floor,,(410) 222-7853,9am-12pm,"1st & 3rd Wed, every Friday"
+Food Pantry,Anne Arundel,Gospel Assembly,"3555 4th Street, Brooklyn, MD 21225",,(410) 354-2770,"1pm-2pm, 5:30-6:45","Sun, Th"
+Food Pantry,Anne Arundel,Greater Morning Star Apos Church,"8069 Telegraph Rd., Severn, MD 21113",,(410) 551-9000,10am-12pm,Sat
+Food Pantry,Anne Arundel,Harundale Presb.,"1020 Eastway, Glen Burnie, MD 21060",,(410) 766-4338,"1pm-2pm, 5:30-6:45pm","Sun, Thurs"
+Food Pantry,Anne Arundel,Heritage Baptist,"1740 Forest Drive, Annapolis, MD 21401",Bill Bond,(410) 263-6680,"8:30am-11:30pm, 1:30-3pm",Mon-Fri
+Food Pantry,Anne Arundel,Holly Temple Cathedral,"708 Bestgate Rd., Annapolis, MD 21401",,(410) 266-7946,Call for hours,
+Food Pantry,Anne Arundel,Housing Commission of Ann Arundel County,"7477 Baltimore-Annapolis Blvd., Glen Burnie, MD 21060",,(410) 222-6200,,
+Food Pantry,Anne Arundel,Hurting Helping People,"7629 B Spencer Rd., Glen Burnie, MD 21060",,(410) 766-7690,Call for Hours,
+Food Pantry,Anne Arundel,Igles Hispana Alpha and Omega,"16010 Annapolis Rd., Bowie, MD 20715",Roland Rosales,(301) 262-6266,3pm-5pm,Sunday
+Food Pantry,Anne Arundel,Inlesia Hispana Emmanuel,"919 Cedar Park, Annapolis, MD 21401",,,,
+Food Pantry,Anne Arundel,John Welsley UMC,"6922 N. Richie Hwy. GB, MD 21061",,(410) 766-6981,Call,
+Food Pantry,Anne Arundel,Lighthouse of Southern MD,"300 Fairhaven Rd., Tracey's Landing, MD 20779",,(410) 257-6775,Call,
+Food Pantry,Anne Arundel,Lloyd Keaser,"229 Berlin Ave., Baltimore, MD 21225",,(410) 789-4181,10am-3:30pm,"Mon, Wed, Fri"
+Food Pantry,Anne Arundel,Magothy UMC,"3703 Mountain Rd., Pasadena, MD 21122",,(410) 255-2420,Sat,11am-12pm
+Food Pantry,Anne Arundel,Mison Christiana Casa Dios,"4902 Ritchie Hwy., Brooklyn Park, MD 21225",,(410) 789-3991,"11am-1pm, 3pm-5pm","Tuesday, Thurs"
+Food Pantry,Anne Arundel,Mount Olive AME Church,"2 Hicks Avenue, Annapolis, MD 21401",,(410) 266-5090,Call,
+Food Pantry,Anne Arundel,My Brothers Pantry,"P.O. Box 223, Arnold, MD 21012",Barbara Lewis,(410) 757-5190,Call,
+Food Pantry,Anne Arundel,NCEON,"304 5th St., Glen Burnie, MD 21061",,(410) 766-1826,10am-3:30pm,"Mon, Wed, Fri"
+Food Pantry,Anne Arundel,New Life Church,"48 Joyce Lane, Arnold, MD 21012",,(410) 320-6360,,
+Food Pantry,Anne Arundel,On Our Own,"162 West St., Annapolis, MD 21401",,(410) 295-1224,9am-4pm,Mon-Fri
+Food Pantry,Anne Arundel,Our Lady of Perpetual Help,"515 Loch Haven Rd., Edgewater, MD 21037",,(410) 798-5161,10am-12noon,Wed-Fri
+Food Pantry,Anne Arundel,Our Lady of Cheasapeake,"8325 Venitor Road, Pasadena, MD 21122",,(410) 255-3677,,
+Food Pantry,Anne Arundel,Pasadena Church of God in Christ,"Old Mill & Logan Rd. Pasadena, MD 21122",,(410) 255-8635,Call,
+Food Pantry,Anne Arundel,Payne Memorial Church,"7901 Brockbridge Rd., Jessup, MD 20794",,(410) 799-5150,,
+Food Pantry,Anne Arundel,Praise Center Full Gospel Church,"2622-1 Annapolis Rd. Severn, MD 21144",,(410) 551-8771,,
+Food Pantry,Anne Arundel,Touch Thru Me Ministries/Praise Center Full Gospel Church,2611-1 Annapolis Rd. Severn MD 21144,,(410) 551-8771,,
+Food Pantry,Anne Arundel,Rapture Church,"1834 George Ave., Annapolis, MD 21401",,(410) 263-2601,2pm-7pm,Mon-Sat
+Food Pantry,Anne Arundel,"Regeneration Church of Deliverance, Inc.","435 Es. Pataspaco Ave., Baltimore, MD 21225",,(410) 355-8440,,
+Food Pantry,Anne Arundel,RESPECT Foundation,"640 South River Landing, Edgewater, MD 21037",,(410) 571-7992,9am-12pm,Mon
+Food Pantry,Anne Arundel,Restoration Community Dev.,"1812 Virginia Ave., Annapolis MD 21401",,(410) 267-0609,9am-12pm,Sat
+Food Pantry,Anne Arundel,Riva Trace Baptist,"2990 Riva Trace Pkwy., Annapolis, MD 21401",,(410) 224-2690,9am-12pm,1st Sat
+Food Pantry,Anne Arundel,S.C.A.N,"5757 Sol. Island Road, Lothian, MD 20711",,(410) 867-2838,Call,
+Food Pantry,Anne Arundel,Salvation Army,"351 Hilltop Lane, Annapolis, MD 21401",Renne Powell,(410) 263-4091,"8am-12pm, 12:30pm-4pm",Mon-Fri
+Food Pantry,Anne Arundel,Salvation Army,"511 So. Crain Hwy., Glen Burnie, MD 21061",Melaine Thompson,(410) 768-0477,9am-4pm,Mon-Fri
+Food Pantry,Anne Arundel,Samaritan House,"2610 Green Briar Ln., Annapolis, MD 21401",,(410) 269-5605,10am-12pm,2nd and 4th Thursday
+Food Pantry,Anne Arundel,Sarah's House,"2015 20th Street, Ft. Meade MD 20755",,(410) 551-7722,1pm-3pm,"Wed, Fri, Sat"
+Food Pantry,Anne Arundel,Spanish Church in Brooklyn,"P.O. Box 1977, Glen Burnie, MD 21061",,,,Call
+Food Pantry,Anne Arundel,South County Emergency Baby Pantry,"220 Owensville Rd, West River, MD 20778",,(410) 867-0346,Baby Pantry only - Call,
+Food Pantry,Anne Arundel,SPAN,"400 Benfield Rd., Severna Park, MD 21146",Cindy Berkhart,(410) 647-0889,"10am-2pm, 5pm-7pm","Mon-Fri, Mon only"
+Food Pantry,Anne Arundel,St. Bernadette's Parish,Winter Relief Program,,(410) 969-2787,9am-11am,Tues & Thurs
+Food Pantry,Anne Arundel,St. Elizabeth Ann Seton,"1800 Seton Dr., Crofton, MD 21114",,(410) 721-5770,9am-4pm,Mon-Fri
+Food Pantry,Anne Arundel,St. John the Evangelist,"689 Ritchie Hwy., Severna Park, MD 21146",,(410) 647-4884,"10am-12pm, 2pm-4pm",Tue & Thu
+Food Pantry,Anne Arundel,St. James Apostolic,"7566 E. Howard Rd., Glen Burnie, MD21061",Irene Pitts,(410) 761-9272,12pm-3pm,4th Tue
+Food Pantry,Anne Arundel,St. Marks,"1440 Dorsey Rd., Hanover. MD 21076",Dennard,(410) 859-5352,8am-10am,Last Sat
+Food Pantry,Anne Arundel,Vineyard Christian Fellowship of Central Maryland,"255 Najoies Rd., Millersville, Md 21108",,(410) 987-3440,,
+Food Pantry,Anne Arundel,Wayman Good Hope,"100 Hoyle Lane, Severna Park, MD 21146",Irene Johnson,(410) 647-0468,Call,
+Food Pantry,Anne Arundel,Woodside Garden Apartments,"713-D Newtowne Dr., Annapolis, MD 21401",,(410) 269-6563,,
+Food Pantry,Anne Arundel,YMCA of Annapolis,"1517 Ritchie Hwy, Arnold, MD 21012",,(410) 626-7800,2:30pm-5:30pm,Tue-Thu
+Food Pantry,Anne Arundel,Wilson Memorial Church,"Rt. 3 North, Gambrills, MD 21054",Dorothy Geathers,(410) 721-1482,9am-12pm,Mon
+Food Pantry,Baltimore City,Abundant Life II,"5110 Balto Natl. Pike apt 4, Baltimore, MD 21229",Thomas Hill,(410) 947-6343,9am-12pm,Mon
+Food Pantry,Baltimore City,Adams Chapel AME,"3813 Egerton Rd., Baltimore, MD 21215",Arlean Burton,(410) 542-6200,11am-1pm,"Wed, Sat"
+Food Pantry,Baltimore City,Agape House,"222 N. Carrollton Ave., Baltimore, MD 21223",Rev. Robinson,(410) 728-2222,12pm-6pm,"Wed, Sat"
+Food Pantry,Baltimore City,AMES Memorial AME,"615 Baker St., Baltimore, MD 21217",Jacqueline Johnson,(410) 523-5556,11am-1pm,Tue
+Food Pantry,Baltimore City,Bernard E. Mason,"2121 Windsor Gardens, Baltimore, MD 21207",Lillie Ziegler,(410) 448-1311,11am-4pm,Thurs
+Food Pantry,Baltimore City,Bethany Baptist Church,"2616 Ridgeley St., Baltimore, MD 21230",Sanra White,(410) 539-5029,9am-12pm,Mon-Fri
+Food Pantry,Baltimore City,Bethel Church of God,"301 W. 28th Street, Baltimore, MD 21211",Charletta Williams,(410) 235-0160,"9am-12pm, 12pm-3pm","Fri, Sun"
+Food Pantry,Baltimore City,Carter Memorial Emergency,"745 West Fayette St., Baltimore, MD 21201",Vernell Lewis,(410) 752-6123,10am-2pm,Thu
+Food Pantry,Baltimore City,Central Baptist Church,"2035 West Baltimore St., Baltimore, MD 21223",Rev. Matthew Braxton,(410) 233-8558,12pm-2pm,Sat
+Food Pantry,Baltimore City,Chase House,"1027 Cathedral St., Baltimore, MD 21201",Joan Weston,(410) 539-6155,10am-2pm,Fri
+Food Pantry,Baltimore City,Christ Deliverance Church,"711 Walnut Ave., Baltimore, MD 21229",Rev. Martin Jacobs,(410) 945-8700,12pm-6pm,"M, W, F, S"
+Food Pantry,Baltimore City,Christian Memorial Church,"2001 West North Ave., Baltimore, MD 21217",Barbara Grimes,(410) 728-0464,10am-12pm,Sat
+Food Pantry,Baltimore City,Church Of Jesus Christ,"2880 Hillen Road, Baltimore, MD 21218",James Gamble,(410) 366-8010,10am-3pm,"Mon, Thu"
+Food Pantry,Baltimore City,Claremont Homes,"4312 Clareway, Baltimore, MD 21213",Anna Warren,(410) 485-4836,10am-2pm,"Mon, Wed, Fri"
+Food Pantry,Baltimore City,Collington Square,"1211 N. Chester St. Baltimore, MD 21213",Gloria Etheridge,(410) 342-6740,12pm-4:30,Wed
+Food Pantry,Baltimore City,Concord Baptist Church,"5204 Liberty Heights Ave., Baltimore, MD 21207",Hazel Guin,(410) 367-1117,10am-11:30am,4th Sat
+Food Pantry,Baltimore City,Corpus Christi,"703 Whitelock St., Baltimore, MD 21217",Mariano,(410) 523-5822,1:30pm-3pm,Thu
+Food Pantry,Baltimore City,Deliverance Manna,"3538 Old York Road, Baltimore, MD 21218",Jerry Wallace,(410) 947-4536,"6pm-8pm, 10am-12pm","Thu, Sat"
+Food Pantry,Baltimore City,Dept. of Housing Neighborhood,"22 S. Calhoun, Baltimore, MD 21223",Deinia,(410) 566-6658,10am-3pm,Mon
+Food Pantry,Baltimore City,Donald Bentley Food Pantry,"2405 Loch Raven Blvd., Baltimore MD 21218",Ellen Bentley,(410) 662-9287,9am-12:30pm,Sat
+Food Pantry,Baltimore City,Dukeland Development,"1601 Gertrude St., Baltimore, MD 21216",Hattie Rhames,(410) 233-6112,12pm-8pm,"Mon, Fri"
+Food Pantry,Baltimore City,East Baltimore Church of God,"800 South Oldham St. Baltimore, MD 21224",Welton Hunt,(410) 327-0177,10am-3pm,"Sat, Sun"
+Food Pantry,Baltimore City,Emergency Food Relief Fund,"1401 Pennsylvania Ave., Baltimore MD 21217",Leslie Wood,(410) 523-7000,11:30am-1pm,Wed
+Food Pantry,Baltimore City,First Apostolic Faith Church,"27 S. Caroline St., Baltimore, MD 21231",Beatrice Bridgefort,(410) 327-1181,2:30pm-4:30pm,Sat
+Food Pantry,Baltimore City,First Charity Baptist Church,"611 N. Aisquith St. Baltimore, MD 21202",Rebecca Pugh,(410) 732-0076,11am-3pm,Fri-Sun
+Food Pantry,Baltimore City,First Emmanuel Baptist Church,"2209 Park Ave, Baltimore, MD 21217",Bertha Creighton,(410) 523-6787,12pm-3pm,"Tue, Thu"
+Food Pantry,Baltimore City,First Philadelphia Baptist,"2120 Greenmount Ave., Baltimore, MD 21218",Lucy Washington,(410) 243-5625,10:30am-12:30pm,Thu-Fri
+Food Pantry,Baltimore City,"Franciscan Center, Inc.","2212 Maryland Ave., Baltimore, MD 21218",Brother Finbar,(410) 467-5340,10am-2pm,Mon-Fri
+Food Pantry,Baltimore City,Gillis Memorial,"3939 Reisterstown Rd., Baltimore, Md 21215",Rev. Helen Samuel,(410) 396-7740,9am-1pm,"Mon, Wed, Fri"
+Food Pantry,Baltimore City,Gospel Messenger,"2610 Keyworth Ave., Baltimore, MD 21215",Rev. Geraldine S. James,(410) 467-0113,9am-1pm,Thu
+Food Pantry,Baltimore City,Gospel Tabernacle,"3100 Walbrook Ave., Baltimore, MD 21216",Lillian Royster,(410) 298-6919,11am-3pm,"Sun, Mon, Fri"
+Food Pantry,Baltimore City,Grace Memorial,"1100 N. Eden St., Baltimore, MD 21213",Rev. Irwin Pope,(410) 563-2355,12pm-1:30pm,Tue
+Food Pantry,Baltimore City,Greater Zion Church,"301 No. Gilmore Ave., Baltimore, MD 21223",Rev. Amos Burgess,(410) 788-0547,1pm-4pm,"Wed, Fri"
+Food Pantry,Baltimore City,Greenhill Apts.,"2501 Violet Ave, #710 N., Baltimore, MD 21215",Ethel Lee,(410) 383-9171,10am-12pm,Wed
+Food Pantry,Baltimore City,Hampden UMC,"3449 Falls Rd., Baltimore, MD 21211",Elizabeth Green,(410) 243-1997,9am-12pm,"Mon, Wed"
+Food Pantry,Baltimore City,Harford Senior Center,"4920 Harford Rd., Baltimore, MD 21214",Jessie Martek,(410) 426-4009,10am-2pm,Mon-Fri
+Food Pantry,Baltimore City,Harvest Christian,"2601 Pennsylvania Ave., Baltimore, MD 21217",Mary Coleman,(410) 523-0143,10am-12pm,Wed
+Food Pantry,Baltimore City,Harvey Johnson Towers,"1510 WE. Mosher St., Baltimore, MD 21217",Juanita Leigh,(410) 462-6205,9am-2pm,Sat
+Food Pantry,Baltimore City,Healthy Start,"610 N. Chester St., Baltimore, MD 21205",Jacqueline Toppins,(410) 675-2125,8:30am-4:30pm,Mon-Fri
+Food Pantry,Baltimore City,Healthy Start,"1622 N. Carey St., Baltimore, MD 21217",Gloria Johnson,(410) 728-7539,8:30am-4:30pm,Mon-Fri
+Food Pantry,Baltimore City,Helping Hands Food Pantry,"1911 Belair Rd., Baltimore, MD 21213",Rosalie Branch,(410) 342-1310,9am-1pm,Sat
+Food Pantry,Baltimore City,Homestead UMC,"1500 Gorsuch Ave., Baltimore, MD 21218",Shirley Dean,(410) 243-4419,11:30am-2pm,Tue
+Food Pantry,Baltimore City,Household of Faith Missionary,"4811 Belair Rd., Baltimore, MD 21206",Rev. Harrison Geter,(410) 485-5375,12pm-2pm,Sat
+Food Pantry,Baltimore City,Human Services Division-4th,"1133 Pennsylvania Ave., Baltimore, MD 21201",Josephine Battaglia,(410) 396-0893,9am-3pm,Tue-Fri
+Food Pantry,Baltimore City,Israel Baptist Outreach,"1211 N. Chester St., Baltimore, MD 21213",Shirley Eaddy,(410) 732-3494,"11am-2pm, 5pm-7pm","Mon, Tue, Thu, Wed, Fri"
+Food Pantry,Baltimore City,JB Outreach Ministries,"301 N. Stricker St., Baltimore, MD 21223",James Bivens,(410) 644-5822,10am-2pm,2nd & 4th Th
+Food Pantry,Baltimore City,Jesus Saves Ministries,"1625 N. Hilton St., Baltimore, Md 21216",Barbara Davis,(410) 362-1911,12pm-1pm,Wed-Sat
+Food Pantry,Baltimore City,Johnston Square Community,"841 E. Chase St., Baltimore, MD 21202",Margaret Hawkes,(410) 685-5950,1pm-4pm,Mon-Fri
+Food Pantry,Baltimore City,Jonah House,"1301 Moreland Ave., Baltimore, MD 21216",Susan Crane,(410) 233-6238,7am-6pm,Tuesday
+Food Pantry,Baltimore City,Judah Worship Center,"2000 Frederick Ave., Baltimore, MD 21223",Pastor Morton,(410) 466-5729,10am-2pm,"Wed, Sat"
+Food Pantry,Baltimore City,Laurens House,"1330 Laurens St., Baltimore, Md 21217",Rosalie,(410) 728-5515,1pm-6pm,"Mon,Wed,Fri"
+Food Pantry,Baltimore City,Lexington Poe,"206 N. Fremont Ave., Baltimore, MD 21201",Lorraine Ledbetter,(410) 396-0936,9am-3pm,Tue-Fri
+Food Pantry,Baltimore City,Love of God,"321 N. Fulton St., Baltimore, MD 21229",Bettie Williams,(410) 362-2232,11am-2pm,Wed
+Food Pantry,Baltimore City,Macedonia Baptist Church,"718 W. Lafayette St., Baltimore, MD 21217",Gladys Augustus,(410) 669-5776,10am-2pm,Tue
+Food Pantry,Baltimore City,Manna Ministry of Greater Gethsemane,"2511 E. Preston St., Baltimore, MD 21213",Bertha Bell,(410) 675-2267,10am-12pm,Thu
+Food Pantry,Baltimore City,Maryland Church of God,"5100 Denmore Ave., Baltimore, MD 21215",Ethel Lee,(410) 367-2768,12pm-5pm,Mon-Fri
+Food Pantry,Baltimore City,Mason Memorial,"2608 Frederick Ave., Baltimore, MD 21223",Mary Curtis,(410) 947-4466,9am-12pm,Wed
+Food Pantry,Baltimore City,Metropolitan Church Pantry,"4815 Eastern Ave., Baltimore, MD 21224",Grace Weber,(410) 633-5516,9am-10am,Sat
+Food Pantry,Baltimore City,Mount Moriah Baptist Church,"2201 Garrison Blvd., Baltimore, MD 21216",Wilhelmina Davis,(410) 945-3575,8:30am-12:30pm,Mon
+Food Pantry,Baltimore City,Mt. Lebanon Baptist Church,"2812 Reisterstown Rd., Baltimore, MD 21215",Roberta McKinney,(410) 669-1800,10am-12pm,"Wed, Sat"
+Food Pantry,Baltimore City,Mt. Calvary Star Baptist Church,"1725 N. Milton Ave., Baltimore, MD 21213",Alex Young,(410) 276-1431,11am-2pm,"Sat, Sun"
+Food Pantry,Baltimore City,Mt. Pleasant Church,"6000 Radecke Ave., Baltimore, MD 21206",Aretha Allen,(410) 325-3080,10am-2pm,"Mon,Wed,Fri"
+Food Pantry,Baltimore City,Mt. Tabor Baptist,"1719 E. Oliver St., Baltimore, MD 21213",Rev. Forrest,(410) 327-1740,10am-2pm,Tuesday
+Food Pantry,Baltimore City,New Fellowship Christian Community,"5202 Park Heights Ave., Baltimore, MD 21215",Ann Quarles,(410) 367-5766,9am-12:30pm,Wed
+Food Pantry,Baltimore City,New Gabriel Baptist Church,"1041 Wilmington Ave., Baltimore, MD 21223",Rev. Dykes,(410) 840-3363,8am-12pm,Sun
+Food Pantry,Baltimore City,New Hope Church of God,"6601 Cleveland Ave., Baltimore, MD 21224",Cynthia,(410) 282-2219,10am-6pm,Mon-Fri
+Food Pantry,Baltimore City,New Life Evangelical Baptist,"2417 E. North Ave., Baltimore, MD 21213",Rev. Williams,(410) 675-2178,9am-4pm,Mon-Fri
+Food Pantry,Baltimore City,New Life Fellowship,"559 Robert St., Baltimore, MD 21217",Rita Yarborough,(410) 466-7306,11am-1pm,Thursday
+Food Pantry,Baltimore City,New Mount Zion Baptist Church,"817 N. Mount St., Baltimore, MD 21217",Peggy Mitchell,(410) 523-9082,10am-12pm,Wed-Sat
+Food Pantry,Baltimore City,New Shiloh Baptist Church,"2100 N. Monroe St., Baltimore, MD 21217",Sue Wilson,(410) 523-5306,1pm-2pm,Sat
+Food Pantry,Baltimore City,New Zion Hill Baptist,"2432 E. North Ave., Baltimore, MD 21213",Pastor Barnes,(410) 558-0950,10am-1pm,Fri & Sat
+Food Pantry,Baltimore City,North Baltimore CARES,"5502 York Rd., Baltimore, MD 21212",Barbara Metz,(410) 433-2442,9am-11am,"Mon, Thu"
+Food Pantry,Baltimore City,Oaks at Liberty,"3501 Howard Park, Baltimore, Md 21207",Kimberly White,(410) 466-9267,2pm-4pm,Friday
+Food Pantry,Baltimore City,Park Heights Community Center,"4917 Park Heights Ave., Baltimore, MD 21215",Shirley Oliver,(410) 578-1800,10am-4pm,Mon-Fri
+Food Pantry,Baltimore City,Paul's Place Outreach Center,"1118 Ward St., Baltimore, MD 21230",Bill McLennan,(410) 625-0775,8:30am-11am,Mon-Fri
+Food Pantry,Baltimore City,Payne Memorial Church,"1714 Madison Ave., Baltimore, MD 21216",Margaret Solomon,(410) 462-3800,10am-2pm,"Mon, Tue, Wed, Thu"
+Food Pantry,Baltimore City,People's Church of Baltimore,"230 N. Fulton Ave., Baltimore, MD 21223",Coretha Jones,(410) 945-7923,9am-12pm,Sat
+Food Pantry,Baltimore City,Perkins Square Baptist Church,"2500 Edmondson Ave., Baltimore, MD 21223",Edythe Gregory,(410) 945-0445,2pm-5pm,Mon-Fri
+Food Pantry,Baltimore City,Pillar of Truth,"2522 Greenmount Ave., Baltimore, MD 21218",Lonnia Perry,(410) 243-1141,9am-5pm,Mon-Sat
+Food Pantry,Baltimore City,Pitts Outreach,"1142 N. Fulton Ave., Baltimore, MD 21217",Rose Long,(410) 728-8782,2:30pm-3pm,"Wed, Thu"
+Food Pantry,Baltimore City,Pleasant Grove Food,"214 S. Loudon Ave., Baltimore, MD 21229",Charlotte,(410) 646-1462,10am-2pm,"Mon, Thu"
+Food Pantry,Baltimore City,Pleasant View Gardens,"201 N. Aisquith St., Baltimore, MD 21202",Darrel Roaster,(410) 396-9006,10am-2pm,Fri
+Food Pantry,Baltimore City,Poppleton Co-op,"838 W. Fairmont Ave., Baltimore, MD 21201",Jackie Brown,(410) 532-1517,11am-3pm,Mon-Fri
+Food Pantry,Baltimore City,Prisoners Aid,"204 25th Street, Baltimore, MD 21218",Michael Brown,(410) 662-0359,10am-6pm,Wed
+Food Pantry,Baltimore City,Quality of Life Corp,"2630 Harford Rd., Baltimore, MD 21218",Ismenda Hendrix,(410) 235-3972,10am-2pm,"Mon, Thu"
+Food Pantry,Baltimore City,Ray of Hope,"3501 Parkside Dr., Baltimore, Md 21236",George Crutchfield,(410) 661-9428,10am-2pm,Tuesday
+Food Pantry,Baltimore City,Refuge Way of Cross Church,"4301 Old York Rd., Baltimore, MD 21212",Frances Wellborn,(410) 435-8339,12pm-2pm,Wed
+Food Pantry,Baltimore City,Royal Light Outreach,"1562 N. Fulton Ave., Baltimore, MD 21217",Al Lawson,(410) 566-2940,11am-1pm,"Tue, Thu"
+Food Pantry,Baltimore City,Salvation Army,"814 Light St., Baltimore, MD 21230",Crystal White,(410) 783-2920,8:30am-12pm,Mon-Fri
+Food Pantry,Baltimore City,Sharon Baptist,"1373 N. Stricker St., Baltimore, MD 21217",Elaine Brown Page,(410) 669-6667,10am-12pm,3rd Sat
+Food Pantry,Baltimore City,Second Shiloh,"1355 Homestead St., Baltimore, MD 21218",Wanda Hudson,(410) 366-1025,11am-1pm,Tues-Thurs
+Food Pantry,Baltimore City,Solomon Temple Baptist Church,"1738 Appleton Street, Baltimore, MD 21217",Rev. Thomas Sledge,(410) 566-2106,10am-2pm,Mon-Fri
+Food Pantry,Baltimore City,Southwest Emergency Food Program,"31 S. Payson St., Baltimore, MD 21223",Eugene Holt,(410) 396-1740,9am-3pm,Tues-Thurs
+Food Pantry,Baltimore City,South Baltimore Emergency,"110 E. West St. Baltimore, MD 21230",Elizabeth Baer,(410) 752-1336,10am-1pm,Mon-Fri
+Food Pantry,Baltimore City,Southeast Neighborhood Service Center,"3411 Bank St., Baltimore, MD 21224",Carlene Bullard,(410) 545-6515,10am-2pm,"Mon, Wed, Fri"
+Food Pantry,Baltimore City,St. Abraham Baptist Church,"1124 W. North Ave., Baltimore, MD 21217",Rev. Clarence Yerby,(410) 383-6919,9:30am-1pm,1st & 3rd Wed
+Food Pantry,Baltimore City,St. Ambrose,"3445 Park Heights Ave., Baltimore, MD 21215",Inez,(410) 225-0870,9am-4pm,Mon-Fri
+Food Pantry,Baltimore City,St. Ann Outreach Ctr.,"528 E. 22nd St., Baltimore, MD 21218",Sister Jean,(410) 235-8169,"9am-11am, 8am-12pm","Tue, Sat"
+Food Pantry,Baltimore City,St. Bernadines's Catholic,"3812 Edmondson Ave., Baltimore, MD 21229",Deacon Phil,(410) 362-8664,10am-12pm,"Tue, Wed, Thu"
+Food Pantry,Baltimore City,St. Cecilia,"3300 Clifton Ave., Baltimore, MD 21216",Robert Viner,(410) 624-3600,10am-12pm,Wednesday
+Food Pantry,Baltimore City,St. Elizabeth Food Pantry,"2 N. Belnord Ave., Baltimore, MD 21224",Lucy D'Pinto,(410) 675-8260,11:30am-1:30pm,"Tue, Fri"
+Food Pantry,Baltimore City,St. Gregory the Great,"1542 N. Gilmore St., Baltimore MD 21217",Gloria Williams,(410) 523-0061,10am-2pm,Mon-Fri
+Food Pantry,Baltimore City,St. Luke Temple,"1821 N. Smallwood Street, Baltimore, MD 21217",Edna Evans,(410) 225-9409,"5pm-9pm, 7pm-9pm","Tue, Fri"
+Food Pantry,Baltimore City,St. Mark's UMC/Bread of Life,"3900 Liberty Heights Ave., Baltimore, MD 21207",Richard Wright,(410) 542-5338,5:30pm-7pm,"Wed, Fri"
+Food Pantry,Baltimore City,St. Micheal Outreach,"1922 E. Lombard St., Baltimore, MD 21231",Lisa Knickmeyer,(410) 732-2176,9am-12pm,"Tue, Wed, Thu"
+Food Pantry,Baltimore City,St. Paul Baptist Church,"3101 The Alameda, Baltimore, MD 21218",Thelma Gentry,(410) 366-0096,"10am-2pm, 10-2pm/5pm-7pm","Mon, Thu"
+Food Pantry,Baltimore City,St. Vincent's Emergency Services,"120 N. Front St., Baltimore, MD 21202",Jeanne Cole,(410) 962-5078,12:30pm-2pm,Mon
+Food Pantry,Baltimore City,St. Wenceslaus,"2100 E. Madison St., Baltimore, MD 21205",Audrey Wesson,(410) 675-3320,11am-1pm,"Wed, Thu"
+Food Pantry,Baltimore City,Temple House,"812 N. Fulton Ave., Baltimore, MD 21217",Stanley Butler,(410) 462-1876,10am-12pm,"Tue, Sat"
+Food Pantry,Baltimore City,The Tree of Life Bible Church,"516 N. Schroeder St., Baltimore, MD 21223",Lassiter Basket,(410) 542-1928,3pm-7pm,Tue
+Food Pantry,Baltimore City,Total Man Outreach,"1116 N. Gilmore St., Baltimore, MD 21217",Willie Williams,(410) 728-8151,10am-12pm,Sat
+Food Pantry,Baltimore City,Trinity AME Church,"2140 E. Hoffman St., Baltimore, MD 21213",Nancy Woodhouse,(410) 342-2320,11am-1pm,Thu
+Food Pantry,Baltimore City,Trinity Apostolic Faith,"3600 N. Rogers Ave., Baltimore, MD 21207",Elizabeth Milburn,(410) 448-1215,9:30am-12pm,Sun
+Food Pantry,Baltimore City,Trinity Presbyterian,"3200 Walbrook, Baltimore, Md 21216",Camilla Martin,(410) 383-9633,1pm-3pm,Wednesday
+Food Pantry,Baltimore City,United House of Prayer,"3401 Edgewood Rd., Baltimore, MD 21215",Edward Williams,(410) 542-5300,9am-6pm,"Sat, Sun"
+Food Pantry,Baltimore City,Unity UMC Church,"1433 Edmonson Ave., Baltimore, MD 21223",Clara Bowser,(410) 728-4826,10am-12pm,"Thu, Fri"
+Food Pantry,Baltimore City,Walker Co-Op,"1 Cooperative Dr., Baltimore, MD 21212",Charles Cluxton,(410) 377-0200,10am-12pm,Tue
+Food Pantry,Baltimore City,Wayland Baptist Church,"3200 Garrison Blvd., Baltimore, MD 21216",John Wells,(410) 664-2774,10am-12pm,"Mon, Tue"
+Food Pantry,Baltimore City,Whitestone Baptist Church,"3001 Baker St., Baltimore, MD 21216",Frank Jones,(410) 947-1863,11:30am-1pm,Wed
+Food Pantry,Baltimore City,Wyman House Pantry,"123 West 29th St., Baltimore, MD 21218",Ester Hall,(410) 243-4676,12pm-8pm,Mon-Fri
+Food Pantry,Baltimore City,Zion Baptist Church,"1700 N Caroline St., Baltimore, MD 21213",Mary James,(410) 837-4181,9:30am-12pm,Mon-Fri
+Food Pantry,Baltimore City,Zion Outreach Services Inc.,"1221 Argyle Ave., Baltimore, MD 21217",Rose Jones,(410) 383-1825,11-1:30pm,"Tue, Thu"
+Food Pantry,Baltimore County,Alliance Inc,"9201 Philadelphia Rd., Balto., MD 21237",Sabrina,(410) 574-7700,8:30am-5pm,Mon-Fri
+Food Pantry,Baltimore County,Back River United Methodist,"544 Back River Neck Rd., Baltimore, MD 21221",Joy Smell,(410) 686-0412,By appointment,
+Food Pantry,Baltimore County,Balto. Co. Dept. of Aging/Indiv. & Family Svcs. Div.,"611 Central Ave., Towson, MD 21204",,"(410) 887-4141, (410) 887-2022",Restricted,
+Food Pantry,Baltimore County,Balto. Co. Health Dept. Geriatric Services,"1 Investment Pl. 11th Fl., Towson, MD 21204",Pat Smith,(410) 887-2754,8:30am-4:30pm,Mon-Fri
+Food Pantry,Baltimore County,Christian Fellowship,"2929 Sollers Pt. Rd. Baltimore, MD 21222",Sue Brads,(410) 477-5664,10am-4pm,Sat
+Food Pantry,Baltimore County,Community Asst. Network Inc,"7701 Dunmanway, Dundalk MD 21222",Charles Bosley,(410) 285-4674,"9:30am-11:30am, 1:30pm-3:30pm",Mon-Fri
+Food Pantry,Baltimore County,Community Crisis Ctr./Reisterstown Utd. Meth. Ch.,"725 Main St., Reisterstown, MD 21136",Alan Mello,(410) 526-7111,10am-1pm,Mon-Fri
+Food Pantry,Baltimore County,Dundalk Church of the Brethren,"2660 Yorkway Dundalk, MD 21222",Medie McLaughten,(410) 284-0647,12:15pm-2pm,Wed
+Food Pantry,Baltimore County,Eastern Interfaith Outreach,"531 Eastern Bend, Essex, MD 21221",Merle Bolger,(410) 391-6181,10am-2pm,"Mon,Wed,Fri"
+Food Pantry,Baltimore County,Edgemere Church of God,"7414 Ellen Ave., P.O. Box 6686, Balto. MD 21219",Karen Knight,(410) 686-2593,9am-5pm,"Sun,Wed,Th"
+Food Pantry,Baltimore County,Essex Utd. Methodist Church,"524 Maryland Ave., Balto., MD 21221",Carole Krach,(410) 686-2867,10:30am-12:30pm,"Tue,Th"
+Food Pantry,Baltimore County,First Baptist Church of Essex,"911 Mace Avenue, Balto., MD 21221","Bill Ledford, Russel Purkey","(410) 679-5901, (410) 686-8499",9am-12noon,Mon-Th
+Food Pantry,Baltimore County,Friendship Baptist Church,"307½ Avondale Rd., Balto., MD 21222",Zelma Strawther,"(410) 282-5284, (410) 284-9603",Restricted,
+Food Pantry,Baltimore County,Good Samaritan Ministry Union Bethel AME Church,"8615 Church Lane, Randallstown, MD 21133",Mary Johnson,"(410) 922-3286, (410) 655-0948",Vary,By appt.
+Food Pantry,Baltimore County,Greater St. John BC,"103 Carver Road, Baltimore, MD 21222",Lillian Branch,(410) 284-6048,Restricted,
+Food Pantry,Baltimore County,Helping Hands Food Pantry,"7901 Bradshaw Rd., P.O. Box 192, Upper Falls, MD 21156",Gilbert Thompson,(410) 592-7676,9am-12noon,Mon-Fri
+Food Pantry,Baltimore County,Hopkins Village,"3 Brett Court, Balto., MD 21212",Nona Lehr,(410) 391-0473,Restricted,
+Food Pantry,Baltimore County,Key Point Health Services Inc,"7701 Dunmanway, Baltimore, MD 21222",Erica Efterkhari,(410) 282-2363 x26,Vary,Vary
+Food Pantry,Baltimore County,Ironworkers-Local #16 Union Hall,"2008 Merrin Ave., Balto., MD 21222","Tony Bennett, Willard Morgan","(410) 686-5515, (410) 285-2246",7am-4pm,Mon-Fri
+Food Pantry,Baltimore County,J & C Unity Christian Church,"101 Back Riverneck Rd., Balto., MD 21221",Eartha Harris,(410) 686-2752,Vary,Mon-Fri
+Food Pantry,Baltimore County,Life Outreach,"8334 Liberty Rd. Baltimore, MD 21244",Dr. Patricia Snow,(410) 385-2204,10am-2pm,Wed
+Food Pantry,Baltimore County,Liberty Assistance Ctr.,"9019 Liberty Rd., Randallstown, MD 21113",Jim Rollins,(410) 655-4216,10am-2pm,"Mon,Wed,Th,Fri"
+Food Pantry,Baltimore County,Manna,"914 Essex Rd. Essex, MD 21221",Bob Nerthling,(410) 687-7354,9am-5pm,Everyday
+Food Pantry,Baltimore County,Mount Olive Baptist Church,"651 Mount Olive Rd., Balto., MD 21222","Wanda Barnes, A. Lewis",(410) 282-0226,10am-5pm,Sun-Sat
+Food Pantry,Baltimore County,Mount Olivet UM Church,"823 Edmondson Ave., Catonsville, MD 21228",Milton Gaines,(410) 788-4361,Vary,"Tue,Th,Sat"
+Food Pantry,Baltimore County,New Horizon Baptist Church,"2200 St. Luke Lane, Baltimore, MD 21207",Rev. Lambert,(410) 655-2230,8am-4pm,Sat
+Food Pantry,Baltimore County,New Macedonia Bapt. Church,"6930 Liberty Rd, Balto. MD 21207","Casandra Smith, Willie Belleflood",(410) 277-9909,"9am-6pm, 7pm-10pm, 1pm-6pm","Sun, Wed, Sat"
+Food Pantry,Baltimore County,Perry Hall United Meth. Ch.,"9515 Belair Rd., Balto., MD 21236-1599",Linda Diller,(410) 256-6479,9am-5pm,Mon-Fri
+Food Pantry,Baltimore County,Rising Sun Food Pantry,2211 St. Lukes Lane,Joyce Nicholson,,Call,"Sat,Sun"
+Food Pantry,Baltimore County,Rock of Ages Church of God,"310 South Marlyn Ave., Baltimore, MD 21221",Robin Burch,(410) 918-9388,9am-2pm,Mon-Fri
+Food Pantry,Baltimore County,Shining Star,"111832 Eastern Ave., Baltimore, MD 21220",Yuonne Howell,,10am-2pm,Mon-Fri
+Food Pantry,Baltimore County,St. Luke's Lutheran Church,"1803 Dundalk Ave., Balto., MD 21222",Jane Rossi,(410) 633-5374,9am-2pm,"Tue,Th,Fri"
+Food Pantry,Baltimore County,St. Luke's United Meth. Ch.,"2119 Gwynn Oak Ave., Woodlawn, MD 21207",Margaret Edwards,"(410) 944-4111, (410) 944-5878",9am-12noon,Mon-Fri
+Food Pantry,Baltimore County,St. Peter Ev. Luth. Church,"7834 Eastern Blvd., Balto., MD 21224",Namoi Flink,(410) 931-6739,9am-1pm,Mon-Fri
+Food Pantry,Baltimore County,St. Stephen's AME Church,"1601 Old Eastern Ave., Baltimore, MD 21221",Sara Albright,(410) 686-9392,Varies,
+Food Pantry,Baltimore County,St. Ursula,"8801 Harford Rd. Baltimore, MD 21234",Richard Keys,(410) 665-2111,9:30am-12pm,Wed
+Food Pantry,Baltimore County,Southwest Emergency Svcs.,"1201 Maple Ave., Balto., MD 21227",Betty Okonski,"(410) 247-8154, (410) 719-0722","9am-12noon, 6pm-8pm","Mon-Fri, 1st Wed mt only"
+Food Pantry,Baltimore County,Towson United Methodist Church-Food Pantry,"501 Hampton Ln., Towson, MD 21286",Catherine Ritter,"(410) 823-6511, (410) 823-3689",6pm-7:30pm,Last Th mt.
+Food Pantry,Baltimore County,Water's Edge Baptist,"3483 Liberty Parkway, Baltimore, 21222",Jean Lacey,(410) 282-1974,9am-5pm,Mon-Wed
+Food Pantry,Calvert,Brooks United Methodist Emerg. Food Pantry,5550 Mackall Rd. St. Leonard,Marguerite Johnson,(410) 586-1295,9am-12pm,Tue & Thur
+Food Pantry,Calvert,Calvert Churches Community,"4132 Old Town Road, Huntingtown, MD 20639",Carl Beathy,(410) 257-1342,10am-1pm,Mon-Wed
+Food Pantry,Calvert,Catholic Charities,"P.O. Box 779, Prince Frederick MD 20678",Peggy Lawrence,(410) 535-0309,9am-5pm,Mon-Fri
+Food Pantry,Calvert,Dept. of Social Services,200 Duke St. Prince Frederick MD 20678,Wendie Walton,(410) 535-8700,8am-5pm,Mon-Fri
+Food Pantry,Calvert,Emmanual Seventh Day Adventist,105 Kingsberry Ct. St. Leonard,Catherine Tyler-King,(410) 535-2275,9am-2pm,"Tue, Thrus, Sun"
+Food Pantry,Calvert,SMILE,"P.O. Box 1276, Solomons, MD 20688",Maarja Gandy,(410) 326-0009,9am-5pm,Mon-Fri
+Food Pantry,Calvert,Randle Cliff Community Church Food Pantry,"4311 Randle Way, Chesapeake Beach",Karen Paguette,(410) 257-3884,10am-12pm,Sat
+Food Pantry,Caroline,St. Martin's Barn,"14376 Benedictine Lane Ridgely, MD 21660",Sister Frances Walker,(410) 634-1140,"8:30am-12pm, 6pm-8pm, By appointment","Tue,Fri, Wed, Mon & Th"
+Food Pantry,Carroll,Westminster Food Bank,"10 Distillery Dr., P.O. Box 2160, Westminster, MD 21158",Dennis Fahey,(410) 857-7926,"10am-11:15am, 1pm-2:15pm, 9am-12noon","Tue-Th, Sat"
+Food Pantry,Carroll,Sykesville/Eldersburgh Food Bank St. Joseph's Cath. Ch.,"915 Liberty Rd., Eldersburgh, MD 21784",Marie Sanner,(410) 795-7838,10am-1:00pm,Wed
+Food Pantry,Carroll,Taneytown Food Bank St. Joseph's Catholic Church,"44 Frederick Street, Taneytown, MD 21787",Fred Robinson,(410) 756-2137,9:30am-11:15am,Thur
+Food Pantry,Cecil,Blythedale 7th Day Adventist Church,"48 Blythedale Rd., Perryville, MD 21903",Anna Gall,(410) 378-2356,8am-11:30am,Mon
+Food Pantry,Cecil,Cecil County Help Center,"135 E. High St., Elkton, MD 21921","Diana Klusak, Lorraine Vass","(410) 996-0260, (410) 996-0241, (410) 996-0242",7:30am-4:30pm,Mon-Fri
+Food Pantry,Cecil,Clairvaux Farm Meeting Ground,"P.O. Box 808, Elkton, MD 21922",Cynthia Wood,(410) 275-2936,9am-4pm,Mon-Fri
+Food Pantry,Cecil,Elkton Presbyterian Church,"207 W. Main ST. Elkton, MD",Dorothy McDaniel,(410) 398-4636,9am-3pm,Mon-Fri
+Food Pantry,Cecil,First Baptist Ch. of NorthEast,"206 Mechanics Valley Rd., N.E., MD 21921",Kathy Gray,(410) 287-6247,9am-4pm,Mon-Fri
+Food Pantry,Cecil,Good Sheperd Church,"810 Aiken Ave., Perryville MD 21903",Harriet Beckert,(410) 642-3588,9:45am-12pm,"Mon, Wed, Fri"
+Food Pantry,Cecil,Immaculate Conception Outreach,"P.O. Box 345, Elkton, MD 21922",Dottie Fritz,(410) 398-2110,9:30-12pm,"Mon, Wed, Fri"
+Food Pantry,Cecil,Ray of Hope Mission Center,"960 Creigtown Rd., Port Deposit MD 21901",Frank Rinaldi Jr.,(410) 378-9800,9am-4pm,Fri
+Food Pantry,Charles,Calvary United Methodist,"3235 Leonardtown Rd., Waldorf, MD 20601",Ron Black,(301) 645-5247,9:30am-12:30pm,Tue & Wed
+Food Pantry,Charles,Charles County Children Aid Society,3000 Huntington Cir. Waldorf,Maria Bryan,(301) 645-1561,,
+Food Pantry,Charles,Forest Park Baptist,12995 Church Rd. Waldorf,Joyce Breagy,(301) 843-8916,9am-12pm,Sat
+Food Pantry,Charles,Grace Lutheran/FISH,"1200 Charles St., Laplata, MD",Alice Adams,(301) 855-1819,9am-4pm,Mon-Fri
+Food Pantry,Charles,Hughesville Baptist Church,"8505 Leonardtown Rd, Hughesville",Ray Allen,(301) 884-6163,10am-12pm,Wed
+Food Pantry,Charles,St. Mary's Star of the Sea,"30 Mattingly Ave., Indian Head, MD 20640",Rev. Thomas Hill,(301) 743-7175,8:30am-11am,4th Sat
+Food Pantry,Charles,Assoc. Catholic Charities,"513 E. Charles St., La Plata, MD 20646",Brenda Dicario,(301) 934-2582,9am-5pm,Mon-Fri
+Food Pantry,Charles,St. Peter's St. Vincent dePaul,"3220 St. Peter's Drive, Waldorf, MD 20601",Joyce Breagy,(301) 843-8916,By appt.,
+Food Pantry,Charles,Children's Aid Society,"3000 Huntington Circle, Waldorf, MD 20602",Barbara Madison,(301) 645-1561,9am-4:30pm,Mon-Fri
+Food Pantry,Charles,WM Lord Led Mission (Lord's Supper),"2275 Oriental Pl, Nanjemoy",Wayne Matthews,(301) 753-4615,10am-3pm,Mon & Wed
+Food Pantry,Charles,Waldorf Free Will Baptist Pantry,4028 Middletown Rd. Waldorf,Pastor Jim Fairchild,(301) 645-4931,As needed,
+Food Pantry,Charles,Zion Wesley Utd. Methodist,"Rt. 228, P.O Box 972, Waldorf, MD 20604",Emily Pender,(301) 645-7340,9am-12pm,Sat
+Food Pantry,Dorchester,Dorchester Community Development Corporation,"435 High St., P.O. Box 549, Cambridge, MD 21613",Ruth Campbell,(410) 228-3600,9am-4pm,Mon-Fri
+Food Pantry,Frederick,Brunswick Food Bank 1st United Methodist Church,"7S. Maryland Ave., Brunswick, MD",Sandy Cox,(301) 834-8802,6:30pm-8pm,Th
+Food Pantry,Frederick,Emmitsburg Food Bank Elias Lutheran Church,"300 S. Seton Ave., Emmitsburg, MD 21727",Phyllis Kelley,(717) 642-6963,"7pm-8pm, 10am-11am","Wed, Thur, Sat"
+Food Pantry,Frederick,Frederick Community Action Council,"100 S. Market Street, Frederick, MD 21701",Marty Qually,(301) 694-1506,"2pm-4pm, 7pm-9pm","M, T, Th, F, Wed"
+Food Pantry,Frederick,Jefferson Food Bank St. Paul's Lutheran Church,"3864 Jefferson Pike, Jefferson, MD 21755",Nancy Whitney,(301) 834-7020,10am-11:30am,1st & 3rd Sat
+Food Pantry,Frederick,Middletown Food Bank,"301 W. Main St., Community Building Middletown, MD 21769",Carrie Toms,(301) 371-7303,"1pm-3pm, 9am-12pm","Wed, Sat"
+Food Pantry,Frederick,Thermont Food Bank Apple United Church,"Apples Church Road, Thurmont, MD 21788",Emily Yingling,(301) 271-7730,"6pm-7:30pm, 3:30-5pm","Tue, Fri"
+Food Pantry,Frederick,Walkersville Food Bank Town Hall,"21 West Frederick St., Walkersville, MD 21231",Betsy Waugh,(301) 845-0504,"6:30pm-8:30pm, 12pm-2pm","Mon, Th"
+Food Pantry,Harford,AME Refuge Temple Church,"116 Spesutia Rd., Aberdeen, MD 21001",Mary Green,(410) 679-0178,9am-12pm,3rd Sat
+Food Pantry,Harford,Bread of Life/Abundant Grace Family Church,"3716 Dublin Rd., Darlington, MD 21034","Rev. Walter Donnolly, Jerry Morrison",(410) 838-8409,,3rd Sat
+Food Pantry,Harford,Community Action Agency,"33 W. Courtland St., Bel Air, MD 21014",Becky Hamlin,(410) 638-3241,"9am-12pm/1-4pm, 9-12/1-2pm","M-Th, Fri"
+Food Pantry,Harford,Fish-St. Paul's Lutheran Ch.,"428 Battery Drive, Havre de Grace, MD 21078",Joanne Bowman,(410) 939-5753,On-call,Daily
+Food Pantry,Harford,FISH - Holy Spirit Lutheran Church,"504 Joppa Farm Rd., Joppa, MD 21085",Naomi Horn,(410) 679-3891,On-call,Daily
+Food Pantry,Harford,Fish-Bel Air Calvary Baptist,"206 E. Courtland St., Bel Air, MD 21014",Dennis Longo,(410) 836-7696,"10am-3pm, 6-8","Mon-Fri, Mon"
+Food Pantry,Harford,FISH- St. Joan of Arc,"22 Law Street, Aberdeen, MD 21001",,(410) 272-4535,9:30-11:00am,Mon-Fri
+Food Pantry,Harford,Grove Presbyterian Church,"50 East Belair Ave., Aberdeen, MD 21001",Helen Farmer,"(410) 272-0585, (410) 272-0773",7pm-8pm,Wed
+Food Pantry,Harford,Inner County Outreach,"529 Edmund Street, Aberdeen, MD 21001",Joe Williams,(410) 272-3278,9am-1pm,Mon-Fri
+Food Pantry,Harford,Mason Dickson,"708 Highland Rd. PO Box 34, MD 21014",Cindy Esworthy,(410) 452-9025,9am-12pm,Mon-Th
+Food Pantry,Harford,Manna House-Bel Air United Methodist Church,"21 Linwood Ave., Bel Air, MD 21014",Ron Rivenburg,(410) 838-4151,11am-2pm,Wed
+Food Pantry,Harford,New Covenant Church,"2530 Conowingo Rd., Bel Air, MD 21014",,(410) 420-1299,9am-1pm,Thursday
+Food Pantry,Harford,Salvation Army,"300 Rear Seneca Ave., Havre de Grace, MD 21078",Dawn,(410) 939-3535,Call,
+Food Pantry,Harford,Sharing Table-Presby United Methodist Church,"2600 Willoughby Beach Road, Edgewood, MD 21040",Susan Graper,(410) 676-6496,11:30am-1pm,Sat
+Food Pantry,Harford,St. Matthew's Church,"1200 Church Rd, Bel Air, MD 21014",Diana Tildon,(410) 273-6536,9am-3pm,Mon-Fri
+Food Pantry,Harford,Trinity Lutheran Church,"1100 Philadelphia Rd., Joppa, MD 21085",Pat Martin,(410) 515-3384,"1pm-3pm, 9am-11am","Thursday, Saturday"
+Food Pantry,Howard,Bethany Lane Baptist Church,"3030 Bethany Lane, Ellicott City, MD 21042",Lynn Dantmann,(410) 465-0150,Call,
+Food Pantry,Howard,Bridgeway Community Cupboard,"6148 Cedar Wood Dr., Columbia, MD 21044",Donna Michener,(410) 992-1840,Call,
+Food Pantry,Howard,Celebration Church,"6080 Foreland Garth, Columbia, MD 21045",Arlene Braithwaite,(410) 997-2088,5:30-6pm,Fri
+Food Pantry,Howard,Elkridge Food Pantry,"5646 Furnance Ave, Elkridge, MD",Herman Prelm,(410) 796-1456,6pm-8pm,2nd & 4th Friday
+Food Pantry,Howard,Eva Johnson Foundation Food Pantry,"3588 Mt. Ida Drive, Ellicott City, MD 21043",Raymond Johnson,(410) 465-0886,"11am-1pm, 4pm-6pm",Friday
+Food Pantry,Howard,First Baptist Church of Savage,"8901 Washington St. Savage, MD 20763",Jackie Waller,(410) 465-7883,"6:30pm-7:30pm, 9am-11am","Wed, Fri, Sat"
+Food Pantry,Howard,FISH,"P.O. Box 34, Ellicott City, MD 21041",Wendell Thompson,(410) 964-8660,Call,Mon-Fri
+Food Pantry,Howard,Howard County Food Bank,"8920 Suite A Route 108, Columbia MD 21045",Community Action,(410) 313-6440,1pm-4pm,Tue & Thur
+Food Pantry,Howard,Locust United Methodist Church,"8105 Martin Rd. Simpsonville, MD 21150",Roberta Kelley,(410) 531-5323,Call,
+Food Pantry,Howard,Mt. Pisgah AME Church,"5901 Cedar Fern Court, Columbia, MD 21044",Carolyn Hatcher,(410) 730-6688,"11am-5pm, 10am-2pm","Weekdays, Saturday"
+Food Pantry,Howard,St. John Baptist Church,"8910 Route 108, Columbia, MD 21045",Harold Hunt,(301) 596-5571,10am-1pm,3rd Sat
+Food Pantry,Kent,Community Food Pantry,"Christ United Methodist Church, Chestertown, MD",Rita Brantly,(410) 778-3163,10am-12noon,"Tue,Fri"
+Food Pantry,Montgomery,Adventist Community Services,"501 Sligo Ave. Silver Springs, MD 20910",Mercedes Lemos,(301) 585-6556,10am-4pm,Mon-Thur
+Food Pantry,Montgomery,Colesville Center,14015 New Hampshire Ave.,Manna Food Center,(301) 424-1130,2pm-4pm,Wed & Fri
+Food Pantry,Montgomery,Gaithersburg,"602 East Diamond Ave., Suite A",Manna Food Center,(301) 424-1130,5pm-7pm,Mon-Thur
+Food Pantry,Montgomery,Germantown/Salvation Army Center,20021 Aircraft Dr.,Manna Food Center,(301) 424-1130,2pm-4pm,Thursday
+Food Pantry,Montgomery,Long Branch Community Center,8700 Piney Branch Rd.,Manna Food Center,(301) 424-1130,"2pm-4pm, 5pm-7pm","Tuesday, Wednesday"
+Food Pantry,Montgomery,Montgomery County Family Center,"11160 Veirs Mill Rd. #700, Wheaton, MD 20902",Haregewoin Kefyalew,(301) 942-1856,Appt. only,Mon-Fri
+Food Pantry,Montgomery,Salvation Army,"20021 Aircraft Dr., Germantown, Md 20874",Maxine Goalie,(301) 515-5354,HOLIDAYS,
+Food Pantry,Montgomery,Silver Spring/St. Camillus RC Church,1600 St. Camillus Dr.,Manna Food Center,(301) 424-1130,2pm-4pm,Mon
+Food Pantry,Montgomery,Montgomery Ave. Women's Shelter,"12250 Wilkins Ave., Rockville, MD 20850",Norma Fegan,(301) 762-2288,Women's Shelter,
+Food Pantry,Montgomery,Outpatient Addiction Services,"751 Twimbrook Parkway 2nd Floor, Rockville, MD 20851",Hilda Sayles,(240) 777-1680,Daytime Shelter,
+Food Pantry,Montgomery,Stepping Stones,"P.O. Box 712 Rockville, MD 20848",,(301) 251-0567,Family Shelter,
+Food Pantry,Montgomery,Vanguard Services Unlimited,"1 Lawrence Court, Rockville, MD 20850",Sarah M. Donnem,(301) 251-8920,Halfway house,
+Food Pantry,Montgomery,Watkins Mill House,"20201 Watkins Mill Rd., Gaithersburg, MD 20886",,(301) 444-3355,Women's Shelter,
+Food Pantry,Montgomery,Wells Robertson House,"1 Wells Avenue, Gaithersburg, MD 20877",,(301) 258-6390,Shelter,
+Food Pantry,Prince George's,Adventist Community Services,"501 Sligo Ave., Silver Springs, MD 20910",Wordy Nicholas,(301) 585-6556,10am-12pm,Mon-Thu
+Food Pantry,Prince George's,Ager Road Methodist,"6301 Ager Rd., Hyattsville, MD 20782",Rebecca Armstrong,(301) 422-2132,9:30am-11:15am,Th
+Food Pantry,Prince George's,"Central Baptist Church ""Feed My Sheep""","5410 Annapolis Road, Bladensburg, MD 20712",Mrs. Corenne Labble,(301) 627-0267,Call,M-F
+Food Pantry,Prince George's,Church of the Living God,"1417 Chillum Rd., Hayattsville, MD 20782",June Muna Mbulu,(301) 559-8893,10am-12pm,Sat
+Food Pantry,Prince George's,Clothing Power of Eternal Church,"25 Quire Ave. Capitol Heights, MD 20743",Tracy Jenkins,(301) 336-3395,"6pm-8pm, 10am-12pm","Wed & Fri, Sat"
+Food Pantry,Prince George's,Community Support Systems,"13500 Baden-Westwood Rd., Brandywine, MD 20613",Catherine Brooks,(301) 785-2936,9:30am-11am,"Wed, Fri"
+Food Pantry,Prince George's,First Baptist Church of Suitland,"5400 Silver Hill Rd., Suitland, MD 20747",Delores Callier,(301) 735-6111,9am-4pm,Mon-Fri
+Food Pantry,Prince George's,"Fish of Greater Laurel, Inc.","308 Gorman Ave., Laurel MD 20724",Mary Ellen Verikious,(301) 262-7106,11am-2pm,"Tue,Th,Sat"
+Food Pantry,Prince George's,G.A. Fitzgerald Community,"1250 Benning Rd., Capitol Hgts., MD 20743",Rev Fitzgerald,(301) 736-0184,10am-2pm,Mon & Wed
+Food Pantry,Prince George's,Galilee Baptist Church,"2101 Shadyside Ave., Suitland, MD 20746",Francis Grayl,(301) 420-5014,9:30am-3pm,Mon-Thu
+Food Pantry,Prince George's,Gethsemane United Methodist,"901 Addison Rd., Capitol Heights, MD 20743",Anne White,(301) 336-1219,10am-1pm,Mon-Thu
+Food Pantry,Prince George's,Greater Refuge Food Bank,"9512 Piscataway Dr., Clinton, MD 20735",Deborah Williams,(301) 868-5880,6pm-7pm,Fri
+Food Pantry,Prince George's,Harvest Temple Church of God,"6608 Wilkins Place, Forestville, MD",Rev Mary Campbell,(301) 420-1417,12pm-2pm,Tue-Thu
+Food Pantry,Prince George's,Help By Phone,"6100 Westchester Park Dr., College Park, MD 20740",Lois Jones,(301) 669-9009,"9am-5pm, 9am-12noon","Mon,Th, Fri"
+Food Pantry,Prince George's,Hunter Memorial AME Church,"4719 Silver Hill Rd., Suitland, MD 20746",Dorothy Boddie,(301) 735-5761,On Call,Mon-Fri
+Food Pantry,Prince George's,ICAC/Oxon Hill Food Pantry,"4915 St. Barnabas Rd., Temple Hills, MD 20748",George Wiggers,(301) 899-8358,10am-1pm,"Tue,Sat"
+Food Pantry,Prince George's,Langley Park-McCormick E.S-Pantry,"8201 15th Avenue, Hyattsville, MD 20783",Ms. Cabrera,(301) 445-8423,2:30-3:30pm,Mon-Fri
+Food Pantry,Prince George's,Laurel Advocacy Referral Services (LARS),"311 Laurel Ave., Laurel MD 20724",Nancy Graham,(301) 776-0442,"9am-2pm, 6:30pm-9pm","Mon,Wed,Fri, Mon"
+Food Pantry,Prince George's,Life in Victory Outreach Center,"11171 Crain Highway Upper Marlboro, MD 20773",Cynthia Brown,(301) 782-7700,By appt.,M-F
+Food Pantry,Prince George's,Love Foundation Christian Center,"13992 Baltimore Ave. Suite 300 Laurel, MD 20707",Pastor Daniel Erharbor,(301) 776-5782,10am-5pm,Sat
+Food Pantry,Prince George's,Lucille's Pantry,"6100 Jost Street, Fairmont Hgts., MD 20743",Lucille Smith,(301) 925-8585,10am-2pm,"Wed,Fri"
+Food Pantry,Prince George's,"Mayr Harris ""Mother"" Jones ES","2405 Tecumseh St., Adeiphi, MD 20783",Arinette Sagastizado,(301) 408-7900,2pm-3:15pm,M-F
+Food Pantry,Prince George's,Mt Calvary Church,"6706 Marlboro Pike, Forestville, MD 20747",Margeret Dougherty,(301) 735-5532,9:30am-11:30am,Mon & Th
+Food Pantry,Prince George's,New Revival Kingdom Church,"7821 Parston Dr. Forestville, MD 20747",Rev. Catherine Chase,(301) 736-4535,1pm-3pm,Mon & Thur
+Food Pantry,Prince George's,Oaklands Presbyterian Church,"14301 Laurel-Bowie Rd., Laurel, MD 20706",Bob Clark,(301) 766-5833,9am-2pm,Tue-Fri
+Food Pantry,Prince George's,"Pregnancy Aid Center, Inc.","4809 Greenbelt Rd., College Park, MD 20740",Mary Jelacic,(301) 345-9325,"9am-4pm, 9am-4:30pm, 9am-3pm","Mon, Wed, Tue, Thu, Fri"
+Food Pantry,Prince George's,Regeneration Development Group,"9244 E. Hampton Dr., Suite 514, Capitol Hgts., MD 20743",Bishop George Blair,(301) 808-7455,10am-1pm,Mon-Fri
+Food Pantry,Prince George's,Salvation Army,"4825 Edmonston Rd., Hyattsville, MD 20781",Renee Dawson,(301) 277-6103,"9am-12noon, 1pm-4pm",Mon-Fri
+Food Pantry,Prince George's,Shabach! Food Pantry,"2101 Kent Village Dr., Landover MD 20785",Erma Norris,(301) 322-9593,10am-2pm,Mon-Fri
+Food Pantry,Prince George's,St. Joseph's Church,"2020 St. Joseph's Dr., Landover, MD 20785",John Queen,(301) 773-0102,1pm-2:30pm,"Wed,Sat"
+Food Pantry,Prince George's,St. Margaret's Catholic Church,"408 Addison Rd., South Seat Pleasant, MD 20743",Deacon Samuel Minor,(301) 336-3344,9:30am-12noon,"Tu,Fri"
+Food Pantry,Prince George's,St. Paul United Methodist Church,"6634 St. Barnabas Rd., Oxon Hill, MD 20745",Karen Dorsey,(301) 567-4433,10am-12noon,Mon-Fri
+Food Pantry,Prince George's,United Christian Mission,"7808 Marlboro Pike, Forestville, MD 20747",Shernece Stephens,(301) 735-6909,10am-1pm,Th
+Food Pantry,Prince George's,United Communities Against Poverty,"1400 Doewood Lane, Capital Heights, MD 20747",Lilian Nobles,(301) 322-5700,"12:30-4:30, 8:30-4:30","Mon-Thurs, Fri"
+Food Pantry,Prince George's,United Methodist Church of the Redeem,"1901 Iverson St., Temple Hills, MD 20748",Linda Young,(301) 894-8622,9am-2pm,Mon-Fri
+Food Pantry,Prince George's,Walker Mill Outreach Center,"6974 Walker Mill Rd., Capitol Hgts., MD 20743",,(301) 808-0096,10am-2pm,Thu
+Food Pantry,Queen Anne's,Living Water Food Bank,"204 Island Plaza, P.O. Box 212 Stevensville, MD 21666",Marsha Johnson,(410) 604-0450,1:30pm-5:30pm,Tue
+Food Pantry,St. Mary's,Catholic Charities,"21506 Cotton Point Ave., Avenue MD 20609",Cindy Otts,(301) 769-2788,9am-5pm,Mon-Fri
+Food Pantry,St. Mary's,HOPE,"2161 Great Mills Rd. Lexington Park, MD 20653",Debbie Cooper,(301) 737-2870,9am-12noon,Mon-Th
+Food Pantry,St. Mary's,"Helping Hands, Inc",24360 Beck Rd Hollywood MD 20650,Rose Slade,(301) 373-6990,10am-2pm,"M,W,F"
+Food Pantry,St. Mary's,Trinity Lutheran Church,"46707 Shangri-La Dr, Lexington Park",Cindy Pavis,(301) 394-6139,6pm-8pm,Wed
+Food Pantry,St. Mary's,Zion United Methodist,"21291 Three Notch Rd., Lexington Park, MD 20653",Janie Hunter,(301) 863-5161,5:30pm-7pm,Th
+Food Pantry,Somerset,Christ United Methodist Church,"27473 Fairmont Road, Upper Fairmount, MD 21867",Chris Koons,(410) 651-2375,9am-11pm,Sat (1 per month)
+Food Pantry,Somerset,Community Relief Fund,140 Maryland Ave. Crisfield MD 21817,Charles Mc Daniel,(410) 968-0284,3pm-7pm,Thursday
+Food Pantry,Somerset,Immanuel United Methodist Church,"206 West Main Street, Crisfield, MD 21817",Beth McCullough,(410) 968-2189,9:30am-12pm,2nd & 4th Tue
+Food Pantry,Somerset,Manna House,"510 W. Main St., Suite C Crisfield, MD 21817","Hayes Diggs, Jr.",(410) 968-3619,When Needed,When Needed
+Food Pantry,Somerset,St. James United Methodist Church,"8370 Crisfield Highway, Westover, MD 21871",Shirley Terrell,(410) 651-9580,10am-12pm,2nd & 3rd Sat
+Food Pantry,Somerset,Seaton Center Catholic Charities,"30632 Hampden Ave., Princess Anne, MD 21853",Sister Diane Moore,(410) 651-9608,1pm-5pm,Mon-Fri
+Food Pantry,Talbot,Neighborhood Center,"126 Port St., Easton, MD 21601",Gloria Gorish,(410) 822-5015,"9am-3pm, 9am-12noon","Mon,Th, Fri"
+Food Pantry,Washington,Adventist Community Center,"50 E. Franklin St., Hagerstown, MD 21740",Sandy Martin,(301) 739-3854,10am-3pm,"Tue,Th"
+Food Pantry,Washington,Bethel Assembly of God,"515 W. Wilson Blvd. Hagerstown, MD 21710",Ed Kennedy,(301) 735-1167,10AM-3PM,M-F
+Food Pantry,Washington,Bountiful Harvest Outreach,"14346 Maple Ridge, Hancock, MD 21750",Barbara Sparks,(301) 678-5011,10am-12pm,T-TH
+Food Pantry,Washington,Community Action Council,"110 Summit Ave., Hagerstown, MD 21740",Cindy Shefer,(301) 797-4161,8:30am-4:30pm,Mon-Fri
+Food Pantry,Washington,Faith Chapel,"14 S. Potomac St., Hagerstown, MD 21740",Roger Elliott,(301) 733-7748,10am-3pm,Mon-Fri
+Food Pantry,Washington,Hancock Food Pantry,"Pa. Ave. & High St., Hancock, MD",Jim Becker,(301) 678-5020,9am-12noon,Mon-Fri
+Food Pantry,Washington,"Office of Consumer Advocacy, Inc.","265 Mill Street, Hagerstown, MD 21740",Sherry Phelps,(301) 790-5054,As needed,
+Food Pantry,Washington,SHIP,"116 W. High Street, Hancock, MD 21750",Debbie Cahill,(301) 678-6605,8am-4pm,Mon-Fri
+Food Pantry,Washington,Salvation Army,"524 West Franklin Street, Hagerstown, MD 21740",Laura Barger,(301) 733-2440,9am-4pm,Mon-Fri
+Food Pantry,Washington,South County Food Bank,"645 S. Main Street, Boonsboro, MD 21713",Vivian Clipp,,11:30am-3pm,Thu
+Food Pantry,Washington,Trinity Food Pantry,"15 Randolph Ave., Hagerstown, MD 21740",Jeff Reed,(301) 733-5651,10am-2pm,"Tue, Wed, Thu"
+Food Pantry,Washington,Willamsport Food Bank,"35 W. Potomac St., Williamsport, MD 21785",Mary Ann Kline,(301) 223-7136,10am-3pm,"Mon, Wed, Fri"
+Food Pantry,Wicomico,Cathedral of Love,"423 Church St., Salisbury, MD 21803",Curley Ivey,(410) 742-5386,10am-12pm,Thursday
+Food Pantry,Wicomico,Emmanuel Wesleyan Outreach,"142 Shamrock Dr., Salisbury, MD 21801","Charles Kirby, Jimmy Layton","(410) 749-6594, (410) 614-7937",8am-9am,Sat
+Food Pantry,Wicomico,First Baptist Food Ministry,"528 Booth St., Salisbury, MD 21801",Lelia Chester,(410) 548-5486,10am-5pm,Mon-Fri
+Food Pantry,Wicomico,First Baptist Church of Fruitland,"630 Clyde Ave. Fruitland, MD 21826",Dot Hamiliton,(410) 742-3396,When Needed,When needed
+Food Pantry,Wicomico,God's Caring & Sharing Food Bank,"2671 Bank Road, Naticoke, MD 21840","Mary Ringgold, Laurence Elsey","(410) 873-2077, (410) 873-3097",10am-1pm,3rd Thursday
+Food Pantry,Wicomico,Greater Hebron Area Food Pantry/St. Paul's United,"204 East Walnut St., Hebron, MD 21830",Teresa Richards,(410) 546-9750,10am-12pm,Thurs or by appointment
+Food Pantry,Wicomico,Helping Hands,"33063 Old Ocean City Rd, Parsonsburg, Md 21849",Kimberly Monar,(410) 835-2745,9am-1pm,Sat
+Food Pantry,Wicomico,In His Service,"6724 Keyes Ln., Salisbury, MD 21804",Don Keyes,(410) 860-8426,8-4pm,Mon-Sat
+Food Pantry,Wicomico,Joseph House,"812 Boundary St., P.O. Box 1755",Dave Heininger,(410) 543-8171,8:30am-11:30am,"Tue,Wed,Th"
+Food Pantry,Wicomico,New Beginning,"1611 Jersey Rd. Salisbury, MD 21804",Mamie Morris,(410) 742-0456,6pm-7pm,3rd Tue
+Food Pantry,Wicomico,Pearl's Pantry,"411 Robinson St. Salisbury, MD 21801",Pearl Harmon,(410) 572-8532,10am-4pm,Mon-Fri
+Food Pantry,Wicomico,Regis Brown Bag,"507 Overlook Dr. Salisbury, MD 21801",Janet Ames,(410) 860-1326,"9am-5pm, 9am-12pm","Mon-Fri, Sat"
+Food Pantry,Wicomico,Riverside Homes,"519 Alabama Ave., Salisbury, MD 21801",Oscar Drummond,(410) 742-0060,1pm-4pm,Thur
+Food Pantry,Wicomico,St. James AME Zion,"721 Mack Ave. Salisbury, MD",Lois Bunting,(410) 749-5841,11am-1pm,"Tue, Thurs, Fri"
+Food Pantry,Wicomico,St. Paul AME Zion Church,"410 Delaware Ave., Salisbury, MD 21801",Laura D. Goslce,(410) 546-5661,9am-5pm,Mon-Fri
+Food Pantry,Wicomico,Salvation Army,"407 Oak St., PO Box 3235 Salisbury, MD 21874",Shari Tracy,(410) 749-3077,"9am-12noon, 1pm-3pm",Mon-Fri
+Food Pantry,Wicomico,Salisbury Urban Ministries,"326 Barclay Street, Salisbury MD 21802",Angel Simpson,(410) 749-1563,10am-2pm,"Tue, Thur"
+Food Pantry,Wicomico,Telamon Corporation,"237 Florida Ave., Salisbury, MD 21801",Jeffifer Shahan,(410) 546-4604,"9am-12:30pm, 1pm-4:30pm","Tue, Wed, Thru"
+Food Pantry,Wicomico,Wesley Temple,"1322 West Rd., Salisbury, MD 21801",Ina Townsend,(410) 749-2818,9am-12noon,"Mon,Wed,Fri"
+Food Pantry,Wicomico,Vision of Mercy,"423 Hammond Street, Salisbury, MD 21801",Stephanie Wallace,(410) 742-6206,10am-5pm,Mon-Sat
+Food Pantry,Worcester,Delmarva Food Foundation/Worcester County Food Bank,"7925 Circle Rd., Whaleyville, MD 21872",Ed Tinus,(410) 641-2919,Call,
+Food Pantry,Worcester,Diakonia Shelter,"12747 Old Bridge Rd., Ocean City, MD 21842",Claudia Nagel,(410) 213-0923,7am-10pm,Sun-Sat
+Food Pantry,Worcester,Ebenezer Ecumenical Food Pantry,"107 Collins St., Snow Hill, MD 21863",Mary Waters,(410) 632-0705,9am-12:30pm,2nd Fri
+Food Pantry,Worcester,Helping Hand Outreach Mission,"701 Ocean Highway, Pocomoke, MD 21851",Martha Bivens,(410) 957-0412,Call,
+Food Pantry,Worcester,P.A.C.A Enterprise Family Food Pantry,"5564 Market St., Snow Hill, MD 21863",Davida Washington,"(410) 632-1580, (410) 641-4118",Call,Call
+Food Pantry,Worcester,Pentecostal Baptist Mission Pantry,"512 S. Main St., Berlin, MD 21811",Eva Flem,(410) 629-1669,"9am-11:30am, 6pm-8pm","Tue, Wed"
+Food Pantry,Worcester,Pocomoke Area Community Service Center,"121-123 Willow Street, Pocomoke, MD 21851",Andrea Hamilton,(410) 957-0940,Call,
+Food Pantry,Worcester,"Samaritan Ministries, Inc.","814 Fourth St., P.O. Box 661 Pocomoke, MD 21851",Rev. Tom Wall,(410) 957-4310,1pm-2pm,"M,Tu,W,Sat"
+Soup Kitchen,Anne Arundel,Adventist Community Services,"508 Aquahart Rd., Glen Burnie, MD 21061",,(410) 760-9172,10am-1pm,Tuesday
+Soup Kitchen,Anne Arundel,Church of the Rock,"900 Church Street, Baltimore, MD 21225",,,,
+Soup Kitchen,Anne Arundel,Damascus House,"4203 Ritchie Hwy, Balto., MD 21225",,(410) 789-7446,Call,
+Soup Kitchen,Anne Arundel,Fouse Center,"6401 Richie Hwy., Glen Burnie, MD 21061",,(410) 609-1224,9:30am-3:30pm,Mon-Fri
+Soup Kitchen,Anne Arundel,Harundale Presb.,"1020 EastWay, Glen Burnie, MD 21060",,(410) 761-4338,12:30-2pm,Tue
+Soup Kitchen,Anne Arundel,Salvation Army GB,"511 So. Crain Hwy., Glen Burnie, MD 21061",,(410) 768-0477,12pm-1pm,"Mon,Wed & Fri"
+Soup Kitchen,Anne Arundel,Sarah's House,"2015 20th St., Fort Meade, MD 20755",,(410) 551-7722,1pm-3pm,"Wed, Fri, Sat"
+Soup Kitchen,Baltimore City,American Rescue Workers of Maryland,"11 W. Clement St., Balto., MD 21230",Rev. Michael Carr,(410) 556-3300,,Everyday
+Soup Kitchen,Baltimore City,Antioch Shelter Home,"5300 York Rd, Balto., MD 21221",Mother Allen,(410) 323-9112,24hrs,Shelter
+Soup Kitchen,Baltimore City,Beans and Bread,"402 S. Bond St., Balto., MD 21231",Sr. Eleanor,(410) 732-1892,Lunch,"M,Tu,Th,F,Sat"
+Soup Kitchen,Baltimore City,Bethany Baptist,"2616 Ridgely St., Balto, MD 21230",Sandra Whilte,(410) 539-5029,12pm-5pm,"Tue, Thu"
+Soup Kitchen,Baltimore City,Brown's Memorial Bapt. Ch.,"3215 W. Belvedere Ave., Balto., MD 21215",Barbara Cole,(410) 542-5700,Shelter,Everyday
+Soup Kitchen,Baltimore City,Christopher Place,"709 E. Eager St., Balto., MD 21202",Vernon,(410) 576-0066,,Everyday
+Soup Kitchen,Baltimore City,Code Blue Shelter,1400 E. Federal St.,Karen Booth,(410) 361-9441,5pm-8am,When code blue is declared
+Soup Kitchen,Baltimore City,Corpus Christi Church,"703 Whitelock St., Balto., MD 21217",Mariano,(410) 523-5822,5:30-6:30pm,"Tu,Th"
+Soup Kitchen,Baltimore City,East Balto. Church of God,"800 South Oldham St., Balto., MD 21224",Welton Hunt,(410) 327-0177,,
+Soup Kitchen,Baltimore City,Ebenezer AME,"18 W. Montgomery St., Balto., MD 21230",Gilda Williams,(410) 783-0190,12noon-1pm,Th
+Soup Kitchen,Baltimore City,First Mount Calvary Bapt. Ch.,"1142 N. Fulton Ave., Balto., MD 21217",Rose Long,(410) 728-8782,11am-1pm,Wed
+Soup Kitchen,Baltimore City,Foremost Mentor Care,"68 S. Koosuth St., Balto., MD 21229",Mamie Daughety,(410) 655-9406,12noon-4pm,"Sun,Sat"
+Soup Kitchen,Baltimore City,Franciscan Center,"2212 Maryland Ave., Balto., MD 21218-5625",Brother Finbar,(410) 467-9045,10am-1pm,"Mon, Thu, Fri"
+Soup Kitchen,Baltimore City,Gentle Care,"4924 Carmine Ave., Balto., MD 21207",Mrs. Jefferson,(410) 448-0217,12pm-4pm,"Sat, Sun"
+Soup Kitchen,Baltimore City,Gospel Tabernacle,"3100 Walbrook Ave., Balto., MD 21216",Lillian Royster,(410) 298-6919,11am-2pm,Tue
+Soup Kitchen,Baltimore City,Grace Memorial,"1100 N. Eden St., Balto., MD 21213",Rev. Pope,(410) 563-2355,12pm-1:30pm,Tue
+Soup Kitchen,Baltimore City,Homestead UMC,"1500 Gorsuch Ave., Balto., MD 21218",Shirley Dean,(410) 889-5223,10am-1pm,Tue-Sat
+Soup Kitchen,Baltimore City,I CAN,"2215 Greenmount Ave., Balto., MD 21218",Frank Giles,(410) 467-8623,,Everyday
+Soup Kitchen,Baltimore City,Israel Baptist,"1211 N. Chester St., Balto., MD 21213",Bettye Brinkley,(410) 668-8462,12pm-1pm,
+Soup Kitchen,Baltimore City,JB Outreach,"301 N. Stricker St., Balto., MD 21223",Rev. Bivens,(410) 728-8731,12pm-2:30pm,
+Soup Kitchen,Baltimore City,Manna House,"435 E 25th St., Balto., MD 21218",Lillian Lowensen,(410) 889-3001,8:30am-10:30am,Mon-Fri
+Soup Kitchen,Baltimore City,Mary Elizabeth Lange Center,"601 E. Chase St., Balto., MD 21202",Sr. Crescentia,(410) 244-8605,,Everyday
+Soup Kitchen,Baltimore City,Maryland Church of God,"5100 Denmore Ave., Balto., MD 21215",Ethel Lee,(410) 383-2853,2pm-4:30pm,"Sat,Sun"
+Soup Kitchen,Baltimore City,Maryland Community Kitchen,"3242 Eastern Ave., Balto., MD 21224",Darrell Carter,(410) 327-3420,,Mon-Fri
+Soup Kitchen,Baltimore City,Mason Memorial,"2608 Frederick Ave., Balto., MD 21223",Anita Newkirk,(410) 947-4466,,
+Soup Kitchen,Baltimore City,Mount Tabor Baptist,"1719 E. Oliver St., Balto., MD 21213",Rev. Forrest,(410) 215-1215,11am-1pm,
+Soup Kitchen,Baltimore City,My Sister's Place Lodge,"111 W. Mulberry St., Balto., MD 21201",Keisha,(410) 528-9002,,Shelter
+Soup Kitchen,Baltimore City,New Life,"2417 E. North Ave., Balto., MD 21213",Rev. Williams,(410) 675-2113,6pm-7:30pm,Wed
+Soup Kitchen,Baltimore City,Our Daily Bread,"19 W. Franklin St., Balto., MD 21201",,(410) 659-4014,,Everyday
+Soup Kitchen,Baltimore City,Paul's Place,"PO Box 27070, 1118 Ward St, Balto. MD 21230",Bill Mclennan,(410) 625-0775,11am-12:30pm,Mon-Fri
+Soup Kitchen,Baltimore City,Pillar of Truth,"2522 Greenmount Ave., Balto., MD 21218",Lonnia Perry,(410) 338-0541,1pm-1:30pm,Sat
+Soup Kitchen,Baltimore City,Project Plase,"2029 St. Paul St., Balto., MD 21218",Mary Slicher,(410) 837-1400,,Everyday
+Soup Kitchen,Baltimore City,Salvation Army,"2700 W. Patapsco Ave., Balto., MD 21230",Mary Thompson,(410) 525-0530,5:30am-6:30pm,Everyday
+Soup Kitchen,Baltimore City,Second Shiloh,"1355 Homestead St., Balto., MD 21218",Wanda Hudson,(410) 366-1025,11am-1pm,"Wed, Thu"
+Soup Kitchen,Baltimore City,St. Ambrose,"3445 Park Heights Ave., Balto., MD 21215",Inez,(410) 225-0870,8am-4pm,Mon-Sat
+Soup Kitchen,Baltimore City,St. Cecilia's Kitchen,"3300 Clifton Ave., Balto., MD 21216",Robert Viner,(410) 362-7892,4-5:30pm,
+Soup Kitchen,Baltimore City,St. Gregory,"1542 N. Gilmore St., Balto., MD 21217","Gloria, Pat",(410) 523-0061,12noon-2pm,Th
+Soup Kitchen,Baltimore City,St. James UMC,"1901 W. Lexington St., Balto., MD 21223",Regina Mason,(410) 685-5562,12pm-2pm,"Wed, Sat"
+Soup Kitchen,Baltimore City,Supper Club,"1728 Eastern Ave., Balto., MD 21218",Lillian Lowensen,(410) 732-7644,5:30pm-7pm,Wed
+Soup Kitchen,Baltimore City,Temple House,"802 N. Fulton Ave., Balto., MD 21217",Rev. Stanley Butler,(410) 462-1876,,Everyday
+Soup Kitchen,Baltimore City,United Brethren for Christ,"2112 McCulloh St., P.O Box 16461, Balto. MD 21217",Barbara Horton,(410) 462-3182,,Everyday
+Soup Kitchen,Baltimore City,Valley House,"28 South Broadway, Balto., MD 21231",Ben Toney,(410) 675-7765,,Everyday
+Soup Kitchen,Baltimore City,Waters AME,"417 N. Aisquith St., Balto., MD 21202",Chrystall Mathews,(410) 675-2640,11am-3pm,Sat
+Soup Kitchen,Baltimore City,Westside Assembly of God,"535 S. Smallwood St., Balto., 21223",Marshall Haley,(410) 947-3006,12pm-2pm,M-F
+Soup Kitchen,Baltimore City,Wayland Baptist,"3200 Garrison Blvd., Balto., MD 21216",John Wells,(410) 664-2774,12pm-3pm,Wed
+Soup Kitchen,Baltimore County,Hiding Place,"Dunwoody Road, Towson, MD",Kim Poindexter,(410) 882-9130,Shelter,
+Soup Kitchen,Baltimore County,Nehima House,"8720 Philadelphia Rd., Balto., MD 21237",George Haynesworth,(410) 682-6333,Shelter,
+Soup Kitchen,Baltimore County,Family Crisis Ctr. of Balto. Co.,"P.O. Box 3909 Balto., MD",Rebecca Foster,,Shelter,
+Soup Kitchen,Baltimore County,Sarah's Hope,"9100 Franklin Square Dr., Baltimore, MD",Linda Salinski,(410) 391-9155,Shelter,
+Soup Kitchen,Carroll,Carpenter's Table St. Joseph's Catholic Church,"44 Frederick St., Taneytown MD 21787",,(410) 767-2500,11:30am,Thur
+Soup Kitchen,Cecil,Meeting Ground,"P.O. Box 808, Elkton, MD 21921",Cynthia Wood,(410) 275-8990,Shelter,
+Soup Kitchen,Cecil,Chesapeake Care Resources,"80 Marysville Rd. Northeast, MD 21901",Michelle Barrow,(410) 287-5040,,Mon-Fri
+Soup Kitchen,Frederick,Community Action Council,"100 South Market St., Frederick MD 21701",Nancy Walkes,(301) 694-1506,"2pm-4pm, 7pm-9pm","Mon,Tue,Th,Fri, Wed"
+Soup Kitchen,Harford,Care Night Calvary Baptist,"206 E. Courtland st, Bel Air, MD 21014",,(410) 838-6080,6pm-8pm,Monday
+Soup Kitchen,Harford,Children of Life,"539 Jamestown Court, Edgewood, MD 21040",Senora Marshall,(410) 575-6873,Shelter,
+Soup Kitchen,Harford,FCCAU,Rotating Winter Shelter,Pat Eiler,(410) 676-2018,Shelter,
+Soup Kitchen,Harford,Grace Place St. Johns Episcopal Church,"114 N. Union Ave., Havre De Grace, MD 21078",,(410) 939-2107,11:15am-12:30pm,Tuesday
+Soup Kitchen,Harford,Homecoming,Shelter for Women,Arch Forman,(410) 569-4112,Shelter,
+Soup Kitchen,Harford,Manna House,"21 Linwood Ave., Bel Air, MD 21014","Lee Letter, Ron Rivenberg","(410) 838-5181, (410) 838-0493",11:30am-1pm,Wed
+Soup Kitchen,Harford,Martha's Meals Grove Presbyterian Church,"50 East Bel Air Ave., Aberdeen, MD 21001",,(410) 272-0896,11:30am-1pm,Thursday
+Soup Kitchen,Harford,Mason Dixon Comm. Service,"708 Highland St. Street, MD 21154",Patty Hammond,(410) 452-9025,11am-2pm,
+Soup Kitchen,Harford,SARC,"21 W. Courtland St., Bel Air, MD 21014",Susan Fisher,(410) 836-8431 Ext. 22,Shelter,
+Soup Kitchen,Harford,Servants Table (Refuge Temple Ministries),"116 Spesuitia Rd., Aberdeen, MD 21001",Charlotte O'Neil,(410) 273-5349,11am-1pm,3rd Sat
+Soup Kitchen,Harford,Sharing Table,"3479 Albantown Way, Edgewood, MD 21040",Susan Graper,"(410) 676-9496, (410) 893-3711",11:30am-1pm,Sat
+Soup Kitchen,Harford,The Family That Cares,"1421 Charlestown Dr. Edgewood, Md 21040",Ms. Cornish,(410) 679-2463,Shelter,
+Soup Kitchen,Montgomery,ARC of Montgomery County,"11600 Nebel Street, Rockville, Md 20852",Cheryl Gooden,(301) 984-577,Group Home,
+Soup Kitchen,Montgomery,Bethesda Cares-First Baptist Church,"5033 Wilson Lane, Bethesda, MD 20814",,,,Mon-Fri (1st to 15th of month)
+Soup Kitchen,Montgomery,Bethesda Cares-,"4924 Del Ray Ave. Bethesda, MD 20814",Lawrence Blake,(301) 907-9144,12:45pm-1:45pm,Mon-Fri
+Soup Kitchen,Montgomery,Bethesda House,"4848 Cordell Ave., Bethesda, MD 20814",Herman Dozier,(301) 907-9597,Shelter,
+Soup Kitchen,Montgomery,Betty Ann Krahnke Center,"14810 Brossard Road, Rockville, MD 20850",,(301) 279-1640,Shelter,
+Soup Kitchen,Montgomery,Carroll House,"2699 Linden Ln., Silver Springs, MD 20910",Bobby Johnson,(301) 495-4900,Shelter,
+Soup Kitchen,Montgomery,Community Vision,"8210 Colonial Ln. Silver Springs, MD 20910",Lonnie Roister,(301) 585-4471,7am-5pm,Mon-Fri
+Soup Kitchen,Montgomery,Crossways Community,3015 Upton Dr. Kensington MD 20895,Missy Myers,(301) 929-2505,Shelter,
+Soup Kitchen,Montgomery,CSAAC,"751 Twinbrook Parkway, Rockville, MD 20851",Graig Pardon,(240) 912-2263,Group Home,
+Soup Kitchen,Montgomery,Episcopal Senior Ministries,"13325 Burkhart St., Silver Springs, MD 20904",Sherry Waters,(301) 879-4949,Group Home,
+Soup Kitchen,Montgomery,Gaithersburg Community Soup Kitchen Lord's Table,"201 South Frederick Avenue, Gaithersburg, MD 20877",Erika Walden,(301) 330-5812,3:30pm-4:30pm,Sept.-June
+Soup Kitchen,Montgomery,Head Injury Rehabilitation,"One Church Street, Rockville, MD 20850",Maggie Hunter,(301) 309-2228,Group Home,
+Soup Kitchen,Montgomery,Helping Hands Shelter,"622 N. Horner's Ln., Rockville, MD 20850",Ann Chapman,(301) 340-2796,Shelter,
+Soup Kitchen,Montgomery,Lawrence Court Halfway House,"1 Lawrence Court, Rockville, MC 20850",Elaine Brown,(301) 251-8920,Shelter,
+Soup Kitchen,Montgomery,Men's Emergency Shelter,"600 Gude Dr., Rockville, MD 20850",Ron Hall,(301) 545-5025,Shelter,
+Soup Kitchen,Montgomery,Montgomery Ave. Women's Center,"12250 Wilkins ave. C Rockville, MD 20851",Norma Fagan,(301) 984-0901,Shelter,
+Soup Kitchen,Montgomery,Nat'l Ctr. For Children & Families,"6301 Greentree Rd., Bethesda, MD 20817",Richard Green,(301) 365-4480,Shelter,
+Soup Kitchen,Montgomery,Outpatient Addiction Service,"451 Twinbrook Pkwy FL2, Rockville, MD 20851",Hilda Seales,(240) 777-1680,Breakfast & Lunch,Mon-Fri
+Soup Kitchen,Montgomery,Shepherd's Table,"8210A Colonial Lane, Silver Spring, MD 20910-5540",Thierry,(301) 585-6463,6pm-7:30pm,Mon-Fri
+Soup Kitchen,Prince George's,Deliverance Temple,"3918 Alton St., Capitol Hgts., MD 20743",George Blair,"(301) 967-2535, (301) 336-6456",12:00pm-2pm,Mon-Thu
+Soup Kitchen,Prince George's,Freedom Way,"1250 Benning Rd., Capitol Heights, MD 20743",Ave. Broakiet,(301) 736-0184,6pm-8pm,Wed
+Soup Kitchen,Prince George's,Harvest Temple,"6608 Wilkens Place, Forestville, MD 20747",Mary Campbell,(301) 420-1417,12pm-4pm,Tue-Thu
+Soup Kitchen,Prince George's,Transitional Center @ PG City Housing,"603 Addison Rd., Capitol Heights, MD 20743",Robert Walker,(301) 808-5317,Housing,
+Soup Kitchen,Prince George's,Transitional Housing PG City DSS,"9202 Spring Hill Drive Apt., Greenbelt, MD 20770","Darlene Harris, Rita Harris",(301) 345-6175,Housing,
+Soup Kitchen,Prince George's,Transitional Housing PG City,"9160 Edmonston Rd, #202 Greenbelt, MD 20770",Beverly Bruce,(301) 513-0279,Housing,
+Soup Kitchen,Prince George's,Warriors for Christ Ministries,"2420 Brook Drive Suite 322, Suitland MD 20746",Julie Adgerson,(301) 735-6300,Shelter,
+Soup Kitchen,Washington,Salvation Army,"524 West Franklin St., Hagerstown, MD",Laura Berger,(301) 733-2440,Call,Call
+Soup Kitchen,Washington,Soul Haven,"14E Franklin St., Hagerstown, MD 21740",Ethel Newark,(301) 790-5054,12pm-2pm,Sat
+Soup Kitchen,Washington,W House,"549 N. Locust St. Hagerstown, MD 21740",Christina Tredon,(301) 791-7826,24hr.,Shelter
+Soup Kitchen,Washington,Wells House,"324 N. Locust St., Hagerstown, MD 21740",Charles Mooneyhan,(301) 739-7748,Call,
+Soup Kitchen,Washington,Union Rescue Mission,"P.O. Box 685 Hagerstown, MD 21741",Nancy Shank,(301) 739-1165,24hr,Shelter
+Soup Kitchen,Washington,Zion Soup Kitchen,"201 N. Potomac St., Hagerstown, MD 21740",Barbara Hendershot,(301) 739-7244,5pm-8pm,Tue
+Soup Kitchen,Wicomico,"Christian Shelter, Inc.","334 Barclay St., Salisbury, MD 21804",James Barnes,(410) 749-5673,,
+Soup Kitchen,Wicomico,Life Crisis Center,"P.O. Box 387, Salisbury, MD 21803-0387",Edith Saroli-Silva,(410) 749-4357,Shelter,
+Soup Kitchen,Wicomico,Emmanuel Wesleyan Church,"142 Shamrock Dr., Salisbury, Md 21801",Charles Kirby,"(410) 749-6594, (410) 614-7937",8am-9am,Saturday
+Soup Kitchen,Wicomico,First Baptist Soup Kitchen,"528 Booth Street Salisbury, MD 21801","Lelia Chester, Clinda Johnson","(410) 548-5486, (410) 546-8158",10-1pm,"Mondays, Sept-May"
+Soup Kitchen,Wicomico,Hebron Community Kitchen/St. Paul's United Methodist Church,"204 East Walnut Street, Hebron, MD 21830",Terresa Richards,(410) 546-9750,2pm-until,1st-3rd Saturday
+Soup Kitchen,Wicomico,Joseph House Crisis Center,"812 Boundary Street, Salisbury, MD 21801",Dave Heininger,(410) 749-4239,10:30am-12pm,"Tue, Wed, Thur"
