@@ -56,7 +56,7 @@ const URGENCY_COLORS = {
   flexible: "bg-green-100 text-green-700",
 };
 
-export default function CommunityNeedsBoard() {
+export default function CommunityNeedsBoard({ readOnly = false }: { readOnly?: boolean }) {
   const { t } = useLanguage();
   const [posts, setPosts] = useState<NeedPost[]>([]);
   const [showForm, setShowForm] = useState(false);
@@ -127,23 +127,29 @@ export default function CommunityNeedsBoard() {
           <h3 className="text-lg font-bold text-blue-900 flex items-center gap-2">
             {t.needsBoardTitle}
           </h3>
-          <p className="text-sm text-blue-700 mt-0.5">{t.needsBoardSub}</p>
+          <p className="text-sm text-blue-700 mt-0.5">
+            {readOnly
+              ? "Food requests from people in need — help fulfill them."
+              : t.needsBoardSub}
+          </p>
         </div>
-        <button
-          onClick={() => setShowForm((v) => !v)}
-          className="shrink-0 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-xl text-sm shadow-sm transition-colors"
-        >
-          {showForm ? t.needsBoardCancel : t.needsBoardPostBtn}
-        </button>
+        {!readOnly && (
+          <button
+            onClick={() => setShowForm((v) => !v)}
+            className="shrink-0 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-xl text-sm shadow-sm transition-colors"
+          >
+            {showForm ? t.needsBoardCancel : t.needsBoardPostBtn}
+          </button>
+        )}
       </div>
 
-      {submitted && (
+      {!readOnly && submitted && (
         <div className="bg-green-100 border border-green-300 text-green-800 rounded-xl px-4 py-2 text-sm font-medium mb-4">
           {t.needsBoardSuccess}
         </div>
       )}
 
-      {showForm && (
+      {!readOnly && showForm && (
         <form
           onSubmit={handleSubmit}
           className="bg-white rounded-2xl border border-blue-200 p-5 mb-5 shadow-sm"
@@ -228,7 +234,11 @@ export default function CommunityNeedsBoard() {
         <div className="text-center py-8 text-gray-400">
           <div className="text-3xl mb-2">🤝</div>
           <p className="text-sm">{t.needsBoardEmpty}</p>
-          <p className="text-xs mt-1">{t.needsBoardEmptySub}</p>
+          <p className="text-xs mt-1">
+            {readOnly
+              ? "No requests right now. When someone on the Find Food tab asks for help, it'll appear here."
+              : t.needsBoardEmptySub}
+          </p>
         </div>
       ) : (
         <div className="grid sm:grid-cols-2 gap-3">

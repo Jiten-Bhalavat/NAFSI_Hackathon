@@ -59,7 +59,7 @@ const EXPIRY_OPTIONS = [
   { label: "48 hours", value: 48 },
 ];
 
-export default function SurplusFoodBoard() {
+export default function SurplusFoodBoard({ readOnly = false, postOnly = false }: { readOnly?: boolean; postOnly?: boolean }) {
   const [posts, setPosts] = useState<SurplusPost[]>([]);
   const [showForm, setShowForm] = useState(false);
   const [tick, setTick] = useState(0); // force countdown re-render
@@ -155,18 +155,22 @@ export default function SurplusFoodBoard() {
       <div className="flex items-center justify-between mb-4">
         <div>
           <h3 className="text-lg font-bold text-orange-900 flex items-center gap-2">
-            🍱 Surplus Food Board
+            {postOnly ? "🍱 Post Surplus Food" : "🍱 Surplus Food Available"}
           </h3>
           <p className="text-sm text-orange-700 mt-0.5">
-            Have extra food? Post it here so nearby pantries or individuals can claim it before it goes to waste.
+            {postOnly
+              ? "Have extra food? Post it here — it will appear on the Find Food tab for people in need to claim."
+              : "Food posted by donors — claim it before it expires."}
           </p>
         </div>
-        <button
-          onClick={() => setShowForm((v) => !v)}
-          className="shrink-0 bg-orange-600 hover:bg-orange-700 text-white font-semibold px-4 py-2 rounded-xl text-sm shadow-sm transition-colors"
-        >
-          {showForm ? "✕ Cancel" : "+ Post Surplus Food"}
-        </button>
+        {postOnly && (
+          <button
+            onClick={() => setShowForm((v) => !v)}
+            className="shrink-0 bg-orange-600 hover:bg-orange-700 text-white font-semibold px-4 py-2 rounded-xl text-sm shadow-sm transition-colors"
+          >
+            {showForm ? "✕ Cancel" : "+ Post Surplus Food"}
+          </button>
+        )}
       </div>
 
       {/* Success banner */}
@@ -177,7 +181,7 @@ export default function SurplusFoodBoard() {
       )}
 
       {/* Post form */}
-      {showForm && (
+      {postOnly && showForm && (
         <form
           onSubmit={handleSubmit}
           className="bg-white rounded-2xl border border-orange-200 p-5 mb-5 shadow-sm"
@@ -275,14 +279,15 @@ export default function SurplusFoodBoard() {
         </form>
       )}
 
-      {/* Active posts */}
-      {activePosts.length === 0 && !showForm ? (
+      {/* Active posts — only shown on Find Food tab (readOnly), not on Donate tab (postOnly) */}
+      {!postOnly && activePosts.length === 0 && !showForm ? (
         <div className="text-center py-8 text-gray-400">
           <div className="text-3xl mb-2">🥡</div>
-          <p className="text-sm">No surplus food posted yet.</p>
-          <p className="text-xs mt-1">If you have extra food, click "Post Surplus Food" to share it with the community.</p>
+          <p className="text-sm">No surplus food available right now.</p>
+          {!readOnly && <p className="text-xs mt-1">If you have extra food, click "Post Surplus Food" to share it with the community.</p>}
+          {readOnly && <p className="text-xs mt-1">Check back soon — donors post surplus food here. You can also visit the <strong>Donate</strong> tab to see more.</p>}
         </div>
-      ) : (
+      ) : !postOnly ? (
         <div className="grid sm:grid-cols-2 gap-3">
           {activePosts.map((post) => (
             <div
@@ -333,10 +338,10 @@ export default function SurplusFoodBoard() {
             </div>
           ))}
         </div>
-      )}
+      ) : null}
 
-      {/* Claimed posts */}
-      {claimedPosts.length > 0 && (
+      {/* Claimed posts — only on Find Food tab */}
+      {!postOnly && claimedPosts.length > 0 && (
         <div className="mt-4">
           <p className="text-xs text-gray-400 font-semibold mb-2 uppercase tracking-wide">Recently Claimed</p>
           <div className="space-y-2">

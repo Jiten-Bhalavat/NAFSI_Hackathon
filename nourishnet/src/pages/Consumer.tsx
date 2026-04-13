@@ -8,7 +8,7 @@ import NourishMap, { type MapPoint, type AddressLookup } from "../components/Nou
 import PlaceCard from "../components/PlaceCard";
 import PlaceDetail from "../components/PlaceDetail";
 import EmergencyFoodModal from "../components/EmergencyFoodModal";
-import CommunityNeedsBoard from "../components/CommunityNeedsBoard";
+import SurplusFoodBoard from "../components/SurplusFoodBoard";
 import LivePantryStatus from "../components/LivePantryStatus";
 import QuickFoodRequest from "../components/QuickFoodRequest";
 import { useLanguage } from "../contexts/LanguageContext";
@@ -181,8 +181,8 @@ export default function Consumer() {
         {/* Live pantry status updates */}
         <LivePantryStatus />
 
-        {/* Community Needs Board */}
-        <CommunityNeedsBoard />
+        {/* Surplus food posted by donors — claim it here */}
+        <SurplusFoodBoard readOnly />
 
         {selected && <PlaceDetail place={selected} onClose={() => setSelectedId(null)} />}
 
