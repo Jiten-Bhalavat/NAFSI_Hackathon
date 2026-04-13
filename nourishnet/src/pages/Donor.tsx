@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useDonorCatalog } from "../hooks/useDonorCatalog";
 import { useGeolocation } from "../hooks/useGeolocation";
 import { useGeocode } from "../hooks/useGeocode";
@@ -106,62 +106,7 @@ export default function Donor() {
     return counts;
   }, [catalog]);
 
-  // #region agent log
-  useEffect(() => {
-    fetch("http://127.0.0.1:7273/ingest/2e98aacf-fd4e-4abd-8ec2-44bbe6fa1fa2", {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "X-Debug-Session-Id": "d952e0" },
-      body: JSON.stringify({
-        sessionId: "d952e0",
-        runId: "pre-fix",
-        hypothesisId: "H_mount",
-        location: "Donor.tsx:mount",
-        message: "Donor page mounted",
-        data: { hasCatalog: Boolean(catalog), hasError: Boolean(error) },
-        timestamp: Date.now(),
-      }),
-    }).catch(() => {});
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
-  useEffect(() => {
-    fetch("http://127.0.0.1:7273/ingest/2e98aacf-fd4e-4abd-8ec2-44bbe6fa1fa2", {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "X-Debug-Session-Id": "d952e0" },
-      body: JSON.stringify({
-        sessionId: "d952e0",
-        runId: "pre-fix",
-        hypothesisId: "H_catalogState",
-        location: "Donor.tsx:state",
-        message: "Donor page state",
-        data: { hasCatalog: Boolean(catalog), error: error ?? null },
-        timestamp: Date.now(),
-      }),
-    }).catch(() => {});
-  }, [catalog, error]);
-
-  useEffect(() => {
-    if (!catalog) return;
-    fetch("http://127.0.0.1:7273/ingest/2e98aacf-fd4e-4abd-8ec2-44bbe6fa1fa2", {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "X-Debug-Session-Id": "d952e0" },
-      body: JSON.stringify({
-        sessionId: "d952e0",
-        runId: "pre-fix",
-        hypothesisId: "H_render",
-        location: "Donor.tsx:render",
-        message: "Donor page catalog loaded",
-        data: {
-          donorPlacesCount: catalog.donorPlaces.length,
-          countyStatsCount: catalog.countyStats?.length ?? 0,
-          showHeatmap,
-          showImpact,
-        },
-        timestamp: Date.now(),
-      }),
-    }).catch(() => {});
-  }, [catalog, showHeatmap, showImpact]);
-  // #endregion agent log
 
   if (error) return <p className="p-8 text-red-600">Failed to load data: {error}</p>;
   if (!catalog) return <p className="p-8 text-gray-500 animate-subtle-pulse">Loading donor data…</p>;
