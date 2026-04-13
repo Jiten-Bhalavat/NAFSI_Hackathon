@@ -9,8 +9,6 @@ import PlaceCard from "../components/PlaceCard";
 import PlaceDetail from "../components/PlaceDetail";
 import EmergencyFoodModal from "../components/EmergencyFoodModal";
 import QuickFoodRequest from "../components/QuickFoodRequest";
-import LivePantryStatus from "../components/LivePantryStatus";
-import SurplusFoodBoard from "../components/SurplusFoodBoard";
 import type { Place, PlaceType } from "../types";
 
 const TYPE_CHIPS: { type: PlaceType; icon: string; label: string }[] = [
@@ -436,9 +434,6 @@ export default function Consumer() {
           </div>
         </div>
 
-        {/* Surplus + live status — below the map */}
-        <LivePantryStatus />
-        <SurplusFoodBoard readOnly />
       </div>
 
       {showEmergency && catalog && (
