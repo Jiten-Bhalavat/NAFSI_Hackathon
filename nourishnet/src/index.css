@@ -45,9 +45,9 @@
 .nn-pin-planner  { background: #2563eb; }
 .nn-pin-selected { transform: rotate(-45deg) scale(1.4) !important; box-shadow: 0 2px 8px rgba(0,0,0,0.4); }
 
-/* ── Global transitions ── */
+/* ── Global transitions (exclude slow ones like scale/translate on images) ── */
 *, *::before, *::after {
-  transition-property: color, background-color, border-color, box-shadow, opacity, transform;
+  transition-property: color, background-color, border-color, box-shadow, opacity;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 }
