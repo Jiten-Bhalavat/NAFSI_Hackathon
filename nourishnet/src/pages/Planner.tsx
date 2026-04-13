@@ -7,6 +7,7 @@ import { distanceMiles } from "../utils/geo";
 import { pointInGeoJSON } from "../utils/pointInPolygon";
 import { plannerIcon } from "../utils/leafletIcons";
 import RegionOverlay from "../components/RegionOverlay";
+import { FlyToMarker, FitBounds } from "../components/MapController";
 import VolunteerForm from "../components/VolunteerForm";
 import type { Place, Opportunity } from "../types";
 
@@ -93,6 +94,16 @@ export default function Planner() {
   }, [volunteering, placeMap]);
 
   const selected = volunteering.find((o) => o.id === selectedOpp) ?? null;
+
+  // Fly-to coords when an opportunity is selected
+  const selectedPlace = selected?.place;
+  const selectedCoords: [number, number] | null =
+    selectedPlace?.lat != null && selectedPlace?.lng != null
+      ? [selectedPlace.lat, selectedPlace.lng]
+      : null;
+
+  const fitKey = useMemo(() => mappablePlaces.map((p) => p.id).join(","), [mappablePlaces]);
+  const fitPoints = useMemo<[number, number][]>(() => mappablePlaces.map((p) => [p.lat, p.lng]), [mappablePlaces]);
 
   const openForm = (opp?: (Opportunity & { place?: Place }) | null) => {
     setFormOpp(opp ?? null);
@@ -243,7 +254,7 @@ export default function Planner() {
 
         <div className="grid lg:grid-cols-5 gap-5 mb-8">
           {/* List */}
-          <div className="lg:col-span-3 max-h-[500px] overflow-y-auto space-y-3 styled-scrollbar pr-1" role="list" aria-label="Volunteer opportunities">
+          <div className="lg:col-span-2 max-h-[500px] overflow-y-auto space-y-3 styled-scrollbar pr-1" role="list" aria-label="Volunteer opportunities">
             <div className="text-xs text-gray-500 font-medium px-1 mb-1">
               {volunteering.length} opportunit{volunteering.length !== 1 ? "ies" : "y"} found
             </div>
@@ -295,13 +306,15 @@ export default function Planner() {
           </div>
 
           {/* Map */}
-          <div className="lg:col-span-2 h-[500px] rounded-2xl overflow-hidden map-wrapper border border-gray-200">
+          <div className="lg:col-span-3 h-[500px] rounded-2xl overflow-hidden map-wrapper border border-gray-200">
             <MapContainer center={MD_CENTER} zoom={9} className="h-full w-full" scrollWheelZoom>
               <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               />
               <RegionOverlay geocode={geocode.result} color="#2563eb" />
+              <FitBounds points={fitPoints} fitKey={fitKey} />
+              <FlyToMarker lat={selectedCoords?.[0] ?? null} lng={selectedCoords?.[1] ?? null} />
               {mappablePlaces.map((p) => (
                 <Marker key={p.id} position={[p.lat, p.lng]} icon={plannerIcon}>
                   <Popup><strong>{p.name}</strong><br />{p.address}, {p.city}</Popup>

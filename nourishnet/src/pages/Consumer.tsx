@@ -8,6 +8,7 @@ import { distanceMiles } from "../utils/geo";
 import { pointInGeoJSON } from "../utils/pointInPolygon";
 import { consumerIcon } from "../utils/leafletIcons";
 import RegionOverlay from "../components/RegionOverlay";
+import { FlyToMarker, FitBounds } from "../components/MapController";
 import PlaceCard from "../components/PlaceCard";
 import PlaceDetail from "../components/PlaceDetail";
 import type { Place } from "../types";
@@ -67,6 +68,12 @@ export default function Consumer() {
     (p): p is Place & { lat: number; lng: number } => p.lat != null && p.lng != null
   );
   const selected = catalog?.places.find((p) => p.id === selectedId) ?? null;
+
+  const selectedCoords: [number, number] | null =
+    selected?.lat != null && selected?.lng != null ? [selected.lat, selected.lng] : null;
+
+  const fitKey = useMemo(() => mappable.map((p) => p.id).join(","), [mappable]);
+  const fitPoints = useMemo<[number, number][]>(() => mappable.map((p) => [p.lat, p.lng]), [mappable]);
 
   if (error) return <p className="p-8 text-red-600">Failed to load data: {error}</p>;
   if (!catalog) return <p className="p-8 text-gray-500 animate-subtle-pulse">Loading…</p>;
@@ -150,30 +157,8 @@ export default function Consumer() {
         {/* Selected place detail */}
         {selected && <PlaceDetail place={selected} onClose={() => setSelectedId(null)} />}
 
-        {/* Map + List */}
+        {/* List + Map */}
         <div className="grid lg:grid-cols-5 gap-5 mb-8">
-          <div className="lg:col-span-3 h-[500px] rounded-2xl overflow-hidden map-wrapper border border-gray-200">
-            <MapContainer center={MD_CENTER} zoom={10} className="h-full w-full" scrollWheelZoom>
-              <TileLayer
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-              />
-              <RegionOverlay geocode={geocode.result} color="#059669" />
-              <MarkerClusterGroup chunkedLoading>
-                {mappable.map((p) => (
-                  <Marker
-                    key={p.id}
-                    position={[p.lat, p.lng]}
-                    icon={consumerIcon}
-                    eventHandlers={{ click: () => setSelectedId(p.id) }}
-                  >
-                    <Popup><strong>{p.name}</strong><br />{p.address}, {p.city}</Popup>
-                  </Marker>
-                ))}
-              </MarkerClusterGroup>
-            </MapContainer>
-          </div>
-
           <div
             ref={listRef}
             className="lg:col-span-2 max-h-[500px] overflow-y-auto space-y-2 styled-scrollbar pr-1"
@@ -201,6 +186,30 @@ export default function Consumer() {
                 </div>
               );
             })}
+          </div>
+
+          <div className="lg:col-span-3 h-[500px] rounded-2xl overflow-hidden map-wrapper border border-gray-200">
+            <MapContainer center={MD_CENTER} zoom={10} className="h-full w-full" scrollWheelZoom>
+              <TileLayer
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              />
+              <RegionOverlay geocode={geocode.result} color="#059669" />
+              <FitBounds points={fitPoints} fitKey={fitKey} />
+              <FlyToMarker lat={selectedCoords?.[0] ?? null} lng={selectedCoords?.[1] ?? null} />
+              <MarkerClusterGroup chunkedLoading showCoverageOnHover={false}>
+                {mappable.map((p) => (
+                  <Marker
+                    key={p.id}
+                    position={[p.lat, p.lng]}
+                    icon={consumerIcon}
+                    eventHandlers={{ click: () => setSelectedId(p.id) }}
+                  >
+                    <Popup><strong>{p.name}</strong><br />{p.address}, {p.city}</Popup>
+                  </Marker>
+                ))}
+              </MarkerClusterGroup>
+            </MapContainer>
           </div>
         </div>
       </div>

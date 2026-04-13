@@ -26,3 +26,15 @@ I want to overlay the region as well, for example if I select on college park ar
 
 Also, should we create a submit interest form or something on the volunteers page, so that volunteers can enter their availability or interest in donating their time and supporting at a particular location or within an area? and also make the website more user friendly and attractive, don't keep it basic
 
+
+---
+
+## Prompt 6 — Unify Data & Integrate Donor
+
+we need to unify all the data together in one and remove de duplication as we want to use the whole data in order to integrate it. now, we have the donor data and the frontend as well, now we need to use that data to replace the mock data on the current web-app and actually get it working with the available donor data.
+
+---
+
+## Prompt 7 — Full Donor Integration
+
+now we have the unified data under the data folder, check the readme file which has the guide on how the data is suppossed to be used, make the use of whole donor data and let's get the donor function fully working now!

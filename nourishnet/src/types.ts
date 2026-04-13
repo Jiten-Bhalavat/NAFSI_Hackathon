@@ -35,3 +35,57 @@ export interface Catalog {
   places: Place[];
   opportunities: Opportunity[];
 }
+
+/* ── Donor-specific types ── */
+
+export interface DonorPlace {
+  id: string;
+  name: string;
+  address: string;
+  city: string;
+  state: string;
+  zip: string;
+  county: string | null;
+  lat: number | null;
+  lng: number | null;
+  phone: string;
+  website: string;
+  email?: string;
+  hours: string;
+  eligibility: string;
+  requirements: string | null;
+  tags: string[];
+  source: string;
+  summary: string;
+  donorType: "pantry" | "food-bank" | "farmers-market" | "store";
+  products?: string;
+  paymentMethods?: string;
+}
+
+export interface CountyStat {
+  county: string;
+  year: string;
+  foodInsecurePopulation: number;
+  foodInsecurityRate: number | null;
+  averageMealCost: number | null;
+  annualFoodBudgetShortfall: number | null;
+  url: string;
+}
+
+export interface PriorityTract {
+  tractId: string;
+  healthyStoreCount: number;
+  unhealthyStoreCount: number;
+  rfei: number | null;
+  isHealthyFoodPriorityArea: boolean;
+  tier: string | null;
+  municipality: string | null;
+}
+
+export interface DonorCatalog {
+  schemaVersion: string;
+  generatedAt: string;
+  donorPlaces: DonorPlace[];
+  countyStats: CountyStat[];
+  priorityTracts: PriorityTract[];
+}
