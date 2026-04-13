@@ -70,9 +70,10 @@ interface Props {
   selected: boolean;
   onSelect: (id: string) => void;
   distance?: number | null;
+  onFilterByType?: (type: PlaceType) => void;
 }
 
-export default function PlaceCard({ place, selected, onSelect, distance }: Props) {
+export default function PlaceCard({ place, selected, onSelect, distance, onFilterByType }: Props) {
   const models = place.distributionModel ?? [];
   const formats = place.foodFormats ?? [];
   const theme = TYPE_THEME[place.type] ?? TYPE_THEME["pantry"];
@@ -89,8 +90,12 @@ export default function PlaceCard({ place, selected, onSelect, distance }: Props
     >
       <div className="flex items-start justify-between gap-2">
         <div className="flex-1 min-w-0">
-          {/* Type badge */}
-          <span className={`inline-flex items-center gap-1 text-xs font-medium px-1.5 py-0.5 rounded-md mb-1 ${theme.badge}`}>
+          {/* Type badge — clickable to filter by this type */}
+          <span
+            onClick={onFilterByType ? (e) => { e.stopPropagation(); onFilterByType(place.type); } : undefined}
+            className={`inline-flex items-center gap-1 text-xs font-medium px-1.5 py-0.5 rounded-md mb-1 ${theme.badge} ${onFilterByType ? "cursor-pointer hover:opacity-80 active:scale-95 transition-all" : ""}`}
+            title={onFilterByType ? `Filter by ${theme.label}` : undefined}
+          >
             {theme.icon} {theme.label}
           </span>
           <div className="font-semibold text-sm text-gray-900 group-hover:text-gray-700 transition-colors truncate">

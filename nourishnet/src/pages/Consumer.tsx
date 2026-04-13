@@ -27,8 +27,7 @@ export default function Consumer() {
   const [countyFilter, setCountyFilter] = useState("");
   const [dayFilter, setDayFilter] = useState("");
   const [typeFilters, setTypeFilters] = useState<Set<PlaceType>>(new Set());
-  const [snapOnly, setSnapOnly] = useState(false);
-  const [wicOnly, setWicOnly] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(60);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [showEmergency, setShowEmergency] = useState(false);
   const [showQuickRequest, setShowQuickRequest] = useState(false);
@@ -51,18 +50,17 @@ export default function Consumer() {
 
   const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
-  // Wrap all filter setters in startTransition so React defers the heavy re-render
-  const setCountyFilterT  = useCallback((v: string) => startTransition(() => setCountyFilter(v)), []);
-  const setDayFilterT     = useCallback((v: string) => startTransition(() => setDayFilter(v)), []);
-  const setSnapOnlyT      = useCallback((v: boolean) => startTransition(() => setSnapOnly(v)), []);
-  const setWicOnlyT       = useCallback((v: boolean) => startTransition(() => setWicOnly(v)), []);
+  // Wrap filter setters in startTransition so React defers the heavy re-render
+  const setCountyFilterT = useCallback((v: string) => startTransition(() => setCountyFilter(v)), []);
+  const setDayFilterT    = useCallback((v: string) => startTransition(() => setDayFilter(v)), []);
 
   const toggleType = useCallback((t: PlaceType) => {
     startTransition(() => {
       setTypeFilters((prev) => {
-        const next = new Set(prev);
-        next.has(t) ? next.delete(t) : next.add(t);
-        return next;
+        // If this type is already the only active filter, clear all (toggle off)
+        if (prev.size === 1 && prev.has(t)) return new Set();
+        // Otherwise select ONLY this type (single-select)
+        return new Set([t]);
       });
     });
   }, []);
@@ -80,13 +78,12 @@ export default function Consumer() {
   // Stage 2: discrete filters
   const filtered = useMemo(() => {
     let list = geoFiltered;
-    if (countyFilter) list = list.filter((p) => p.county === countyFilter);
+    // Only apply county filter to places that actually have a county set
+    if (countyFilter) list = list.filter((p) => !p.county || p.county === countyFilter);
     if (dayFilter)    list = list.filter((p) => p.hours.toLowerCase().includes(dayFilter.toLowerCase()));
     if (typeFilters.size > 0) list = list.filter((p) => typeFilters.has(p.type as PlaceType));
-    if (snapOnly)     list = list.filter((p) => p.acceptsSnap);
-    if (wicOnly)      list = list.filter((p) => p.acceptsWic);
     return list;
-  }, [geoFiltered, countyFilter, dayFilter, typeFilters, snapOnly, wicOnly]);
+  }, [geoFiltered, countyFilter, dayFilter, typeFilters]);
 
   // Stage 3: distance sort
   const sorted = useMemo(() => {
@@ -98,11 +95,12 @@ export default function Consumer() {
     });
   }, [filtered, userCoords]);
 
-  // Scroll list to top whenever the filtered set changes
+  // Scroll list to top and reset pagination whenever filters change
   useEffect(() => {
     listRef.current?.scrollTo({ top: 0 });
     setSelectedId(null);
-  }, [countyFilter, dayFilter, typeFilters, snapOnly, wicOnly, geocode.result]);
+    setVisibleCount(60);
+  }, [countyFilter, dayFilter, typeFilters, geocode.result]);
 
   const selected = useMemo(
     () => catalog?.places.find((p) => p.id === selectedId) ?? null,
@@ -160,12 +158,10 @@ export default function Consumer() {
     [userCoords]
   );
 
-  const hasActiveFilters = typeFilters.size > 0 || snapOnly || wicOnly || !!countyFilter || !!dayFilter;
+  const hasActiveFilters = typeFilters.size > 0 || !!countyFilter || !!dayFilter;
   const clearFilters = useCallback(() => {
     startTransition(() => {
       setTypeFilters(new Set());
-      setSnapOnly(false);
-      setWicOnly(false);
       setCountyFilter("");
       setDayFilter("");
     });
@@ -262,27 +258,6 @@ export default function Consumer() {
                 </button>
               );
             })}
-            <span className="text-gray-300 mx-0.5">|</span>
-            <button
-              onClick={() => setSnapOnlyT(!snapOnly)}
-              aria-pressed={snapOnly}
-              disabled={isPending}
-              className={`inline-flex items-center gap-1 text-xs font-medium px-2.5 py-1.5 rounded-full border transition-all disabled:opacity-60 ${
-                snapOnly ? "bg-violet-600 border-transparent text-white shadow-sm" : "border-gray-200 bg-white text-gray-600 hover:border-violet-300"
-              }`}
-            >
-              💳 SNAP
-            </button>
-            <button
-              onClick={() => setWicOnlyT(!wicOnly)}
-              aria-pressed={wicOnly}
-              disabled={isPending}
-              className={`inline-flex items-center gap-1 text-xs font-medium px-2.5 py-1.5 rounded-full border transition-all disabled:opacity-60 ${
-                wicOnly ? "bg-pink-600 border-transparent text-white shadow-sm" : "border-gray-200 bg-white text-gray-600 hover:border-pink-300"
-              }`}
-            >
-              🍼 WIC
-            </button>
             {hasActiveFilters && (
               <button onClick={clearFilters} disabled={isPending} className="text-xs text-gray-400 hover:text-gray-600 underline ml-1 disabled:opacity-50">
                 Clear all
@@ -355,16 +330,25 @@ export default function Consumer() {
                   )}
                 </div>
               )}
-              {sorted.map((p) => (
+              {sorted.slice(0, visibleCount).map((p) => (
                 <div key={p.id} role="listitem">
                   <PlaceCard
                     place={p}
                     selected={selectedId === p.id}
                     onSelect={setSelectedId}
                     distance={distanceFor(p)}
+                    onFilterByType={toggleType}
                   />
                 </div>
               ))}
+              {visibleCount < sorted.length && (
+                <button
+                  onClick={() => setVisibleCount((v) => v + 60)}
+                  className="w-full py-3 text-sm text-emerald-600 font-medium hover:bg-emerald-50 rounded-xl border border-emerald-200 transition-colors"
+                >
+                  Show more ({sorted.length - visibleCount} remaining)
+                </button>
+              )}
             </div>
           </div>
 
