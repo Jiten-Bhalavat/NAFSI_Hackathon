@@ -33,6 +33,7 @@ export default function Donor() {
   const [showHeatmap, setShowHeatmap] = useState(true);
   const [showImpact, setShowImpact] = useState(false);
   const [selectedHeatmapCounty, setSelectedHeatmapCounty] = useState<string | null>(null);
+  const [hoverCountyProps, setHoverCountyProps] = useState<Record<string, unknown> | null>(null);
 
   const geocode = useGeocode(search);
 
@@ -104,8 +105,6 @@ export default function Donor() {
     return counts;
   }, [catalog]);
 
-
-
   if (error) return <p className="p-8 text-red-600">Failed to load data: {error}</p>;
   if (!catalog) return <p className="p-8 text-gray-500 animate-subtle-pulse">Loading donor data…</p>;
 
@@ -156,7 +155,7 @@ export default function Donor() {
         {/* Filters */}
         <div className="filter-bar rounded-2xl shadow-lg p-4 mb-6 border border-gray-200/50">
           <div className="flex flex-wrap gap-3">
-            <div className="flex-1 min-w-[220px] relative">
+            <div className="w-full sm:flex-1 sm:min-w-[220px] relative">
               <label htmlFor="donor-search" className="sr-only">Search by city, ZIP, county, or address</label>
               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">🔍</span>
               <input
@@ -169,21 +168,15 @@ export default function Donor() {
                 className="w-full border border-gray-200 rounded-xl pl-10 pr-4 py-2.5 text-sm focus:border-amber-500 focus:ring-2 focus:ring-amber-100 bg-white"
               />
             </div>
-            <select aria-label="Filter by type" value={typeFilter} onChange={(e) => setTypeFilter(e.target.value)} className="border border-gray-200 rounded-xl px-4 py-2.5 text-sm bg-white">
+            <select aria-label="Filter by type" value={typeFilter} onChange={(e) => setTypeFilter(e.target.value)} className="flex-1 min-w-0 border border-gray-200 rounded-xl px-4 py-2.5 text-sm bg-white">
               {DONOR_TYPES.map((t) => <option key={t} value={t}>{TYPE_LABELS[t]}</option>)}
             </select>
-            <select aria-label="Filter by county" value={countyFilter} onChange={(e) => setCountyFilter(e.target.value)} className="border border-gray-200 rounded-xl px-4 py-2.5 text-sm bg-white">
+            <select aria-label="Filter by county" value={countyFilter} onChange={(e) => setCountyFilter(e.target.value)} className="flex-1 min-w-0 border border-gray-200 rounded-xl px-4 py-2.5 text-sm bg-white">
               <option value="">All counties</option>
               {counties.map((c) => <option key={c} value={c}>{c}</option>)}
             </select>
-            <button onClick={geo.requestLocation} disabled={geo.loading} className="bg-amber-600 text-white px-5 py-2.5 rounded-xl text-sm font-medium hover:bg-amber-700 disabled:opacity-50 shadow-sm">
+            <button onClick={geo.requestLocation} disabled={geo.loading} className="w-full sm:w-auto bg-amber-600 text-white px-5 py-2.5 rounded-xl text-sm font-medium hover:bg-amber-700 disabled:opacity-50 shadow-sm">
               {geo.loading ? "Locating…" : "📍 My Location"}
-            </button>
-            <button
-              onClick={() => setShowHeatmap(!showHeatmap)}
-              className={`px-4 py-2.5 rounded-xl text-sm font-medium border transition-colors ${showHeatmap ? "bg-red-100 text-red-800 border-red-300" : "bg-white text-gray-600 border-gray-200 hover:border-red-300"}`}
-            >
-              🌡️ Food Insecurity Map
             </button>
             <button
               onClick={() => setShowImpact(!showImpact)}
@@ -216,10 +209,10 @@ export default function Donor() {
         )}
 
 
-        {/* List + Map */}
-        <div className="grid lg:grid-cols-5 gap-5 mb-8">
+        {/* List + Map — on mobile: map first (order-1), list second (order-2) */}
+        <div className="flex flex-col lg:grid lg:grid-cols-5 gap-5 mb-8">
           {/* List with inline expandable details */}
-          <div className="lg:col-span-2 max-h-[560px] overflow-y-auto space-y-1 styled-scrollbar pr-1" role="list" aria-label="Donor locations">
+          <div className="order-2 lg:order-none lg:col-span-2 max-h-[60vh] lg:max-h-[560px] overflow-y-auto space-y-1 styled-scrollbar pr-1" role="list" aria-label="Donor locations">
             <div className="text-xs text-gray-500 font-medium px-1 mb-2">
               {filtered.length.toLocaleString()} location{filtered.length !== 1 ? "s" : ""} found
               {mapPoints.length < filtered.length && ` · ${mapPoints.length} on map`}
@@ -309,8 +302,8 @@ export default function Donor() {
             )}
           </div>
 
-          {/* Map */}
-          <div className="lg:col-span-3 h-[560px] rounded-2xl overflow-hidden map-wrapper border border-gray-200 relative">
+          {/* Map — shows first on mobile */}
+          <div className="order-1 lg:order-none lg:col-span-3 h-[45vh] sm:h-[50vh] lg:h-[560px] rounded-2xl overflow-hidden map-wrapper border border-gray-200 relative">
             <NourishMap
               points={mapPoints}
               variant="donor"
@@ -319,6 +312,9 @@ export default function Donor() {
               geocode={geocode.result}
               addressLookup={addressLookup}
               initialZoom={9}
+              hoverLayerIds={["food-insecurity-fill"]}
+              onHoverFeature={setHoverCountyProps}
+              overlayToggle={{ visible: showHeatmap, onToggle: () => setShowHeatmap((v) => !v), label: "Toggle food insecurity layer" }}
             >
               <FoodInsecurityOverlay
                 countyStats={catalog.countyStats}
@@ -326,6 +322,21 @@ export default function Donor() {
               />
             </NourishMap>
             <InsecurityLegend visible={showHeatmap} />
+            {showHeatmap && hoverCountyProps && (
+              <div className="absolute top-3 left-3 z-10 bg-white/90 backdrop-blur-sm rounded-xl shadow-lg px-3 py-2 text-xs">
+                <div className="font-semibold text-gray-900">
+                  {(hoverCountyProps.county_name as string) || "County"}
+                </div>
+                <div className="text-gray-700">
+                  Food insecure:{" "}
+                  <span className="font-semibold">
+                    {typeof hoverCountyProps.food_insecure_pop === "number"
+                      ? (hoverCountyProps.food_insecure_pop as number).toLocaleString()
+                      : "No data"}
+                  </span>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 

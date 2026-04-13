@@ -42,3 +42,27 @@ now we have the unified data under the data folder, check the readme file which 
 ## Prompt 8 — Bake the coordinates using geocoder
 
 Donor map is mostly blank. donor_catalog.json shows "lat": null, "lng": null for the majority of donorPlaces — these come from food_pantries_unified.csv which lacks coordinates. The map the donor sees is empty.
+
+---
+
+## Prompt 9 — Food Insecurity Layer on Donor Map
+
+we have county level food insecurity data in countyStats and a md_counties.geojson file. can you add a choropleth overlay on the donor map that colors each county by how many people are food insecure there? use shades of red/orange, don't use white for any bucket. also the county names don't always match between the stats and geojson so normalize them
+
+---
+
+## Prompt 10 — Hunger Map Toggle and Hover Info
+
+the food insecurity layer needs a toggle button but put it on the map itself, top right corner, not in the filter bar. call it "Show Hunger Map" / "Hide Hunger Map" so people actually understand what it does. also when I hover over a county on the map it should show me the county name and how many people are food insecure there. and add a small legend at the bottom left of the map, keep it in one line, dark semi-transparent background so it doesn't look like a white box sitting on the map
+
+---
+
+## Prompt 11 — Mobile Friendly
+
+make the whole website mobile friendly. on phones the map should show first and the list below it, not side by side. map should be about 45% of the screen height on phones. filters and buttons should go full width on small screens. make the pins and clusters a bit bigger on mobile so they're easier to tap. do this for all three pages not just donor
+
+---
+
+## Prompt 12 — Clean Up and Polish
+
+remove that food insecurity map button from the filter bar, it's now on the map itself. also the legend was wrapping into two lines, keep it compact. the "My Impact" button can stay in the filters. clean up any leftover debug code

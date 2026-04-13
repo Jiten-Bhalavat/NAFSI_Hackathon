@@ -120,7 +120,7 @@ export default function Consumer() {
       <div className="max-w-6xl mx-auto px-4 -mt-5">
         <div className="filter-bar rounded-2xl shadow-lg p-4 mb-6 border border-gray-200/50">
           <div className="flex flex-wrap gap-3">
-            <div className="flex-1 min-w-[220px] relative">
+            <div className="w-full sm:flex-1 sm:min-w-[220px] relative">
               <label htmlFor="consumer-search" className="sr-only">Search by city, ZIP, county, or address</label>
               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">🔍</span>
               <input
@@ -138,7 +138,7 @@ export default function Consumer() {
               aria-label="Filter by county"
               value={countyFilter}
               onChange={(e) => setCountyFilter(e.target.value)}
-              className="border border-gray-200 rounded-xl px-4 py-2.5 text-sm bg-white"
+              className="flex-1 min-w-0 border border-gray-200 rounded-xl px-4 py-2.5 text-sm bg-white"
             >
               <option value="">All counties</option>
               {counties.map((c) => <option key={c} value={c}>{c}</option>)}
@@ -148,7 +148,7 @@ export default function Consumer() {
               aria-label="Filter by day"
               value={dayFilter}
               onChange={(e) => setDayFilter(e.target.value)}
-              className="border border-gray-200 rounded-xl px-4 py-2.5 text-sm bg-white"
+              className="flex-1 min-w-0 border border-gray-200 rounded-xl px-4 py-2.5 text-sm bg-white"
             >
               <option value="">Any day</option>
               {days.map((d) => <option key={d} value={d}>{d}</option>)}
@@ -156,7 +156,7 @@ export default function Consumer() {
             <button
               onClick={geo.requestLocation}
               disabled={geo.loading}
-              className="bg-emerald-600 text-white px-5 py-2.5 rounded-xl text-sm font-medium hover:bg-emerald-700 disabled:opacity-50 shadow-sm"
+              className="w-full sm:w-auto bg-emerald-600 text-white px-5 py-2.5 rounded-xl text-sm font-medium hover:bg-emerald-700 disabled:opacity-50 shadow-sm"
             >
               {geo.loading ? "Locating…" : "📍 My Location"}
             </button>
@@ -176,8 +176,8 @@ export default function Consumer() {
 
         {selected && <PlaceDetail place={selected} onClose={() => setSelectedId(null)} />}
 
-        <div className="grid lg:grid-cols-5 gap-5 mb-8">
-          <div ref={listRef} className="lg:col-span-2 max-h-[500px] overflow-y-auto space-y-2 styled-scrollbar pr-1" role="list" aria-label="Food assistance locations">
+        <div className="flex flex-col lg:grid lg:grid-cols-5 gap-5 mb-8">
+          <div ref={listRef} className="order-2 lg:order-none lg:col-span-2 max-h-[60vh] lg:max-h-[500px] overflow-y-auto space-y-2 styled-scrollbar pr-1" role="list" aria-label="Food assistance locations">
             <div className="text-xs text-gray-500 font-medium px-1 mb-1">
               {filtered.length} location{filtered.length !== 1 ? "s" : ""} found
               {mapPoints.length < filtered.length && ` (${mapPoints.length} on map)`}
@@ -199,7 +199,7 @@ export default function Consumer() {
             })}
           </div>
 
-          <div className="lg:col-span-3 h-[500px] rounded-2xl overflow-hidden map-wrapper border border-gray-200">
+          <div className="order-1 lg:order-none lg:col-span-3 h-[45vh] sm:h-[50vh] lg:h-[500px] rounded-2xl overflow-hidden map-wrapper border border-gray-200">
             <NourishMap
               points={mapPoints}
               variant="consumer"
