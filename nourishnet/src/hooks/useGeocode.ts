@@ -10,15 +10,30 @@ export interface GeocodeResult {
   bounds: LatLngBoundsExpression | null;
 }
 
-interface NominatimResult {
-  lat: string;
-  lon: string;
-  display_name: string;
-  boundingbox: [string, string, string, string]; // [south, north, west, east]
-  geojson?: GeoJSON.Geometry;
+interface GoogleGeocodeResult {
+  geometry: {
+    location: { lat: number; lng: number };
+    viewport: {
+      northeast: { lat: number; lng: number };
+      southwest: { lat: number; lng: number };
+    };
+  };
+  formatted_address: string;
+  status?: string;
 }
 
-const NOMINATIM_URL = "https://nominatim.openstreetmap.org/search";
+interface GoogleGeocodeResponse {
+  status: string;
+  results: GoogleGeocodeResult[];
+}
+
+const GOOGLE_GEOCODE_URL = "https://maps.googleapis.com/maps/api/geocode/json";
+const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY as string;
+
+/** Returns true for a 5-digit US ZIP code */
+function isZipCode(query: string): boolean {
+  return /^\d{5}$/.test(query.trim());
+}
 
 export function useGeocode(query: string, debounceMs = 500) {
   const [result, setResult] = useState<GeocodeResult | null>(null);
@@ -51,57 +66,46 @@ export function useGeocode(query: string, debounceMs = 500) {
       abortRef.current = controller;
 
       try {
-        // Bias results toward MD/DC area
+        // Build address query — append ", USA" for ZIP codes to improve accuracy
+        const addressQuery = isZipCode(trimmed) ? `${trimmed}, USA` : `${trimmed}, Maryland, USA`;
+
         const params = new URLSearchParams({
-          q: trimmed,
-          format: "json",
-          limit: "1",
-          polygon_geojson: "1",
-          viewbox: "-79.5,37.9,-75.0,39.8",
-          bounded: "0",
-          countrycodes: "us",
+          address: addressQuery,
+          key: API_KEY,
+          region: "us",
         });
 
-        const res = await fetch(`${NOMINATIM_URL}?${params}`, {
+        const res = await fetch(`${GOOGLE_GEOCODE_URL}?${params}`, {
           signal: controller.signal,
-          headers: { "User-Agent": "NourishNet-ClassProject/1.0" },
         });
 
-        if (!res.ok) throw new Error(`Nominatim HTTP ${res.status}`);
-        const data: NominatimResult[] = await res.json();
+        if (!res.ok) throw new Error(`Geocoding HTTP ${res.status}`);
 
-        if (data.length === 0) {
+        const data: GoogleGeocodeResponse = await res.json();
+
+        if (data.status === "ZERO_RESULTS" || data.results.length === 0) {
           setResult(null);
-          setError("No results found. Try a different search term.");
+          setError("No results found. Try a different ZIP or address.");
           setLoading(false);
           return;
         }
 
-        const hit = data[0];
-        const lat = parseFloat(hit.lat);
-        const lng = parseFloat(hit.lon);
-        const [south, north, west, east] = hit.boundingbox.map(Number);
-
-        let boundary: GeoJSON.GeoJsonObject | null = null;
-        if (
-          hit.geojson &&
-          (hit.geojson.type === "Polygon" || hit.geojson.type === "MultiPolygon")
-        ) {
-          boundary = {
-            type: "Feature",
-            properties: {},
-            geometry: hit.geojson,
-          } as GeoJSON.GeoJsonObject;
+        if (data.status !== "OK") {
+          throw new Error(`Geocoding error: ${data.status}`);
         }
+
+        const hit = data.results[0];
+        const { lat, lng } = hit.geometry.location;
+        const { northeast, southwest } = hit.geometry.viewport;
 
         setResult({
           lat,
           lng,
-          displayName: hit.display_name,
-          boundary,
+          displayName: hit.formatted_address,
+          boundary: null, // Google Geocoding API does not return polygon boundaries
           bounds: [
-            [south, west],
-            [north, east],
+            [southwest.lat, southwest.lng],
+            [northeast.lat, northeast.lng],
           ],
         });
         setError(null);

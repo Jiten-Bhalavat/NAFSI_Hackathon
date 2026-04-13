@@ -100,7 +100,7 @@ export default function Consumer() {
               <input
                 id="consumer-search"
                 type="text"
-                placeholder="City, ZIP, county, or address…"
+                placeholder="Enter ZIP code to sort by distance…"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="w-full border border-gray-200 rounded-xl pl-10 pr-4 py-2.5 text-sm focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 bg-white"
@@ -148,7 +148,7 @@ export default function Consumer() {
             {geo.error && <p className="text-xs text-red-500">{geo.error}</p>}
             {!geocode.loading && !geocode.result && !geocode.error && (
               <p className="text-xs text-gray-400">
-                "My Location" asks your browser for approximate position to sort by distance. Never stored or shared.
+                Enter a ZIP code to sort locations by distance, or use "My Location" for automatic sorting.
               </p>
             )}
           </div>
