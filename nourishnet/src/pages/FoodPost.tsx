@@ -2,33 +2,12 @@ import { useState, useEffect, useCallback } from "react";
 import type { SurplusPost } from "../components/SurplusFoodBoard";
 import type { StatusPost } from "../components/LivePantryStatus";
 import type { NeedPost } from "../components/CommunityNeedsBoard";
-import { loadPosts as loadNeeds, savePosts as saveNeeds } from "../components/CommunityNeedsBoard";
-
-// ─── Storage helpers ──────────────────────────────────────────────────────────
-
-function loadSurplus(): SurplusPost[] {
-  try {
-    const raw = localStorage.getItem("nourishnet-surplus-posts");
-    if (!raw) return [];
-    const parsed: SurplusPost[] = JSON.parse(raw);
-    return parsed.filter((p) => !p.claimed && p.expiresAt > Date.now());
-  } catch { return []; }
-}
-function saveSurplus(posts: SurplusPost[]) {
-  localStorage.setItem("nourishnet-surplus-posts", JSON.stringify(posts));
-}
-
-function loadStatus(): StatusPost[] {
-  try {
-    const raw = localStorage.getItem("nourishnet-pantry-status");
-    if (!raw) return [];
-    const parsed: StatusPost[] = JSON.parse(raw);
-    return parsed.filter((p) => p.expiresAt > Date.now());
-  } catch { return []; }
-}
-function saveStatus(posts: StatusPost[]) {
-  localStorage.setItem("nourishnet-pantry-status", JSON.stringify(posts));
-}
+import {
+  fetchSurplusPosts, insertSurplusPost, deleteSurplusPost, claimSurplusPost,
+  fetchStatusPosts, insertStatusPost, deleteStatusPost,
+  fetchNeedPosts, insertNeedPost, deleteNeedPost, fulfillNeedPost,
+  subscribeToCommunity,
+} from "../lib/community-db";
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -95,17 +74,25 @@ export default function FoodPost() {
   const [surplus, setSurplus]     = useState<SurplusPost[]>([]);
   const [statuses, setStatuses]   = useState<StatusPost[]>([]);
   const [needs, setNeeds]         = useState<NeedPost[]>([]);
+  const [loading, setLoading]     = useState(true);
 
-  const reload = useCallback(() => {
-    setSurplus(loadSurplus());
-    setStatuses(loadStatus());
-    setNeeds(loadNeeds());
+  const reload = useCallback(async () => {
+    const [s, st, n] = await Promise.all([
+      fetchSurplusPosts(),
+      fetchStatusPosts(),
+      fetchNeedPosts(),
+    ]);
+    setSurplus(s);
+    setStatuses(st);
+    setNeeds(n);
+    setLoading(false);
   }, []);
 
   useEffect(() => {
     reload();
-    const id = setInterval(reload, 60_000);
-    return () => clearInterval(id);
+    // Realtime: auto-refresh when any table changes
+    const unsub = subscribeToCommunity(() => reload());
+    return unsub;
   }, [reload]);
 
   const counts = {
@@ -114,6 +101,20 @@ export default function FoodPost() {
     update: statuses.length,
     need: needs.filter(n => !n.fulfilled).length,
   };
+
+  if (loading) {
+    return (
+      <div>
+        <div className="bg-gradient-to-r from-violet-600 to-violet-500 text-white py-8 px-4">
+          <div className="max-w-7xl mx-auto">
+            <h1 className="text-3xl font-bold mb-1">Community Food Board</h1>
+            <p className="text-violet-100">Surplus food, pantry updates, and food requests — all in one place.</p>
+          </div>
+        </div>
+        <div className="max-w-7xl mx-auto px-4 py-16 text-center text-gray-400">Loading posts…</div>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -181,18 +182,18 @@ export default function FoodPost() {
               surplus={surplus}
               statuses={statuses}
               needs={needs}
-              onDelete={(type, id) => {
-                if (type === "surplus") { const u = surplus.filter(p => p.id !== id); saveSurplus(u); setSurplus(u); }
-                if (type === "update")  { const u = statuses.filter(p => p.id !== id); saveStatus(u); setStatuses(u); }
-                if (type === "need")    { const u = needs.filter(p => p.id !== id); saveNeeds(u); setNeeds(u); }
+              onDelete={async (type, id) => {
+                if (type === "surplus") { await deleteSurplusPost(id); setSurplus(s => s.filter(p => p.id !== id)); }
+                if (type === "update")  { await deleteStatusPost(id);  setStatuses(s => s.filter(p => p.id !== id)); }
+                if (type === "need")    { await deleteNeedPost(id);    setNeeds(s => s.filter(p => p.id !== id)); }
               }}
-              onFulfill={(id) => {
-                const u = needs.map(p => p.id === id ? { ...p, fulfilled: true } : p);
-                saveNeeds(u); setNeeds(u);
+              onFulfill={async (id) => {
+                await fulfillNeedPost(id);
+                setNeeds(s => s.map(p => p.id === id ? { ...p, fulfilled: true } : p));
               }}
-              onClaim={(id) => {
-                const u = surplus.map(p => p.id === id ? { ...p, claimed: true } : p);
-                saveSurplus(u); setSurplus(u);
+              onClaim={async (id) => {
+                await claimSurplusPost(id);
+                setSurplus(s => s.map(p => p.id === id ? { ...p, claimed: true } : p));
               }}
             />
           </main>
@@ -414,7 +415,7 @@ function SurplusForm({ onPosted }: { onPosted: () => void }) {
   const [error, setError] = useState("");
   const [done, setDone] = useState(false);
 
-  const handleSubmit = useCallback((e: React.FormEvent) => {
+  const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     if (!foodType) return setError("Please select a food type.");
@@ -429,7 +430,8 @@ function SurplusForm({ onPosted }: { onPosted: () => void }) {
       pickupAddress: pickupAddress.trim(), contact: contact.trim(),
       postedAt: Date.now(), claimed: false,
     };
-    saveSurplus([post, ...loadSurplus()]);
+    const ok = await insertSurplusPost(post);
+    if (!ok) return setError("Failed to post — please try again.");
     setFoodType(""); setQuantity(""); setDescription(""); setPickupZip(""); setPickupAddress(""); setContact("");
     setDone(true); onPosted(); setTimeout(() => setDone(false), 3000);
   }, [foodType, quantity, description, expiryHours, pickupZip, pickupAddress, contact, onPosted]);
@@ -489,7 +491,7 @@ function UpdateForm({ onPosted }: { onPosted: () => void }) {
   const [error, setError] = useState("");
   const [done, setDone] = useState(false);
 
-  const handleSubmit = useCallback((e: React.FormEvent) => {
+  const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     if (!pantryName.trim()) return setError("Please enter the pantry name.");
@@ -501,7 +503,8 @@ function UpdateForm({ onPosted }: { onPosted: () => void }) {
       zip: zip.trim(), statusType, message: message.trim().slice(0, 200),
       postedAt: Date.now(), expiresAt: Date.now() + 48 * 3_600_000,
     };
-    saveStatus([post, ...loadStatus()]);
+    const ok = await insertStatusPost(post);
+    if (!ok) return setError("Failed to post — please try again.");
     setPantryName(""); setZip(""); setStatusType(""); setMessage("");
     setDone(true); onPosted(); setTimeout(() => setDone(false), 3000);
   }, [pantryName, zip, statusType, message, onPosted]);
@@ -550,7 +553,7 @@ function NeedForm({ onPosted }: { onPosted: () => void }) {
   const [error, setError] = useState("");
   const [done, setDone] = useState(false);
 
-  const handleSubmit = useCallback((e: React.FormEvent) => {
+  const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     if (!needType) return setError("Please select what you need.");
@@ -561,7 +564,8 @@ function NeedForm({ onPosted }: { onPosted: () => void }) {
       details: details.trim().slice(0, 200), urgency, mobility,
       postedAt: Date.now(), expiresAt: Date.now() + 7 * 24 * 3_600_000, fulfilled: false,
     };
-    saveNeeds([post, ...loadNeeds()]);
+    const ok = await insertNeedPost(post);
+    if (!ok) return setError("Failed to post — please try again.");
     setNeedType(""); setZip(""); setDetails(""); setUrgency("week"); setMobility("either");
     setDone(true); onPosted(); setTimeout(() => setDone(false), 3000);
   }, [needType, zip, details, urgency, mobility, onPosted]);
