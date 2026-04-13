@@ -5,6 +5,9 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   base: process.env.GITHUB_ACTIONS ? "/nourishnet/" : "/",
   plugins: [react(), tailwindcss()],
+  optimizeDeps: {
+    include: ["supercluster", "maplibre-gl"],
+  },
   server: {
     proxy: {
       "/api": {
