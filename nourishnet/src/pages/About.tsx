@@ -1,188 +1,140 @@
-import { Link } from "react-router-dom";
+const CASCADE_CARDS = [
+  {
+    num: "01",
+    tag: "The problem",
+    title: "Food help exists.\nFinding it doesn't.",
+    text: "Maryland has hundreds of food pantries, food banks, and SNAP retailers but their info is scattered across PDFs, hotlines, and dozens of disconnected websites.",
+    bg: "#f4a94e",
+  },
+  {
+    num: "02",
+    tag: "Our solution",
+    title: "We unified\n5,900+ resources\ninto one app.",
+    text: "NourishNet aggregates data from 211 Maryland, Capital Area Food Bank, USDA SNAP, Feeding America, census tracts, and more then deduplicates, geocodes, and serves it through a fast, searchable map.",
+    bg: "#b8e8d0",
+  },
+  {
+    num: "03",
+    tag: "For families",
+    title: "Find food\nnear you\nin seconds.",
+    text: "Search by ZIP code, city, or county. Filter by day of the week. See what is open now. Get directions with one tap. Available in English, Spanish, French, Chinese, and Korean.",
+    bg: "#f9d97a",
+  },
+  {
+    num: "04",
+    tag: "For donors and volunteers",
+    title: "Give where\nit is needed most.",
+    text: "See county-level food insecurity rates, identify food deserts, and find the pantries and food banks closest to the communities with the greatest need.",
+    bg: "#f4a94e",
+  },
+  {
+    num: "05",
+    tag: "Privacy first",
+    title: "No account.\nNo tracking.",
+    text: "Your location stays in your browser. Nothing is sent to any server. Open source, funded by the NSF through UMD.",
+    bg: "#c5d9f7",
+  },
+];
+
+function CascadeSection() {
+  const doubled = [...CASCADE_CARDS, ...CASCADE_CARDS];
+  return (
+    <section style={{ background: "#fefce8" }} className="py-16 overflow-hidden">
+      <div className="max-w-6xl mx-auto px-6 mb-10">
+        <p className="text-xs font-bold uppercase tracking-[0.2em] text-gray-500 mb-3">
+          NourishNet
+        </p>
+        <div className="flex items-end justify-between gap-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 leading-tight">
+            What makes us different
+          </h2>
+          <span className="text-sm text-gray-400 font-medium whitespace-nowrap pb-1 animate-pulse">
+            auto-scrolling
+          </span>
+        </div>
+      </div>
+      <style>{`
+        @keyframes cascadeLoop {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .cascade-track {
+          display: flex; gap: 28px; width: max-content;
+          animation: cascadeLoop 40s linear infinite;
+        }
+        .cascade-track:hover { animation-play-state: paused; }
+        .cascade-wrap::-webkit-scrollbar { display: none; }
+      `}</style>
+      <div className="cascade-wrap" style={{ overflow: "hidden", scrollbarWidth: "none", paddingLeft: 24 }}>
+        <div className="cascade-track">
+          {doubled.map((card, i) => (
+            <div key={`${card.num}-${i}`} className="relative overflow-hidden" style={{
+              flexShrink: 0, width: 340, minHeight: 360, background: card.bg,
+              borderRadius: 20, padding: "32px 28px", display: "flex", flexDirection: "column",
+            }}>
+              <span className="absolute top-4 right-5 font-bold select-none pointer-events-none"
+                style={{ fontSize: 96, lineHeight: 1, opacity: 0.12, color: "#000" }}>{card.num}</span>
+              <span className="absolute pointer-events-none" style={{
+                bottom: -50, right: -50, width: 180, height: 180,
+                borderRadius: "50%", border: "2px solid rgba(0,0,0,0.06)",
+              }} />
+              <span className="inline-block self-start text-xs font-semibold px-3 py-1 rounded-full mb-6"
+                style={{ background: "rgba(0,0,0,0.08)", color: "rgba(0,0,0,0.7)" }}>{card.tag}</span>
+              <h3 className="font-bold text-2xl leading-snug mb-5"
+                style={{ color: "rgba(0,0,0,0.85)", whiteSpace: "pre-line" }}>{card.title}</h3>
+              <p className="text-sm leading-relaxed mt-auto"
+                style={{ color: "rgba(0,0,0,0.55)" }}>{card.text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
 
 export default function About() {
   return (
     <div>
-      {/* Header */}
-      <div className="bg-gradient-to-r from-gray-800 to-gray-700 text-white py-12 px-4">
-        <div className="max-w-3xl mx-auto text-center">
-          <h1 className="text-3xl font-bold mb-3">About NourishNet</h1>
-          <p className="text-gray-300 max-w-xl mx-auto">
-            An open-source class project connecting people with food assistance across Maryland and the DC metro area.
-          </p>
+      <div className="relative text-white overflow-hidden">
+        <img src="/images/about-header.jpg" alt="Fresh fruits and vegetables"
+          className="w-full h-[340px] object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-black/20" />
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="max-w-4xl mx-auto text-center px-4">
+            <h1 className="text-4xl font-bold mb-4 drop-shadow-lg">NourishNet</h1>
+            <p className="text-white/90 text-lg max-w-2xl mx-auto leading-relaxed drop-shadow-md">
+              We are committed to eliminating hunger by putting healthy food in the hands of the food insecure.
+            </p>
+          </div>
         </div>
       </div>
 
-      <div className="max-w-3xl mx-auto px-4 py-10 space-y-8">
-        {/* Mission */}
-        <section className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-          <div className="flex items-center gap-3 mb-3">
-            <span className="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center text-lg">🎯</span>
-            <h2 className="text-lg font-bold text-gray-900">Our Mission</h2>
-          </div>
-          <p className="text-sm text-gray-600 leading-relaxed">
-            NourishNet helps people find food pantries, donate to organizations in need, and
-            discover volunteer opportunities — all from a single, easy-to-use interface.
-            We believe everyone deserves access to nutritious food and the chance to help their community.
-          </p>
-        </section>
-
-        {/* Data Sources */}
-        <section className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-          <div className="flex items-center gap-3 mb-3">
-            <span className="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center text-lg">📊</span>
-            <h2 className="text-lg font-bold text-gray-900">Data Sources</h2>
-          </div>
-          <p className="text-sm text-gray-600 leading-relaxed">
-            Location and opportunity data is compiled from publicly available information
-            including the Capital Area Food Bank, Maryland Food Bank, Manna Food Center,
-            Bread for the City, county social services departments, and community
-            organizations. We merge and deduplicate records from these sources into a single catalog.
-          </p>
-        </section>
-
-        {/* Disclaimer */}
-        <section className="bg-amber-50 rounded-2xl border border-amber-200 p-6">
-          <div className="flex items-center gap-3 mb-3">
-            <span className="w-10 h-10 bg-amber-200 rounded-xl flex items-center justify-center text-lg">⚠️</span>
-            <h2 className="text-lg font-bold text-amber-900">Important Disclaimer</h2>
-          </div>
-          <p className="text-sm text-amber-800 leading-relaxed mb-3">
-            Data may be incomplete or outdated. Hours, eligibility rules, and contact information
-            can change without notice. Please call the organization directly to confirm details before visiting.
-          </p>
-          <div className="bg-amber-100 rounded-xl p-4 flex items-center gap-3">
-            <span className="text-2xl">📞</span>
-            <div>
-              <div className="text-sm font-semibold text-amber-900">Need help now?</div>
-              <div className="text-sm text-amber-800">
-                Dial <a href="tel:211" className="font-bold underline">211</a> for immediate food assistance referrals.
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Privacy */}
-        <section className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-          <div className="flex items-center gap-3 mb-3">
-            <span className="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center text-lg">🔒</span>
-            <h2 className="text-lg font-bold text-gray-900">Privacy</h2>
-          </div>
-          <p className="text-sm text-gray-600 leading-relaxed">
-            NourishNet is a static site hosted on GitHub Pages. We do not collect, store, or
-            transmit any personal data. The optional "Use My Location" feature runs entirely
-            in your browser and is never sent to any server. Volunteer interest forms open your
-            email client locally — nothing passes through our infrastructure.
-          </p>
-        </section>
-
-        {/* Open Source */}
-        <section className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-          <div className="flex items-center gap-3 mb-3">
-            <span className="w-10 h-10 bg-purple-100 rounded-xl flex items-center justify-center text-lg">💻</span>
-            <h2 className="text-lg font-bold text-gray-900">Open Source</h2>
-          </div>
-          <p className="text-sm text-gray-600 leading-relaxed">
-            This project is fully open source. Contributions, corrections, and new data sources
-            are welcome. Check the repository on GitHub for how to get involved.
-          </p>
-        </section>
-
-        {/* SMS Access */}
-        <section className="bg-gray-900 rounded-2xl overflow-hidden">
-          <div className="px-6 py-5 border-b border-gray-700">
-            <div className="flex items-center gap-3 mb-2">
-              <span className="w-10 h-10 bg-green-600 rounded-xl flex items-center justify-center text-lg">📱</span>
-              <h2 className="text-lg font-bold text-white">SMS Access — No Internet Required</h2>
-            </div>
-            <p className="text-sm text-gray-400">
-              For people without smartphones or data plans. Just text from any basic phone.
+      <div style={{ background: "#fefce8" }}>
+        <CascadeSection />
+        <div className="max-w-5xl mx-auto px-6 py-5 space-y-4">
+          <section className="rounded-lg px-8 py-4 flex items-center gap-6"
+            style={{ background: "#f9f4bb", border: "1px solid rgba(0,0,0,0.06)" }}>
+            <span className="w-10 h-10 rounded-md flex items-center justify-center text-xl shrink-0"
+              style={{ background: "rgba(0,0,0,0.06)" }}>&#9888;&#65039;</span>
+            <p className="text-lg leading-snug flex-1" style={{ color: "rgba(0,0,0,0.6)" }}>
+              <span className="font-bold" style={{ color: "rgba(0,0,0,0.8)" }}>Disclaimer:</span>{" "}
+              Data may be incomplete or outdated. Please call to confirm before visiting.
             </p>
-          </div>
-
-          <div className="p-6 grid sm:grid-cols-2 gap-6">
-            {/* How it works */}
-            <div>
-              <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">How it works</p>
-              <div className="space-y-3">
-                {[
-                  { step: "1", text: 'Text "FOOD 20743" to (202) 555-0NNN', note: "Replace ZIP with yours" },
-                  { step: "2", text: "We look up the 3 nearest open pantries", note: "Using your ZIP code" },
-                  { step: "3", text: "You get a text back in seconds", note: "Name, address, phone number" },
-                ].map(({ step, text, note }) => (
-                  <div key={step} className="flex gap-3">
-                    <span className="w-6 h-6 bg-green-600 rounded-full text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
-                      {step}
-                    </span>
-                    <div>
-                      <p className="text-sm text-white font-medium">{text}</p>
-                      <p className="text-xs text-gray-500">{note}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mt-4 bg-green-900/40 border border-green-700 rounded-xl p-3">
-                <p className="text-xs font-bold text-green-400 mb-1">Example command</p>
-                <p className="font-mono text-green-300 text-base">FOOD 20743</p>
-                <p className="text-xs text-green-600 mt-1">→ sends to (202) 555-0NNN</p>
-              </div>
+            <div className="rounded-md px-5 py-2.5 flex items-center gap-2 shrink-0"
+              style={{ background: "rgba(0,0,0,0.05)" }}>
+              <span className="text-xl">&#128222;</span>
+              <span className="text-lg font-medium" style={{ color: "rgba(0,0,0,0.65)" }}>
+                Dial <a href="tel:211" className="font-bold underline"
+                  style={{ color: "rgba(0,0,0,0.8)" }}>211</a> for assistance
+              </span>
             </div>
-
-            {/* Phone mockup */}
-            <div className="flex flex-col items-center">
-              <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Sample response</p>
-              <div className="bg-gray-800 rounded-3xl p-3 w-full max-w-[220px] shadow-xl border border-gray-700">
-                {/* Status bar */}
-                <div className="flex justify-between text-gray-500 text-xs px-2 mb-2">
-                  <span>9:41</span>
-                  <span>●●●</span>
-                </div>
-                {/* Chat */}
-                <div className="bg-gray-900 rounded-2xl p-3 space-y-2 min-h-[200px]">
-                  {/* User message */}
-                  <div className="flex justify-end">
-                    <div className="bg-green-600 text-white text-xs rounded-2xl rounded-br-sm px-3 py-2 max-w-[80%]">
-                      FOOD 20743
-                    </div>
-                  </div>
-                  {/* Bot reply */}
-                  <div className="flex justify-start">
-                    <div className="bg-gray-700 text-gray-100 text-xs rounded-2xl rounded-bl-sm px-3 py-2 max-w-[90%] leading-relaxed">
-                      <p className="font-bold text-green-400 mb-1">NourishNet 🥦</p>
-                      <p>3 open pantries near 20743:</p>
-                      <p className="mt-1">1. <strong>PG Food Bank</strong> — 0.8 mi<br />14010 Laurel Place · (301) 888-2000</p>
-                      <p className="mt-1">2. <strong>Help365</strong> — 1.2 mi<br />6210 Seat Pleasant · (301) 773-0500</p>
-                      <p className="mt-1">3. <strong>Catholic Charities</strong> — 1.9 mi<br />9222 Basil Ct · (301) 441-9840</p>
-                      <p className="mt-2 text-gray-400">Reply HELP for more options</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="px-6 py-4 bg-gray-800 border-t border-gray-700">
-            <p className="text-xs text-gray-500 text-center">
-              SMS feature planned for Phase 2 · Powered by Twilio + NourishNet API ·
-              Works on any phone, no internet, no app download required
+          </section>
+          <div className="text-center pb-4">
+            <p className="text-xs text-gray-400">
+              Learn more at{" "}
+              <a href="https://nourishnet.umd.edu" target="_blank" rel="noopener noreferrer"
+                className="text-emerald-600 underline hover:text-emerald-700">nourishnet.umd.edu</a>
             </p>
-          </div>
-        </section>
-
-        {/* CTA */}
-        <div className="text-center pt-4">
-          <p className="text-sm text-gray-500 mb-4">Ready to get started?</p>
-          <div className="flex flex-wrap justify-center gap-3">
-            <Link to="/find-food" className="bg-emerald-600 text-white font-medium px-6 py-3 rounded-xl hover:bg-emerald-700 shadow-sm">
-              🍎 Find Food
-            </Link>
-            <Link to="/donate" className="bg-amber-600 text-white font-medium px-6 py-3 rounded-xl hover:bg-amber-700 shadow-sm">
-              🤲 Donate
-            </Link>
-            <Link to="/volunteer" className="bg-blue-600 text-white font-medium px-6 py-3 rounded-xl hover:bg-blue-700 shadow-sm">
-              🙋 Volunteer
-            </Link>
           </div>
         </div>
       </div>
