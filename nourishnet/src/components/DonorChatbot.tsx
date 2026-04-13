@@ -251,12 +251,17 @@ function MessageContent({ text }: { text: string }) {
   const html = text
     .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
     .replace(/\*(.*?)\*/g, "<em>$1</em>")
-    .replace(/\n- /g, "<br/>• ")
-    .replace(/\n\* /g, "<br/>• ")
-    .replace(/\n/g, "<br/>")
     // Convert markdown links [text](url) to clickable <a> tags
     .replace(/\[([^\]]+)\]\(([^)]+)\)/g,
       '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-amber-700 underline hover:text-amber-900">$1</a>')
+    // Indent lines after a bullet (address, phone, hours) with left padding
+    .replace(/\n {2,}(.+)/g, '<br/><span class="pl-4 text-gray-600">$1</span>')
+    // Bullet points
+    .replace(/\n- /g, '<br/><span class="mt-1 inline-block">• </span>')
+    .replace(/\n\* /g, '<br/><span class="mt-1 inline-block">• </span>')
+    .replace(/\n• /g, '<br/><span class="mt-1 inline-block">• </span>')
+    // Regular line breaks
+    .replace(/\n/g, "<br/>")
     // Convert bare URLs to clickable links
     .replace(/(^|[^"'>])(https?:\/\/[^\s<,)]+)/g,
       '$1<a href="$2" target="_blank" rel="noopener noreferrer" class="text-amber-700 underline hover:text-amber-900">$2</a>');
