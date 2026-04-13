@@ -15,14 +15,16 @@ from google import genai
 from google.genai import types
 
 # ── Config ──────────────────────────────────────────────────
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
-load_dotenv(PROJECT_ROOT / ".env")
+CHATBOT_DIR = Path(__file__).resolve().parent
+load_dotenv(CHATBOT_DIR / ".env")
 
-GEMINI_API_KEY = os.environ["GEMINI_API_KEY"]
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
+if not GEMINI_API_KEY:
+    raise RuntimeError("GEMINI_API_KEY environment variable is required")
 client = genai.Client(api_key=GEMINI_API_KEY)
 
-DONOR_DIR = PROJECT_ROOT / "data" / "unified" / "donor"
-SNAP_FILE = PROJECT_ROOT / "data" / "unified" / "consumer" / "snap_retailer_locator.csv"
+DONOR_DIR = CHATBOT_DIR / "data" / "donor"
+SNAP_FILE = CHATBOT_DIR / "data" / "consumer" / "snap_retailer_locator.csv"
 MAX_ROWS = 150
 MODEL = "gemini-2.0-flash"
 
