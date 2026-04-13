@@ -38,3 +38,7 @@ we need to unify all the data together in one and remove de duplication as we wa
 ## Prompt 7 — Full Donor Integration
 
 now we have the unified data under the data folder, check the readme file which has the guide on how the data is suppossed to be used, make the use of whole donor data and let's get the donor function fully working now!
+
+## Prompt 8 — Bake the coordinates using geocoder
+
+Donor map is mostly blank. donor_catalog.json shows "lat": null, "lng": null for the majority of donorPlaces — these come from food_pantries_unified.csv which lacks coordinates. The map the donor sees is empty.

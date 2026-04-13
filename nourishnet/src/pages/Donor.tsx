@@ -1,12 +1,12 @@
-import { useState, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useDonorCatalog } from "../hooks/useDonorCatalog";
 import { useGeolocation } from "../hooks/useGeolocation";
 import { useGeocode } from "../hooks/useGeocode";
 import { distanceMiles } from "../utils/geo";
 import { pointInGeoJSON } from "../utils/pointInPolygon";
 import NourishMap, { type MapPoint, type AddressLookup } from "../components/NourishMap";
-import type { DonorPlace, CountyStat } from "../types";
-import DonorChatbot from "../components/DonorChatbot";
+import FoodInsecurityOverlay, { InsecurityLegend } from "../components/FoodInsecurityOverlay";
+import type { DonorPlace } from "../types";
 import SurplusFoodBoard from "../components/SurplusFoodBoard";
 import DonorImpactPanel from "../components/DonorImpactPanel";
 import NeighborhoodDonation from "../components/NeighborhoodDonation";
@@ -30,8 +30,7 @@ export default function Donor() {
   const [typeFilter, setTypeFilter] = useState<string>("");
   const [countyFilter, setCountyFilter] = useState("");
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [showStats, setShowStats] = useState(false);
-  const [showHeatmap, setShowHeatmap] = useState(false);
+  const [showHeatmap, setShowHeatmap] = useState(true);
   const [showImpact, setShowImpact] = useState(false);
   const [selectedHeatmapCounty, setSelectedHeatmapCounty] = useState<string | null>(null);
 
@@ -98,22 +97,69 @@ export default function Donor() {
     return lookup;
   }, [filtered]);
 
-  const relevantStats = useMemo(() => {
-    if (!catalog) return [];
-    let stats = catalog.countyStats;
-    if (countyFilter) stats = stats.filter((s) => s.county === countyFilter);
-    return stats
-      .filter((s) => s.foodInsecurityRate != null)
-      .sort((a, b) => (b.foodInsecurityRate ?? 0) - (a.foodInsecurityRate ?? 0))
-      .slice(0, 10);
-  }, [catalog, countyFilter]);
-
   const typeCounts = useMemo(() => {
     if (!catalog) return {} as Record<string, number>;
     const counts: Record<string, number> = {};
     for (const p of catalog.donorPlaces) counts[p.donorType] = (counts[p.donorType] || 0) + 1;
     return counts;
   }, [catalog]);
+
+  // #region agent log
+  useEffect(() => {
+    fetch("http://127.0.0.1:7273/ingest/2e98aacf-fd4e-4abd-8ec2-44bbe6fa1fa2", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "X-Debug-Session-Id": "d952e0" },
+      body: JSON.stringify({
+        sessionId: "d952e0",
+        runId: "pre-fix",
+        hypothesisId: "H_mount",
+        location: "Donor.tsx:mount",
+        message: "Donor page mounted",
+        data: { hasCatalog: Boolean(catalog), hasError: Boolean(error) },
+        timestamp: Date.now(),
+      }),
+    }).catch(() => {});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    fetch("http://127.0.0.1:7273/ingest/2e98aacf-fd4e-4abd-8ec2-44bbe6fa1fa2", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "X-Debug-Session-Id": "d952e0" },
+      body: JSON.stringify({
+        sessionId: "d952e0",
+        runId: "pre-fix",
+        hypothesisId: "H_catalogState",
+        location: "Donor.tsx:state",
+        message: "Donor page state",
+        data: { hasCatalog: Boolean(catalog), error: error ?? null },
+        timestamp: Date.now(),
+      }),
+    }).catch(() => {});
+  }, [catalog, error]);
+
+  useEffect(() => {
+    if (!catalog) return;
+    fetch("http://127.0.0.1:7273/ingest/2e98aacf-fd4e-4abd-8ec2-44bbe6fa1fa2", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "X-Debug-Session-Id": "d952e0" },
+      body: JSON.stringify({
+        sessionId: "d952e0",
+        runId: "pre-fix",
+        hypothesisId: "H_render",
+        location: "Donor.tsx:render",
+        message: "Donor page catalog loaded",
+        data: {
+          donorPlacesCount: catalog.donorPlaces.length,
+          countyStatsCount: catalog.countyStats?.length ?? 0,
+          showHeatmap,
+          showImpact,
+        },
+        timestamp: Date.now(),
+      }),
+    }).catch(() => {});
+  }, [catalog, showHeatmap, showImpact]);
+  // #endregion agent log
 
   if (error) return <p className="p-8 text-red-600">Failed to load data: {error}</p>;
   if (!catalog) return <p className="p-8 text-gray-500 animate-subtle-pulse">Loading donor data…</p>;
@@ -189,18 +235,10 @@ export default function Donor() {
               {geo.loading ? "Locating…" : "📍 My Location"}
             </button>
             <button
-              onClick={() => setShowStats(!showStats)}
-              className={`px-4 py-2.5 rounded-xl text-sm font-medium border transition-colors ${showStats ? "bg-amber-100 text-amber-800 border-amber-300" : "bg-white text-gray-600 border-gray-200 hover:border-amber-300"}`}
-            >
-              📊 Need Stats
-            </button>
-            <button
               onClick={() => setShowHeatmap(!showHeatmap)}
-              className={`px-4 py-2.5 rounded-xl text-sm font-medium border transition-colors ${
-                showHeatmap ? "bg-red-100 text-red-800 border-red-300" : "bg-white text-gray-600 border-gray-200 hover:border-red-300"
-              }`}
+              className={`px-4 py-2.5 rounded-xl text-sm font-medium border transition-colors ${showHeatmap ? "bg-red-100 text-red-800 border-red-300" : "bg-white text-gray-600 border-gray-200 hover:border-red-300"}`}
             >
-              🗺 Food Desert Map
+              🌡️ Food Insecurity Map
             </button>
             <button
               onClick={() => setShowImpact(!showImpact)}
@@ -224,18 +262,6 @@ export default function Donor() {
           </div>
         </div>
 
-        {/* County stats */}
-        {showStats && relevantStats.length > 0 && (
-          <div className="bg-amber-50 border border-amber-200 rounded-2xl p-5 mb-6">
-            <h3 className="font-bold text-amber-900 mb-3">
-              📊 Food Insecurity {countyFilter ? `— ${countyFilter}` : "— Top 10 Most Affected Counties"}
-            </h3>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-              {relevantStats.map((s) => <CountyStatCard key={`${s.county}-${s.year}`} stat={s} />)}
-            </div>
-          </div>
-        )}
-
         {/* Donor Impact Panel */}
         {showImpact && (
           <DonorImpactPanel
@@ -246,7 +272,6 @@ export default function Donor() {
 
         {/* Surplus Food Board */}
         <SurplusFoodBoard />
-
 
         {/* List + Map */}
         <div className="grid lg:grid-cols-5 gap-5 mb-8">
@@ -341,36 +366,26 @@ export default function Donor() {
             )}
           </div>
 
-          <div className="lg:col-span-3 flex flex-col gap-2">
-            {showHeatmap && (
-              <div className="flex items-center gap-3 bg-white border border-gray-200 rounded-xl px-4 py-2 text-xs font-medium shadow-sm">
-                <span className="text-gray-500">Food insecurity rate:</span>
-                {[
-                  { color: "#16a34a", label: "< 12%" },
-                  { color: "#ca8a04", label: "12–15%" },
-                  { color: "#ea580c", label: "15–18%" },
-                  { color: "#dc2626", label: "≥ 18%" },
-                ].map(({ color, label }) => (
-                  <span key={label} className="flex items-center gap-1">
-                    <span className="inline-block w-3 h-3 rounded-full" style={{ background: color, opacity: 0.7 }} />
-                    {label}
-                  </span>
-                ))}
-                <span className="text-gray-400 ml-auto">Bubble size = population affected · see county cards below</span>
-              </div>
-            )}
-            <div className="h-[560px] rounded-2xl overflow-hidden map-wrapper border border-gray-200">
-              <NourishMap
-                points={mapPoints}
-                variant="donor"
-                selectedId={selectedId}
-                onSelect={(id) => setSelectedId(selectedId === id ? null : id)}
-                geocode={geocode.result}
-                addressLookup={addressLookup}
-                initialZoom={9}
+          {/* Map */}
+          <div className="lg:col-span-3 h-[560px] rounded-2xl overflow-hidden map-wrapper border border-gray-200 relative">
+            <NourishMap
+              points={mapPoints}
+              variant="donor"
+              selectedId={selectedId}
+              onSelect={(id) => setSelectedId(selectedId === id ? null : id)}
+              geocode={geocode.result}
+              addressLookup={addressLookup}
+              initialZoom={9}
+            >
+              <FoodInsecurityOverlay
+                countyStats={catalog.countyStats}
+                visible={showHeatmap}
               />
-            </div>
+            </NourishMap>
+            <InsecurityLegend visible={showHeatmap} />
           </div>
+        </div>
+
         {/* Neighborhood donation section — always visible on donor page */}
         <NeighborhoodDonation
           countyStats={catalog.countyStats}
@@ -380,27 +395,6 @@ export default function Donor() {
             if (c) setShowImpact(true);
           }}
         />
-        </div>
-      </div>
-
-      {/* RAG Chatbot — donor only */}
-      <DonorChatbot />
-    </div>
-  );
-}
-
-function CountyStatCard({ stat }: { stat: CountyStat }) {
-  const shortfall = stat.annualFoodBudgetShortfall
-    ? `$${(stat.annualFoodBudgetShortfall / 1_000_000).toFixed(1)}M` : "N/A";
-  return (
-    <div className="bg-white rounded-xl p-3 border border-amber-100">
-      <div className="font-semibold text-sm text-gray-900">{stat.county}</div>
-      <div className="text-xs text-gray-500 mb-2">{stat.year} data</div>
-      <div className="grid grid-cols-2 gap-2 text-xs">
-        <div><div className="text-amber-700 font-bold text-lg">{stat.foodInsecurityRate}%</div><div className="text-gray-500">Food insecurity</div></div>
-        <div><div className="text-amber-700 font-bold text-lg">{stat.foodInsecurePopulation.toLocaleString()}</div><div className="text-gray-500">People affected</div></div>
-        <div><div className="text-gray-700 font-semibold">${stat.averageMealCost?.toFixed(2) ?? "N/A"}</div><div className="text-gray-500">Avg meal cost</div></div>
-        <div><div className="text-gray-700 font-semibold">{shortfall}</div><div className="text-gray-500">Budget shortfall</div></div>
       </div>
     </div>
   );

@@ -35,6 +35,8 @@ interface Props {
   geocode?: GeocodeResult | null;
   addressLookup?: AddressLookup;
   initialZoom?: number;
+  /** Extra MapLibre layers to render inside the map (e.g. choropleth overlay) */
+  children?: React.ReactNode;
 }
 
 const STYLE_URL = "https://tiles.openfreemap.org/styles/liberty";
@@ -71,7 +73,7 @@ async function geocodeAddress(address: string): Promise<{ lat: number; lng: numb
 }
 
 export default function NourishMap({
-  points, variant, selectedId, onSelect, geocode, addressLookup = {}, initialZoom = 9,
+  points, variant, selectedId, onSelect, geocode, addressLookup = {}, initialZoom = 9, children,
 }: Props) {
   const mapRef = useRef<MapRef>(null);
   const [zoom, setZoom] = useState(initialZoom);
@@ -217,6 +219,9 @@ export default function NourishMap({
       onZoomEnd={updateViewport}
       style={{ width: "100%", height: "100%" }}
     >
+      {/* Extra overlay layers (e.g. choropleth) — rendered first so pins appear on top */}
+      {children}
+
       {/* Region boundary */}
       {geocode?.boundary && (
         <Source id="nn-region" type="geojson" data={geocode.boundary as GeoJSON.Feature}>
