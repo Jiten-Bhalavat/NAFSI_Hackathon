@@ -7,6 +7,9 @@ import { pointInGeoJSON } from "../utils/pointInPolygon";
 import NourishMap, { type MapPoint, type AddressLookup } from "../components/NourishMap";
 import type { DonorPlace, CountyStat } from "../types";
 import DonorChatbot from "../components/DonorChatbot";
+import SurplusFoodBoard from "../components/SurplusFoodBoard";
+import DonorImpactPanel from "../components/DonorImpactPanel";
+import NeighborhoodDonation from "../components/NeighborhoodDonation";
 
 const DONOR_TYPES = ["", "pantry", "food-bank"] as const;
 const TYPE_LABELS: Record<string, string> = {
@@ -28,6 +31,9 @@ export default function Donor() {
   const [countyFilter, setCountyFilter] = useState("");
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [showStats, setShowStats] = useState(false);
+  const [showHeatmap, setShowHeatmap] = useState(false);
+  const [showImpact, setShowImpact] = useState(false);
+  const [selectedHeatmapCounty, setSelectedHeatmapCounty] = useState<string | null>(null);
 
   const geocode = useGeocode(search);
 
@@ -188,6 +194,22 @@ export default function Donor() {
             >
               📊 Need Stats
             </button>
+            <button
+              onClick={() => setShowHeatmap(!showHeatmap)}
+              className={`px-4 py-2.5 rounded-xl text-sm font-medium border transition-colors ${
+                showHeatmap ? "bg-red-100 text-red-800 border-red-300" : "bg-white text-gray-600 border-gray-200 hover:border-red-300"
+              }`}
+            >
+              🗺 Food Desert Map
+            </button>
+            <button
+              onClick={() => setShowImpact(!showImpact)}
+              className={`px-4 py-2.5 rounded-xl text-sm font-medium border transition-colors ${
+                showImpact ? "bg-amber-100 text-amber-800 border-amber-300" : "bg-white text-gray-600 border-gray-200 hover:border-amber-300"
+              }`}
+            >
+              💛 My Impact
+            </button>
           </div>
           <div className="mt-3 min-h-[20px]">
             {geocode.loading && <p className="text-xs text-gray-400 animate-subtle-pulse">Searching…</p>}
@@ -213,6 +235,18 @@ export default function Donor() {
             </div>
           </div>
         )}
+
+        {/* Donor Impact Panel */}
+        {showImpact && (
+          <DonorImpactPanel
+            countyStats={catalog.countyStats}
+            selectedCounty={selectedHeatmapCounty || countyFilter || undefined}
+          />
+        )}
+
+        {/* Surplus Food Board */}
+        <SurplusFoodBoard />
+
 
         {/* List + Map */}
         <div className="grid lg:grid-cols-5 gap-5 mb-8">
@@ -307,18 +341,45 @@ export default function Donor() {
             )}
           </div>
 
-          {/* Map */}
-          <div className="lg:col-span-3 h-[560px] rounded-2xl overflow-hidden map-wrapper border border-gray-200">
-            <NourishMap
-              points={mapPoints}
-              variant="donor"
-              selectedId={selectedId}
-              onSelect={(id) => setSelectedId(selectedId === id ? null : id)}
-              geocode={geocode.result}
-              addressLookup={addressLookup}
-              initialZoom={9}
-            />
+          <div className="lg:col-span-3 flex flex-col gap-2">
+            {showHeatmap && (
+              <div className="flex items-center gap-3 bg-white border border-gray-200 rounded-xl px-4 py-2 text-xs font-medium shadow-sm">
+                <span className="text-gray-500">Food insecurity rate:</span>
+                {[
+                  { color: "#16a34a", label: "< 12%" },
+                  { color: "#ca8a04", label: "12–15%" },
+                  { color: "#ea580c", label: "15–18%" },
+                  { color: "#dc2626", label: "≥ 18%" },
+                ].map(({ color, label }) => (
+                  <span key={label} className="flex items-center gap-1">
+                    <span className="inline-block w-3 h-3 rounded-full" style={{ background: color, opacity: 0.7 }} />
+                    {label}
+                  </span>
+                ))}
+                <span className="text-gray-400 ml-auto">Bubble size = population affected · see county cards below</span>
+              </div>
+            )}
+            <div className="h-[560px] rounded-2xl overflow-hidden map-wrapper border border-gray-200">
+              <NourishMap
+                points={mapPoints}
+                variant="donor"
+                selectedId={selectedId}
+                onSelect={(id) => setSelectedId(selectedId === id ? null : id)}
+                geocode={geocode.result}
+                addressLookup={addressLookup}
+                initialZoom={9}
+              />
+            </div>
           </div>
+        {/* Neighborhood donation section — always visible on donor page */}
+        <NeighborhoodDonation
+          countyStats={catalog.countyStats}
+          highlightedCounty={selectedHeatmapCounty}
+          onSelectCounty={(c) => {
+            setSelectedHeatmapCounty(c);
+            if (c) setShowImpact(true);
+          }}
+        />
         </div>
       </div>
 
