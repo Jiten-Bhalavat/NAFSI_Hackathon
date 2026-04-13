@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "2.0.0",
+  "schemaVersion": "2.1.0",
   "generatedAt": "2026-04-13T00:00:00Z",
   "donorPlaces": [
     {
@@ -38234,7 +38234,9 @@
       "source": "food_banks_cafb",
       "summary": "CAFB partner food bank in Washington.",
       "donorType": "food-bank"
-    },
+    }
+  ],
+  "partnerMarkets": [
     {
       "id": "fm-a5c727ea1ed2",
       "name": "American Market@National Harbor",
@@ -38761,7 +38763,9 @@
       "donorType": "farmers-market",
       "products": "Baked Goods; Flowers; Eggs; Herbs; Vegetables; Honey; Jams; Meat; Poultry; Trees; Wine",
       "paymentMethods": "CREDIT; WIC; SFMNP"
-    },
+    }
+  ],
+  "supplyGapStores": [
     {
       "id": "mkt-e5b97d7412de",
       "name": "Kashmir Bazaar Halal Meat And Grocery",

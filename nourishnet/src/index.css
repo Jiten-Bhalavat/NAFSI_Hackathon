@@ -1,68 +1,61 @@
 @import "tailwindcss";
-@import "leaflet/dist/leaflet.css";
+@import "maplibre-gl/dist/maplibre-gl.css";
 
-/* Fix Leaflet default icon paths broken by bundlers */
-.leaflet-default-icon-path {
-  background-image: url("leaflet/dist/images/marker-icon.png");
-}
-
-/* Focus styles for accessibility */
+/* ── Accessibility ── */
 *:focus-visible {
   outline: 3px solid #2563eb;
   outline-offset: 2px;
 }
-
-.leaflet-container:focus {
+.maplibregl-map:focus {
   outline: 3px solid #2563eb;
 }
 
-/* Planner markers — blue tint */
-.planner-marker {
-  filter: hue-rotate(200deg) saturate(1.3);
+/* ── Custom cluster markers ── */
+.nn-cluster {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-weight: 700;
+  color: white;
+  cursor: pointer;
+  border: 3px solid white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  transition: transform 150ms ease;
 }
+.nn-cluster:hover { transform: scale(1.1); }
+.nn-cluster-sm  { width: 36px; height: 36px; font-size: 13px; background: #059669; }
+.nn-cluster-md  { width: 46px; height: 46px; font-size: 14px; background: #d97706; }
+.nn-cluster-lg  { width: 56px; height: 56px; font-size: 15px; background: #dc2626; }
 
-/* Cleaner marker clusters */
-.marker-cluster-small {
-  background-color: rgba(5, 150, 105, 0.25) !important;
+/* ── Pin markers ── */
+.nn-pin {
+  width: 14px;
+  height: 14px;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  border: 2px solid white;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+  cursor: pointer;
+  transition: transform 150ms ease;
 }
-.marker-cluster-small div {
-  background-color: rgba(5, 150, 105, 0.7) !important;
-  color: white !important;
-  font-weight: 600;
-  font-size: 13px;
-}
-.marker-cluster-medium {
-  background-color: rgba(217, 119, 6, 0.25) !important;
-}
-.marker-cluster-medium div {
-  background-color: rgba(217, 119, 6, 0.7) !important;
-  color: white !important;
-  font-weight: 600;
-  font-size: 13px;
-}
-.marker-cluster-large {
-  background-color: rgba(220, 38, 38, 0.25) !important;
-}
-.marker-cluster-large div {
-  background-color: rgba(220, 38, 38, 0.7) !important;
-  color: white !important;
-  font-weight: 600;
-  font-size: 14px;
-}
+.nn-pin:hover { transform: rotate(-45deg) scale(1.3); }
+.nn-pin-consumer { background: #059669; }
+.nn-pin-donor    { background: #d97706; }
+.nn-pin-planner  { background: #2563eb; }
+.nn-pin-selected { transform: rotate(-45deg) scale(1.4) !important; box-shadow: 0 2px 8px rgba(0,0,0,0.4); }
 
-/* Smooth transitions everywhere */
+/* ── Global transitions ── */
 *, *::before, *::after {
   transition-property: color, background-color, border-color, box-shadow, opacity, transform;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 }
 
-/* Hero gradient */
+/* ── Utilities ── */
 .hero-gradient {
   background: linear-gradient(135deg, #065f46 0%, #047857 40%, #10b981 100%);
 }
-
-/* Card lift on hover */
 .card-lift {
   transition: transform 200ms ease, box-shadow 200ms ease;
 }
@@ -70,20 +63,14 @@
   transform: translateY(-4px);
   box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.15);
 }
-
-/* Glass-style filter bar */
 .filter-bar {
   background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 }
-
-/* Map shadow wrapper */
 .map-wrapper {
   box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.12);
 }
-
-/* Subtle pulse for loading states */
 @keyframes subtle-pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.5; }
@@ -91,25 +78,12 @@
 .animate-subtle-pulse {
   animation: subtle-pulse 1.5s ease-in-out infinite;
 }
-
-/* Modal overlay */
 .modal-overlay {
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
 }
-
-/* Scrollbar styling for list panels */
-.styled-scrollbar::-webkit-scrollbar {
-  width: 6px;
-}
-.styled-scrollbar::-webkit-scrollbar-track {
-  background: transparent;
-}
-.styled-scrollbar::-webkit-scrollbar-thumb {
-  background: #d1d5db;
-  border-radius: 3px;
-}
-.styled-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #9ca3af;
-}
+.styled-scrollbar::-webkit-scrollbar { width: 6px; }
+.styled-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.styled-scrollbar::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; }
+.styled-scrollbar::-webkit-scrollbar-thumb:hover { background: #9ca3af; }

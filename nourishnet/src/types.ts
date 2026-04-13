@@ -85,7 +85,9 @@ export interface PriorityTract {
 export interface DonorCatalog {
   schemaVersion: string;
   generatedAt: string;
-  donorPlaces: DonorPlace[];
+  donorPlaces: DonorPlace[];        // pantries + food banks — where to donate
+  partnerMarkets: DonorPlace[];     // farmers markets — partnership context
+  supplyGapStores: DonorPlace[];    // PG County stores — supply gap analysis
   countyStats: CountyStat[];
   priorityTracts: PriorityTract[];
 }

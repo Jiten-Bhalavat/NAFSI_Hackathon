@@ -1,17 +1,12 @@
 import { useState, useMemo } from "react";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { useCatalog } from "../hooks/useCatalog";
 import { useGeolocation } from "../hooks/useGeolocation";
 import { useGeocode } from "../hooks/useGeocode";
 import { distanceMiles } from "../utils/geo";
 import { pointInGeoJSON } from "../utils/pointInPolygon";
-import { plannerIcon } from "../utils/leafletIcons";
-import RegionOverlay from "../components/RegionOverlay";
-import { FlyToMarker, FitBounds } from "../components/MapController";
+import NourishMap, { type MapPoint } from "../components/NourishMap";
 import VolunteerForm from "../components/VolunteerForm";
 import type { Place, Opportunity } from "../types";
-
-const MD_CENTER: [number, number] = [38.95, -77.05];
 
 export default function Planner() {
   const { catalog, error } = useCatalog();
@@ -95,15 +90,10 @@ export default function Planner() {
 
   const selected = volunteering.find((o) => o.id === selectedOpp) ?? null;
 
-  // Fly-to coords when an opportunity is selected
-  const selectedPlace = selected?.place;
-  const selectedCoords: [number, number] | null =
-    selectedPlace?.lat != null && selectedPlace?.lng != null
-      ? [selectedPlace.lat, selectedPlace.lng]
-      : null;
-
-  const fitKey = useMemo(() => mappablePlaces.map((p) => p.id).join(","), [mappablePlaces]);
-  const fitPoints = useMemo<[number, number][]>(() => mappablePlaces.map((p) => [p.lat, p.lng]), [mappablePlaces]);
+  const mapPoints = useMemo<MapPoint[]>(() =>
+    mappablePlaces.map((p) => ({ id: p.id, lat: p.lat, lng: p.lng, label: p.name, sublabel: `${p.address}, ${p.city}` })),
+    [mappablePlaces]
+  );
 
   const openForm = (opp?: (Opportunity & { place?: Place }) | null) => {
     setFormOpp(opp ?? null);
@@ -143,6 +133,7 @@ export default function Planner() {
               <input
                 id="planner-search"
                 type="text"
+                autoComplete="off"
                 placeholder="City, ZIP, county, or address…"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
@@ -307,20 +298,14 @@ export default function Planner() {
 
           {/* Map */}
           <div className="lg:col-span-3 h-[500px] rounded-2xl overflow-hidden map-wrapper border border-gray-200">
-            <MapContainer center={MD_CENTER} zoom={9} className="h-full w-full" scrollWheelZoom>
-              <TileLayer
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-              />
-              <RegionOverlay geocode={geocode.result} color="#2563eb" />
-              <FitBounds points={fitPoints} fitKey={fitKey} />
-              <FlyToMarker lat={selectedCoords?.[0] ?? null} lng={selectedCoords?.[1] ?? null} />
-              {mappablePlaces.map((p) => (
-                <Marker key={p.id} position={[p.lat, p.lng]} icon={plannerIcon}>
-                  <Popup><strong>{p.name}</strong><br />{p.address}, {p.city}</Popup>
-                </Marker>
-              ))}
-            </MapContainer>
+            <NourishMap
+              points={mapPoints}
+              variant="planner"
+              selectedId={selected?.place?.id ?? null}
+              onSelect={() => {}}
+              geocode={geocode.result}
+              initialZoom={9}
+            />
           </div>
         </div>
       </div>

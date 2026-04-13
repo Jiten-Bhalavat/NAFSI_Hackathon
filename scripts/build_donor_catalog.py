@@ -13,6 +13,14 @@ from pathlib import Path
 
 DONOR_DIR = Path("data/unified/donor")
 OUT_PATH = Path("nourishnet/public/data/donor_catalog.json")
+GEOCACHE_PATH = DONOR_DIR / "pantry_geocache.json"
+
+
+def load_geocache() -> dict:
+    if GEOCACHE_PATH.exists():
+        with open(GEOCACHE_PATH, encoding="utf-8") as f:
+            return json.load(f)
+    return {}
 
 
 def stable_id(prefix: str, *parts: str) -> str:
@@ -58,8 +66,8 @@ def build_hours_from_cafb(row: dict) -> str:
     return "; ".join(parts) if parts else ""
 
 
-def process_food_pantries(rows: list[dict]) -> list[dict]:
-    """Convert food_pantries_unified.csv rows to places."""
+def process_food_pantries(rows: list[dict], geocache: dict) -> list[dict]:
+    """Convert food_pantries_unified.csv rows to places, merging geocache coords."""
     places = []
     for r in rows:
         name = clean(r.get("name", ""))
@@ -78,10 +86,8 @@ def process_food_pantries(rows: list[dict]) -> list[dict]:
         hours_str = f"{hours} ({days})" if hours and days else hours or days or ""
         categories = clean(r.get("categories", ""))
         description = clean(r.get("description", ""))
-        # Extract a short summary from description (first sentence or 200 chars)
         summary = ""
         if description:
-            # Take up to first period or 200 chars
             dot = description.find(".")
             if 0 < dot < 200:
                 summary = description[:dot + 1]
@@ -89,6 +95,11 @@ def process_food_pantries(rows: list[dict]) -> list[dict]:
                 summary = description[:200] + ("…" if len(description) > 200 else "")
 
         tags = [t.strip() for t in categories.split(";") if t.strip()] if categories else ["pantry"]
+
+        # Merge geocache coordinates
+        cached = geocache.get(pid, {})
+        lat = cached.get("lat")
+        lng = cached.get("lng")
 
         places.append({
             "id": pid,
@@ -98,8 +109,8 @@ def process_food_pantries(rows: list[dict]) -> list[dict]:
             "state": state or "MD",
             "zip": zipcode,
             "county": county,
-            "lat": None,  # pantries_unified doesn't have lat/lng
-            "lng": None,
+            "lat": lat,
+            "lng": lng,
             "phone": phone,
             "website": website,
             "hours": hours_str,
@@ -309,17 +320,27 @@ def main():
     fa_rows = read_csv("feeding_america_maryland.csv")
     tract_rows = read_csv("tracts_with_municipality.csv")
 
-    # Process into places
-    all_places = []
-    all_places.extend(process_food_pantries(pantry_rows))
-    all_places.extend(process_food_banks(cafb_rows))
-    all_places.extend(process_farmers_markets(fm_rows))
-    all_places.extend(process_market_data(market_rows))
+    # Load geocache (built by geocode_pantries.py)
+    geocache = load_geocache()
+    geocached_count = sum(1 for v in geocache.values() if v.get("lat") is not None)
+    print(f"  Geocache: {len(geocache)} entries, {geocached_count} with coordinates")
 
-    # Deduplicate
-    before = len(all_places)
-    all_places = deduplicate_places(all_places)
-    print(f"\n  Dedup: {before} → {len(all_places)} places")
+    # Donation destinations: pantries + food banks only
+    donation_places = []
+    donation_places.extend(process_food_pantries(pantry_rows, geocache))
+    donation_places.extend(process_food_banks(cafb_rows))
+
+    before = len(donation_places)
+    donation_places = deduplicate_places(donation_places)
+    print(f"\n  Donation places dedup: {before} → {len(donation_places)}")
+
+    # Partner markets (farmers markets — partnership/context, not drop-off)
+    partner_markets = process_farmers_markets(fm_rows)
+    print(f"  Partner markets: {len(partner_markets)}")
+
+    # Supply gap stores (market_data — analytical context for identifying gaps)
+    supply_gap_stores = process_market_data(market_rows)
+    print(f"  Supply gap stores: {len(supply_gap_stores)}")
 
     # County stats
     county_stats = process_feeding_america(fa_rows)
@@ -329,27 +350,28 @@ def main():
     tracts = process_tracts(tract_rows)
     print(f"  Tracts: {len(tracts)} entries")
 
-    # Count places with coordinates
-    with_coords = sum(1 for p in all_places if p["lat"] is not None and p["lng"] is not None)
-    print(f"  Places with coordinates: {with_coords}/{len(all_places)}")
+    with_coords = sum(1 for p in donation_places if p["lat"] is not None and p["lng"] is not None)
+    print(f"  Donation places with coordinates: {with_coords}/{len(donation_places)}")
 
-    # Build catalog
     catalog = {
-        "schemaVersion": "2.0.0",
+        "schemaVersion": "2.1.0",
         "generatedAt": "2026-04-13T00:00:00Z",
-        "donorPlaces": all_places,
+        "donorPlaces": donation_places,       # pantries + food banks — where to donate
+        "partnerMarkets": partner_markets,    # farmers markets — partnership context
+        "supplyGapStores": supply_gap_stores, # PG County stores — supply gap analysis
         "countyStats": county_stats,
         "priorityTracts": tracts,
     }
 
-    # Write
     OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     with open(OUT_PATH, "w", encoding="utf-8") as f:
         json.dump(catalog, f, ensure_ascii=False, indent=2)
 
     size_mb = os.path.getsize(OUT_PATH) / (1024 * 1024)
     print(f"\n✓ Wrote {OUT_PATH} ({size_mb:.2f} MB)")
-    print(f"  {len(all_places)} donor places")
+    print(f"  {len(donation_places)} donation places (pantries + food banks)")
+    print(f"  {len(partner_markets)} partner markets")
+    print(f"  {len(supply_gap_stores)} supply gap stores")
     print(f"  {len(county_stats)} county stats")
     print(f"  {len(tracts)} priority tracts")
 
