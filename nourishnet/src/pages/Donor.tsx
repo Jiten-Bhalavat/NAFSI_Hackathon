@@ -6,6 +6,7 @@ import { distanceMiles } from "../utils/geo";
 import { pointInGeoJSON } from "../utils/pointInPolygon";
 import NourishMap, { type MapPoint, type AddressLookup } from "../components/NourishMap";
 import type { DonorPlace, CountyStat } from "../types";
+import DonorChatbot from "../components/DonorChatbot";
 
 const DONOR_TYPES = ["", "pantry", "food-bank"] as const;
 const TYPE_LABELS: Record<string, string> = {
@@ -320,6 +321,9 @@ export default function Donor() {
           </div>
         </div>
       </div>
+
+      {/* RAG Chatbot — donor only */}
+      <DonorChatbot />
     </div>
   );
 }

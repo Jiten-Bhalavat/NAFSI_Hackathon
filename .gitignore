@@ -3,4 +3,5 @@ __pycache__/
 *.py[cod]
 data/sources/**/*.manifest.json
 data/sources/**/*.jpg
+.env
 
