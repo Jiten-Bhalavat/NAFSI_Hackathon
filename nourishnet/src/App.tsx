@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import Consumer from "./pages/Consumer";
 import Donor from "./pages/Donor";
 import Planner from "./pages/Planner";
+import FoodPost from "./pages/FoodPost";
 import About from "./pages/About";
 
 export default function App() {
@@ -13,6 +14,7 @@ export default function App() {
         <Route index element={<Home />} />
         <Route path="find-food" element={<Consumer />} />
         <Route path="donate" element={<Donor />} />
+        <Route path="food-post" element={<FoodPost />} />
         <Route path="volunteer" element={<Planner />} />
         <Route path="about" element={<About />} />
       </Route>

@@ -7,8 +7,6 @@ import { pointInGeoJSON } from "../utils/pointInPolygon";
 import NourishMap, { type MapPoint, type AddressLookup } from "../components/NourishMap";
 import FoodInsecurityOverlay, { InsecurityLegend } from "../components/FoodInsecurityOverlay";
 import type { DonorPlace } from "../types";
-import SurplusFoodBoard from "../components/SurplusFoodBoard";
-import CommunityNeedsBoard from "../components/CommunityNeedsBoard";
 import DonorImpactPanel from "../components/DonorImpactPanel";
 import NeighborhoodDonation from "../components/NeighborhoodDonation";
 import DonorChatbot from "../components/DonorChatbot";
@@ -217,11 +215,6 @@ export default function Donor() {
           />
         )}
 
-        {/* Surplus Food Board — donors post here, posts appear on Find Food tab */}
-        <SurplusFoodBoard postOnly />
-
-        {/* Community Needs Board — cross-posted from Find Food tab so donors see who needs help */}
-        <CommunityNeedsBoard readOnly />
 
         {/* List + Map */}
         <div className="grid lg:grid-cols-5 gap-5 mb-8">
