@@ -3,9 +3,9 @@ import type { SurplusPost } from "../components/SurplusFoodBoard";
 import type { StatusPost } from "../components/LivePantryStatus";
 import type { NeedPost } from "../components/CommunityNeedsBoard";
 import {
-  fetchSurplusPosts, insertSurplusPost, deleteSurplusPost, claimSurplusPost,
-  fetchStatusPosts, insertStatusPost, deleteStatusPost,
-  fetchNeedPosts, insertNeedPost, deleteNeedPost, fulfillNeedPost,
+  fetchSurplusPosts, insertSurplusPost,
+  fetchStatusPosts, insertStatusPost,
+  fetchNeedPosts, insertNeedPost,
   subscribeToCommunity,
 } from "../lib/community-db";
 
@@ -182,19 +182,6 @@ export default function FoodPost() {
               surplus={surplus}
               statuses={statuses}
               needs={needs}
-              onDelete={async (type, id) => {
-                if (type === "surplus") { await deleteSurplusPost(id); setSurplus(s => s.filter(p => p.id !== id)); }
-                if (type === "update")  { await deleteStatusPost(id);  setStatuses(s => s.filter(p => p.id !== id)); }
-                if (type === "need")    { await deleteNeedPost(id);    setNeeds(s => s.filter(p => p.id !== id)); }
-              }}
-              onFulfill={async (id) => {
-                await fulfillNeedPost(id);
-                setNeeds(s => s.map(p => p.id === id ? { ...p, fulfilled: true } : p));
-              }}
-              onClaim={async (id) => {
-                await claimSurplusPost(id);
-                setSurplus(s => s.map(p => p.id === id ? { ...p, claimed: true } : p));
-              }}
             />
           </main>
 
@@ -214,15 +201,12 @@ export default function FoodPost() {
 // ─── Feed ─────────────────────────────────────────────────────────────────────
 
 function Feed({
-  filter, surplus, statuses, needs, onDelete, onFulfill, onClaim,
+  filter, surplus, statuses, needs,
 }: {
   filter: Filter;
   surplus: SurplusPost[];
   statuses: StatusPost[];
   needs: NeedPost[];
-  onDelete: (type: "surplus" | "update" | "need", id: string) => void;
-  onFulfill: (id: string) => void;
-  onClaim: (id: string) => void;
 }) {
   const activeNeeds = needs.filter(n => !n.fulfilled);
 
@@ -263,9 +247,9 @@ function Feed({
     return (
       <div className="space-y-3">
         {items.map((item) => {
-          if (item.type === "surplus") return <SurplusCard key={item.data.id} post={item.data} onDelete={id => onDelete("surplus", id)} onClaim={onClaim} />;
-          if (item.type === "update")  return <StatusCard  key={item.data.id} post={item.data} onDelete={id => onDelete("update", id)} />;
-          return <NeedCard key={item.data.id} post={item.data} onDelete={id => onDelete("need", id)} onFulfill={onFulfill} />;
+          if (item.type === "surplus") return <SurplusCard key={item.data.id} post={item.data} />;
+          if (item.type === "update")  return <StatusCard  key={item.data.id} post={item.data} />;
+          return <NeedCard key={item.data.id} post={item.data} />;
         })}
       </div>
     );
@@ -273,16 +257,16 @@ function Feed({
 
   return (
     <div className="space-y-3">
-      {showSurplus  && surplus.map(p =>      <SurplusCard key={p.id} post={p} onDelete={id => onDelete("surplus", id)} onClaim={onClaim} />)}
-      {showStatuses && statuses.map(p =>     <StatusCard  key={p.id} post={p} onDelete={id => onDelete("update", id)} />)}
-      {showNeeds    && activeNeeds.map(p =>  <NeedCard    key={p.id} post={p} onDelete={id => onDelete("need", id)} onFulfill={onFulfill} />)}
+      {showSurplus  && surplus.map(p =>      <SurplusCard key={p.id} post={p} />)}
+      {showStatuses && statuses.map(p =>     <StatusCard  key={p.id} post={p} />)}
+      {showNeeds    && activeNeeds.map(p =>  <NeedCard    key={p.id} post={p} />)}
     </div>
   );
 }
 
 // ─── Post cards ───────────────────────────────────────────────────────────────
 
-function SurplusCard({ post, onDelete, onClaim }: { post: SurplusPost; onDelete: (id: string) => void; onClaim: (id: string) => void }) {
+function SurplusCard({ post }: { post: SurplusPost }) {
   const urgent = post.expiresAt - Date.now() < 2 * 3_600_000;
   return (
     <div className="bg-white rounded-2xl border border-orange-100 shadow-sm p-4">
@@ -302,21 +286,15 @@ function SurplusCard({ post, onDelete, onClaim }: { post: SurplusPost; onDelete:
         <div>📞 {post.contact}</div>
         <div className="text-gray-400">{timeAgo(post.postedAt)}</div>
       </div>
-      <div className="flex gap-2">
-        <button onClick={() => onClaim(post.id)} className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold py-2 rounded-xl transition-colors">
-          ✋ I Can Pick This Up
-        </button>
-        <button onClick={() => onDelete(post.id)} className="text-gray-300 hover:text-red-400 px-2 py-2 rounded-xl hover:bg-red-50 transition-colors text-xs">🗑</button>
-      </div>
     </div>
   );
 }
 
-function StatusCard({ post, onDelete }: { post: StatusPost; onDelete: (id: string) => void }) {
+function StatusCard({ post }: { post: StatusPost }) {
   const meta = STATUS_META[post.statusType] ?? STATUS_META.other;
   return (
     <div className={`rounded-2xl border shadow-sm p-4 ${meta.color}`}>
-      <div className="flex items-start justify-between gap-2">
+      <div className="flex items-start gap-2">
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap mb-1">
             <span className="text-xs font-bold bg-white/60 px-2 py-0.5 rounded-full">📢 Pantry Update</span>
@@ -326,13 +304,12 @@ function StatusCard({ post, onDelete }: { post: StatusPost; onDelete: (id: strin
           {post.message && <p className="text-xs mt-1 opacity-80">{post.message}</p>}
           <p className="text-xs opacity-50 mt-1">{timeAgo(post.postedAt)} · expires in {timeLeft(post.expiresAt)}</p>
         </div>
-        <button onClick={() => onDelete(post.id)} className="shrink-0 opacity-30 hover:opacity-70 text-xs">✕</button>
       </div>
     </div>
   );
 }
 
-function NeedCard({ post, onDelete, onFulfill }: { post: NeedPost; onDelete: (id: string) => void; onFulfill: (id: string) => void }) {
+function NeedCard({ post }: { post: NeedPost }) {
   return (
     <div className="bg-white rounded-2xl border border-blue-100 shadow-sm p-4">
       <div className="flex items-start justify-between gap-2 mb-2">
@@ -345,16 +322,10 @@ function NeedCard({ post, onDelete, onFulfill }: { post: NeedPost; onDelete: (id
         }`}>{URGENCY_LABELS[post.urgency]}</span>
       </div>
       {post.details && <p className="text-sm text-gray-600 mb-2">{post.details}</p>}
-      <div className="text-xs text-gray-500 space-y-0.5 mb-3">
+      <div className="text-xs text-gray-500 space-y-0.5">
         <div>📍 Near ZIP {post.zip}</div>
         <div>{MOBILITY_LABELS[post.mobility]}</div>
         <div className="text-gray-400">{timeAgo(post.postedAt)}</div>
-      </div>
-      <div className="flex gap-2">
-        <button onClick={() => onFulfill(post.id)} className="flex-1 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold py-2 rounded-xl transition-colors">
-          ✋ I Can Help
-        </button>
-        <button onClick={() => onDelete(post.id)} className="text-gray-300 hover:text-red-400 px-2 py-2 rounded-xl hover:bg-red-50 transition-colors text-xs">🗑</button>
       </div>
     </div>
   );

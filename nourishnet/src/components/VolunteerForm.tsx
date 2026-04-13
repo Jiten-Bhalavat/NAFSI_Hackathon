@@ -94,21 +94,6 @@ export default function VolunteerForm({ opportunity, onClose }: Props) {
     setSubmitted(true);
   };
 
-  const handleDownload = () => {
-    const data = {
-      ...form,
-      opportunity: opportunity ? { id: opportunity.id, title: opportunity.title } : null,
-      submittedAt: new Date().toISOString(),
-    };
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `volunteer-interest-${Date.now()}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
-  };
-
   return (
     <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 modal-overlay" onClick={onClose}>
       <div
@@ -146,24 +131,15 @@ export default function VolunteerForm({ opportunity, onClose }: Props) {
           <div className="p-8 text-center">
             <div className="text-5xl mb-4">🎉</div>
             <h3 className="text-xl font-bold text-gray-900 mb-2">Thank You!</h3>
-            <p className="text-sm text-gray-600 mb-4">
-              Your email client should have opened with your interest details.
-              If it didn't, you can download your submission as a file.
+            <p className="text-sm text-gray-600 mb-6">
+              Your interest has been submitted. The organization will be in touch with you soon.
             </p>
-            <div className="flex flex-col gap-2">
-              <button
-                onClick={handleDownload}
-                className="bg-blue-600 text-white font-medium px-4 py-2 rounded-xl hover:bg-blue-700"
-              >
-                📥 Download as JSON
-              </button>
-              <button
-                onClick={onClose}
-                className="text-gray-500 text-sm hover:text-gray-700"
-              >
-                Close
-              </button>
-            </div>
+            <button
+              onClick={onClose}
+              className="bg-blue-600 text-white font-medium px-6 py-2.5 rounded-xl hover:bg-blue-700"
+            >
+              Close
+            </button>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="p-6 space-y-5">
@@ -274,22 +250,12 @@ export default function VolunteerForm({ opportunity, onClose }: Props) {
               This opens your email client with a pre-filled message. No data is sent to any server.
             </p>
 
-            <div className="flex gap-3">
-              <button
-                type="submit"
-                className="flex-1 bg-blue-600 text-white font-semibold py-3 rounded-xl hover:bg-blue-700 transition-colors shadow-md shadow-blue-200"
-              >
-                ✉️ Submit via Email
-              </button>
-              <button
-                type="button"
-                onClick={handleDownload}
-                className="px-4 py-3 rounded-xl border border-gray-300 text-gray-600 text-sm hover:bg-gray-50"
-                title="Download as JSON file"
-              >
-                📥
-              </button>
-            </div>
+            <button
+              type="submit"
+              className="w-full bg-blue-600 text-white font-semibold py-3 rounded-xl hover:bg-blue-700 transition-colors shadow-md shadow-blue-200"
+            >
+              Submit
+            </button>
           </form>
         )}
       </div>
