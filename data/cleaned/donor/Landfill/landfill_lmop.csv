@@ -1,0 +1,49 @@
+Landfill ID,Landfill Name,State,Physical Address,City,County,Zip Code,Latitude,Longitude,Ownership Type,Landfill Owner Organization(s),Year Landfill Opened,Landfill Closure Year,Current Landfill Status,Waste in Place (tons)
+734,Alpha Ridge SLF,MD,2350 Marriottsville Road,Marriottsville,Howard,21104.0,39.305776,-76.898803,Public,"Howard County, MD",1980.0,2055.0,Open,3041553.0
+735,Annapolis SLF,MD,Defense Highway,Annapolis,Anne Arundel,21401.0,38.992,-76.573,Public,,1960.0,1993.0,Closed,858000.0
+736,Appeal SLF,MD,,Lusby,Calvert,20657.0,38.381112,-76.438334,Public,"Calvert County, MD",1993.0,2014.0,Closed,364268.0
+737,Barstow SLF,MD,,,Calvert,,,,Public,,1975.0,1993.0,Closed,595000.0
+10120,Beulah Municipal Landfill,MD,6815 East New Market Ellwood Road,Hurlock,Dorchester,21643.0,38.6735,-75.8994,Public,"Dorchester County, MD",1996.0,2024.0,Open,1935945.0
+740,Bowley's Lane LF,MD,Bowley's Lane,Baltimore,Baltimore city,21206.0,39.3138,-76.5444,Unknown,,1955.0,1985.0,Closed,490000.0
+741,Brown Station Road Sanitary Landfill,MD,3500 Brown Station Road,Upper Marlboro,Prince George's,20774.0,38.851,-76.789,Public,"Prince George's County, MD",1968.0,2025.0,Open,19413034.0
+742,Cecil County Central Landfill,MD,758 East Old Philadelphia Road,Elkton,Cecil,21921.0,39.5969,-75.9136,Public,"Cecil County, MD",1978.0,2026.0,Open,3717665.0
+738,Central SLF,MD,7091 Central Site Lane,Newark,Worcester,21841.0,38.2159,-75.3186,Public,"Worcester County, MD",1990.0,2038.0,Open,2437290.0
+743,Centreville SLF,MD,,,Queen Anne's,,,,Unknown,,1955.0,1992.0,Closed,700000.0
+744,Charles County Landfill #2,MD,12305 Billingsley Road East,Waldorf,Charles,20602.0,38.572,-76.886,Public,"Charles County, MD",1994.0,2032.0,Open,2200134.0
+745,Eastern Sanitary Landfill Solid Waste Management Facility (ESL),MD,6257 Days Cove Road,White Marsh,Baltimore,21162.0,39.3948,-76.3964,Public,"Baltimore County, MD",1983.0,2027.0,Open,8531139.0
+746,Fort Detrick SLF,MD,,Fort Detrick,Frederick,21702.0,39.43889,-77.422223,Public,United States Army,,,Unknown,79172.0
+747,Fort Meade SLF,MD,,Fort Meade,Anne Arundel,,39.125,-76.77,Public,Landfill Owner of Fort Meade SLF,1976.0,1995.0,Closed,1074376.0
+10740,Forty West SLF,MD,12630 Earth Care Road,Hagerstown,Washington,21740.0,39.6567,-77.82,Public,"Washington County, MD",2000.0,2033.0,Open,2456920.0
+10720,Garrett County SWD and RF,MD,3118 Oakland Sang Run Road,Oakland,Garrett,21550.0,39.45075,-79.40754,Public,"Garrett County, MD",1974.0,2037.0,Open,1360889.0
+20792,Glen Burnie Landfill,MD,100 Dover Road,Glen Burnie,Anne Arundel,21060.0,39.18718,-76.6,Public,"Anne Arundel County Dept. of Public Works, Bureau of Waste Mmgt. Services, MD",1953.0,1982.0,Closed,3844718.0
+748,Gude LF,MD,600 E. Gude Drive,Rockville,Montgomery,20850.0,39.107,-77.14,Public,"Montgomery County, MD",1965.0,1982.0,Closed,4800000.0
+749,Hancock SLF,MD,Hess Road,,Washington,,,,Unknown,,1967.0,1993.0,Closed,40963.0
+750,Harford Waste Disposal Center,MD,3241 Scarboro Road,Street,Harford,21154.0,39.63963,-76.30235,Public,"Harford County, MD",1960.0,2117.0,Open,2727725.0
+751,Hobbs Road SLF,MD,,,Caroline,,,,Public,"Caroline County, MD",1960.0,1996.0,Closed,1160000.0
+752,Hoods Mill Road SLF,MD,7901 Kabik Court,Woodbine,Carroll,21797.0,39.357,-77.024,Public,"Carroll County, MD",1981.0,1994.0,Closed,480000.0
+753,Midshore I - Regional Solid Waste Facility,MD,7341 Barkers Landing Road,Easton,Talbot,21601.0,38.74714,-76.01961,Public,Maryland Environmental Service,1965.0,2010.0,Closed,2540831.0
+11902,Midshore II - Regional Solid Waste Facility,MD,12236 River Road,Ridgely,Caroline,21660.0,38.948,-75.8593,Public,Maryland Environmental Service,2010.0,2046.0,Open,1278302.0
+754,Millersville SLF,MD,389 Burns Crossing Road,Severn,Anne Arundel,21144.0,39.0945,-76.6656,Public,"Anne Arundel County Dept. of Public Works, Bureau of Waste Mmgt. Services, MD",1975.0,2048.0,Open,8887949.0
+755,Mountainview SLF,MD,13300 New George's Creek Road SW,Frostburg,Allegany,21532.0,39.60212,-78.92121,Private,Noble Environmental,1991.0,2024.0,Open,3096665.0
+20837,New Cut Landfill,MD,4361 New Cut Road,Ellicott City,Howard,21043.0,39.246917,-76.796769,Public,"Howard County, MD",1947.0,1980.0,Closed,
+756,Newland Park SLF,MD,6948 Brick Kiln Road,Salisbury,Wicomico,21801.0,38.385,-75.6336,Public,"Wicomico County, MD",1960.0,2038.0,Open,4199445.0
+757,Nicholson SLF,MD,,,Kent,,38.382779,-75.631945,Public,,1964.0,1992.0,Closed,610000.0
+20858,Norris Farms Landfill,MD,101 Norris Lane,Baltimore,Baltimore,21222.0,39.288,-76.48,Private,"Republic Services, Inc.",1968.0,1986.0,Closed,8003869.903
+758,Northern SLF,MD,1400 Baltimore Boulevard,Westminster,Carroll,21157.0,39.554,-76.94,Public,"Carroll County, MD",1988.0,2043.0,Open,528676.0
+759,Oaks SLF,MD,6001 Olney-Laytonsville Road,Laytonsville,Montgomery,20882.0,39.18948,-77.12058,Public,"Montgomery County, MD",1982.0,1994.0,Closed,6874060.0
+739,Old Beulah Municipal LF,MD,,Beulah,Dorchester,21643.0,38.67537,-75.89938,Public,"Dorchester County, MD",1973.0,1996.0,Closed,1050000.0
+760,Pennington Avenue LF,MD,Pennington Avenue,Baltimore,Baltimore city,21226.0,39.218,-76.5915,Public,"City of Baltimore, MD",1973.0,1981.0,Closed,2000000.0
+762,Pisgah SLF,MD,6645 Mason Springs Road,La Plata,Charles,20646.0,38.5357,-77.1491,Public,"Charles County, MD",1972.0,1994.0,Closed,1082000.0
+761,Price Chapel SLF,MD,,,Queen Anne's,,,,Unknown,,1955.0,1991.0,Closed,28000.0
+763,Quarantine Road SLF,MD,6100 Quarantine Road,Curtis Bay,Baltimore city,21226.0,39.2085,-76.5549,Public,"City of Baltimore, MD",1985.0,2026.0,Open,5769357.0
+764,Reich's Ford Road SLF,MD,9031 Reichs Ford Road,Frederick,Frederick,21704.0,39.3754,-77.3528,Public,"Frederick County, MD",1969.0,2045.0,Open,4035497.0
+765,Resh Road II SLF,MD,Resh Road,Hagerstown,Washington,21740.0,39.68,-77.802,Public,"Washington County, MD",1982.0,2000.0,Closed,2055978.0
+766,Round Glade SLF,MD,,Oakland,Garrett,21550.0,39.470556,-79.393057,Public,,1974.0,1994.0,Closed,800000.0
+767,Saint Andrews SLF,MD,44825 St. Andrews Church Road,California,St. Mary's,20619.0,38.2909,-76.5233,Public,"St. Mary's County, MD",1971.0,2001.0,Closed,842556.0
+768,Sandy Hill SLF,MD,9500 Old Laurel Bowie Road,Bowie,Prince George's,20720.0,39.016,-76.791,Public,"Prince George's County, MD",1978.0,2000.0,Closed,8201604.0
+769,Snow Hill SLF,MD,,,Worcester,,,,Unknown,,1970.0,1990.0,Closed,
+20860,Solley Road Landfill,MD,7890 Solley Road,Glen Burnie,Anne Arundel,21061.0,39.160313,-76.575042,Private,"Republic Services, Inc.",1963.0,1982.0,Closed,1237711.841
+21400,Somerset County Municipal Landfill,MD,8716 James Ring Road,Westover,Somerset,21871.0,,,Public,"Somerset County, MD",1998.0,2036.0,Open,635313.0
+770,Sudley Road SLF,MD,5400 Nutwell Sudley Road,Deale,Anne Arundel,20751.0,38.8179,-76.5785,Public,"Anne Arundel County Dept. of Public Works, Bureau of Waste Mmgt. Services, MD",1982.0,1993.0,Closed,671000.0
+772,Westover/Ring SLF,MD,8716 James Ring Road,Westover,Somerset,21871.0,38.121044,-75.735464,Public,"Somerset County, MD",1975.0,1998.0,Closed,447610.0
+1944,Woodbury LF,MD,,Baltimore,Anne Arundel,,,,Unknown,,1982.0,1985.0,Closed,
