@@ -143,7 +143,7 @@ export default function Layout() {
       {/* ─── FOOTER ─── */}
       <footer className="bg-[#0d1f15] text-gray-400">
         <div className="max-w-7xl mx-auto px-6 py-14">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mb-12">
             {/* Brand */}
             <div className="lg:col-span-1">
               <div className="flex items-center gap-2.5 mb-4">
@@ -158,7 +158,7 @@ export default function Layout() {
               </p>
               <div className="flex gap-3">
                 <a
-                  href="https://github.com"
+                  href="https://github.com/protocorn/NAFSI_Track2"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-9 h-9 bg-white/10 rounded-lg flex items-center justify-center hover:bg-[#16a34a] transition-colors"
@@ -191,18 +191,6 @@ export default function Layout() {
                     </Link>
                   </li>
                 ))}
-              </ul>
-            </div>
-
-            {/* Programs */}
-            <div>
-              <h3 className="text-white font-black text-xs uppercase tracking-widest mb-4">Programs</h3>
-              <ul className="space-y-2.5 text-sm">
-                <li><span className="hover:text-[#4ade80] transition-colors cursor-default">Food Pantry Network</span></li>
-                <li><span className="hover:text-[#4ade80] transition-colors cursor-default">Surplus Food Board</span></li>
-                <li><span className="hover:text-[#4ade80] transition-colors cursor-default">Volunteer Matching</span></li>
-                <li><span className="hover:text-[#4ade80] transition-colors cursor-default">Community Events</span></li>
-                <li><span className="hover:text-[#4ade80] transition-colors cursor-default">Food Desert Map</span></li>
               </ul>
             </div>
 
