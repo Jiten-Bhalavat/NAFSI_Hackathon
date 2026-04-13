@@ -5,7 +5,6 @@ const links = [
   { to: "/find-food", label: "Find Food" },
   { to: "/donate", label: "Donate" },
   { to: "/food-post", label: "Community" },
-  { to: "/volunteer", label: "Volunteer" },
   { to: "/about", label: "About" },
 ];
 
@@ -64,15 +63,9 @@ export default function Layout() {
           <div className="hidden md:flex items-center gap-3">
             <Link
               to="/volunteer"
-              className="text-sm font-semibold text-gray-600 border border-gray-300 px-4 py-2 rounded-lg hover:border-[#16a34a] hover:text-[#16a34a] transition-colors"
+              className="text-sm font-semibold text-white bg-[#16a34a] px-4 py-2 rounded-lg hover:bg-[#15803d] transition-colors shadow-sm"
             >
               Register as Volunteer
-            </Link>
-            <Link
-              to="/find-food"
-              className="text-sm font-bold text-white bg-[#16a34a] px-4 py-2 rounded-lg hover:bg-[#15803d] transition-colors shadow-sm"
-            >
-              Find Food
             </Link>
           </div>
 
@@ -130,20 +123,13 @@ export default function Layout() {
                 </li>
               ))}
             </ul>
-            <div className="flex flex-col gap-2 mt-3 pt-3 border-t border-gray-100">
+            <div className="mt-3 pt-3 border-t border-gray-100">
               <Link
                 to="/volunteer"
                 onClick={() => setMenuOpen(false)}
-                className="text-sm font-semibold text-gray-600 border border-gray-300 px-4 py-2.5 rounded-lg text-center hover:border-[#16a34a] hover:text-[#16a34a] transition-colors"
+                className="block text-sm font-bold text-white bg-[#16a34a] px-4 py-2.5 rounded-lg text-center hover:bg-[#15803d] transition-colors"
               >
                 Register as Volunteer
-              </Link>
-              <Link
-                to="/find-food"
-                onClick={() => setMenuOpen(false)}
-                className="text-sm font-bold text-white bg-[#16a34a] px-4 py-2.5 rounded-lg text-center hover:bg-[#15803d] transition-colors"
-              >
-                Find Food
               </Link>
             </div>
           </div>
