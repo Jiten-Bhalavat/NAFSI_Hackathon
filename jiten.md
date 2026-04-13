@@ -1063,3 +1063,207 @@ To clone this site from scratch:
 - [ ] Create `public/data/md_counties.geojson` (Maryland county GeoJSON)
 - [ ] Set `VITE_CHATBOT_API` env var for chatbot feature (optional)
 - [ ] Run `npm run dev` and verify all routes
+
+---
+
+## 26. Prompt Engineering Log — All Prompts Used to Build NourishNet
+
+> This section documents every prompt and task given to the AI assistant across all sessions that produced this project. Reconstructed from `PROMPTS.md`, `Prompts_Sahil.md`, git commit history, and conversation logs. The project was built across 2 days (April 12–13, 2026) with ~70 commits.
+
+---
+
+### Phase 1 — Data Scraping & Pipeline
+
+**Prompt 1**
+> Scrape the Feeding America Maryland website for food resource data.
+
+**Prompt 2**
+> Scrape Capital Area Food Bank (CAFB) data — 382 food banks with real lat/lon, per-day hours, TEFAP eligibility.
+
+**Prompt 3**
+> Scrape SNAP Retailer Locator data (4,196 rows) and Caroline County food pantries.
+
+**Prompt 4**
+> Scrape and add farmers market data.
+
+**Prompt 5**
+> Add pantry data from multiple sources (211md, pantry2, food_pantries_unified).
+
+**Prompt 6**
+> Add data cleaning scripts and clean all datasets — remove duplicates, normalize fields.
+
+**Prompt 7**
+> Add a food-only filter script to strip non-food entries from the datasets.
+
+---
+
+### Phase 2 — Initial Frontend Build
+
+**Prompt 8** *(Verbatim — the big initial project setup prompt)*
+> We're building a small React app for a class challenge called NourishNet. The idea is to help people in Maryland and the DC metro area find food assistance, figure out how to donate, and find volunteer opportunities. Everything has to be open source and deploy as a static site on GitHub Pages—no backend, no AWS services, no paid APIs. Please use Vite with React and TypeScript, React Router for pages, and Tailwind or CSS Modules for styling—your pick, but stick to one. For maps we want Leaflet with react-leaflet, marker clustering when there are a lot of points, and standard OpenStreetMap tiles with the usual attribution. Use npm. All the content will come from one file: public/data/catalog.json. We'll replace it later with real merged data; for now please include a realistic sample with at least eight places (six with latitude/longitude and two without coordinates so we can test edge cases) and six "opportunities" split between donation and volunteering.
+>
+> The JSON should look roughly like this conceptually: a schema version and timestamp at the top, then an array of places (name, address fields, county optional, lat/lng nullable, phone, hours, eligibility and requirements text, tags, and source info), and an array of opportunities that can link to a place by id. Each opportunity is either donation or volunteering, with a title, short summary, contact fields, schedule notes, and optional needs tags.
+>
+> We need three different interfaces, not one page with a toggle:
+> - **Consumer** — People looking for food. ZIP or city search, optional "use my location" with a short honest line about what the browser will do. Map with clustered markers plus a list that stays in sync — filters for things like county and day of week if the data supports it. Tapping or selecting a place should show details: hours, rules, phone as a real tel link, and a directions link built from the address. If something doesn't have coordinates, it should still show in the list and never break the app.
+> - **Donor** — People who want to give food or money. This should feel different from the consumer view: emphasize what's needed and how to help, not just distance. Filter by type of giving and needs when we have tags. Show donation-type opportunities prominently and use a map only for locations that make sense.
+> - **Planner** — People who want to volunteer or help coordinate. Show volunteering opportunities, filters like weekday vs weekend and county, radius from a ZIP if you can do it simply. Use a different marker color than the consumer map. List can be grouped by day if schedule text makes that reasonable; if not, distance sorting is fine.
+>
+> Also add a simple home page with three big cards that link to those three areas, and an About page that says data might be incomplete, where it came from in general terms, and that users should double-check hours with the organization. Set things up so GitHub Pages works: Vite base path and React Router basename should follow import.meta.env.BASE_URL. Keep accessibility in mind: don't hide important info only on the map, use proper labels and focus styles, and make sure keyboard users aren't stuck.
+
+**Prompt 9** *(Verbatim)*
+> Keep the file structure as clean as possible and easy to understand and locate. Also why did you create a `.vscode` folder?
+
+**Prompt 10** *(Verbatim)*
+> I want to overlay the region as well. For example if I select on college park area there should be a border, it should show me all the options within that location of college park. Also currently it only accepts zip code, I should be able to enter my city, state or county or address there in order to search for nearby options.
+
+**Prompt 11** *(Verbatim)*
+> Also, should we create a submit interest form or something on the volunteers page, so that volunteers can enter their availability or interest in donating their time and supporting at a particular location or within an area? And also make the website more user friendly and attractive, don't keep it basic.
+
+---
+
+### Phase 3 — Data Integration
+
+**Prompt 12** *(Verbatim)*
+> We need to unify all the data together in one and remove deduplication as we want to use the whole data in order to integrate it. Now, we have the donor data and the frontend as well, now we need to use that data to replace the mock data on the current web-app and actually get it working with the available donor data.
+
+**Prompt 13** *(Verbatim)*
+> Now we have the unified data under the data folder, check the readme file which has the guide on how the data is supposed to be used, make the use of whole donor data and let's get the donor function fully working now!
+
+**Prompt 14** *(Verbatim)*
+> Donor map is mostly blank. donor_catalog.json shows "lat": null, "lng": null for the majority of donorPlaces — these come from food_pantries_unified.csv which lacks coordinates. The map the donor sees is empty. Bake the coordinates using geocoder.
+
+---
+
+### Phase 4 — Map & Visualization Features
+
+**Prompt 15** *(Verbatim)*
+> We have county level food insecurity data in countyStats and a md_counties.geojson file. Can you add a choropleth overlay on the donor map that colors each county by how many people are food insecure there? Use shades of red/orange, don't use white for any bucket. Also the county names don't always match between the stats and geojson so normalize them.
+
+**Prompt 16** *(Verbatim)*
+> The food insecurity layer needs a toggle button but put it on the map itself, top right corner, not in the filter bar. Call it "Show Hunger Map" / "Hide Hunger Map" so people actually understand what it does. Also when I hover over a county on the map it should show me the county name and how many people are food insecure there. And add a small legend at the bottom left of the map, keep it in one line, dark semi-transparent background so it doesn't look like a white box sitting on the map.
+
+**Prompt 17** *(Verbatim)*
+> Make the whole website mobile friendly. On phones the map should show first and the list below it, not side by side. Map should be about 45% of the screen height on phones. Filters and buttons should go full width on small screens. Make the pins and clusters a bit bigger on mobile so they're easier to tap. Do this for all three pages not just donor.
+
+**Prompt 18** *(Verbatim)*
+> Remove that food insecurity map button from the filter bar, it's now on the map itself. Also the legend was wrapping into two lines, keep it compact. The "My Impact" button can stay in the filters. Clean up any leftover debug code.
+
+---
+
+### Phase 5 — Chatbot & Community Features
+
+**Prompt 19**
+> Add a chatbot to the Donor page so donors can ask questions about food pantry needs near them.
+
+**Prompt 20**
+> Deploy the chatbot backend on Railway (Python FastAPI). Set the `VITE_CHATBOT_API` environment variable to point to the deployed URL.
+
+**Prompt 21**
+> Update chatbot code — fix the response format so the AI reply renders correctly in the UI.
+
+**Prompt 22**
+> Add community platform features: emergency food modal (🚨 I Need Food Now), multi-language support (i18n), community needs board, donor tools (Surplus Food Board, Donor Impact Panel).
+
+**Prompt 23**
+> Fix Vite build error — supercluster and maplibre-gl resolution failing. Add `optimizeDeps` config to vite.config.ts.
+
+---
+
+### Phase 6 — Community Board
+
+**Prompt 24**
+> Fix surplus food and community needs board placement between tabs — Surplus Food should be below the maps, not above.
+
+**Prompt 25**
+> Add food insecurity bubble/heatmap map layer on the Donor page (county circles sized by population, colored by insecurity rate).
+
+**Prompt 26**
+> Add a Food Post community board page (`/food-post`) with 3-column layout: Surplus Food | Pantry Updates | Food Requests.
+
+---
+
+### Phase 7 — Final Polish & Bug Fixes
+
+**Prompt 27**
+> Remove multi-language (i18n) support entirely. Replace all i18n translation keys with hardcoded English strings throughout the app.
+
+**Prompt 28** *(Verbatim from Prompts_Sahil.md)*
+> There are lots of duplicates here in the filters for counties and should be normalized. Also make the design intuitive. This can be done by keeping maps and the side panel right below the search filters, so users (all donors, food seekers, and volunteers) know that by using the search filters, the change will be reflected below. Also, when each location is selected, the information of it should be available in the most readable way possible, such that in a small area maximum information can be shown in a clean structured layout. I don't want it to be either directly shown on map when clicked, or should be displayed below in least space. The search filters should be applied as soon as they are selected, and in an efficient way. We can use caching to efficiently apply the filters.
+
+**Prompt 29** *(Verbatim from Prompts_Sahil.md)*
+> The map gets updated when a search filter is clicked, but it is not shown in the card list shown on the left, that should be updated as well. Also after a search filter is clicked, it takes some time to load the filters, so this should be shown clearly to the user, so they don't spam any more filters. All the information should be visible on map when a location is selected because anyone would be expecting to see all the details on the map. Also, 🍱 Surplus Food Available should go below, and maps should be shown directly below search filters.
+
+**Prompt 30**
+> UI improvements on Donor page — visual polish, better card layout, amber color scheme.
+
+**Prompt 31**
+> Fix geolocations on Donor map — many pantry locations were not showing pins correctly.
+
+**Prompt 32**
+> Fix page jumps after route navigation changes.
+
+**Prompt 33**
+> Bugs fix: counties deduplicated + legend added in Find Food section.
+
+**Prompt 34**
+> Minor map fixes — popup rendering, boundary overlay cleanup.
+
+**Prompt 35**
+> Improve Find Food filters: type chips as single-select (clicking active chip deselects), add pagination (60 results at a time with "Show more" button), remove SNAP/WIC toggles from filter bar.
+
+**Prompt 36**
+> Update About page — redesign with cascade scrolling cards, each explaining a key aspect of NourishNet (the problem, solution, for families, for donors, privacy).
+
+**Prompt 37**
+> County list fix on Donor page — dropdown was showing duplicate county names.
+
+**Prompt 38**
+> Redesign the homepage to match a reference design — bold uppercase headings, green + dark green color scheme, large hero with donate widget, programs grid, testimonials section, events section, dot map visualization, stats bar, partners row. Use local images instead of external URLs.
+
+**Prompt 39**
+> Remove redundant Volunteer nav link from the navbar and the Find Food button from the page header (it was duplicated).
+
+**Prompt 40**
+> Clean up footer: remove the Programs column, fix the GitHub link to point to the correct repo.
+
+**Prompt 41**
+> Database connection + community food post — connect Supabase for persistent community board data.
+
+---
+
+### Phase 8 — Volunteer Page Data
+
+**Prompt 42** *(Verbatim from Prompts_Sahil.md)*
+> Generate Opportunity records in catalog.json from the volunteer CSVs. Each food bank becomes a volunteering opportunity with its phone, email, and hours. Each pantry with a phone number gets one too. Files: build_catalogs.py — generates opportunities[] array in catalog.json. nourishnet/src/pages/Planner.tsx: no changes needed; it already reads opportunities from catalog.
+
+---
+
+### Phase 9 — Documentation & Submission
+
+**Prompt 43**
+> Create a `jiten.md` file documenting every single thing about this website — how the homepage looks, what features are in each section, images, color grading, structure, data, backend, tech stack, assumptions — everything. The main aim is that if any other AI looks at it, it can replicate the same structure, same functionalities, same backend, same color grading, just like someone had cloned this.
+
+**Prompt 44**
+> Push the jiten.md to GitHub.
+
+**Prompt 45**
+> Look for the NourishNet PDF and see what they require in Prompt Engineering. Recall all the prompts I gave you and write a list of prompts I gave you to make this whole project.
+
+**Prompt 46**
+> Write all the prompts list into jiten.md. *(this prompt)*
+
+---
+
+### Summary Statistics
+
+| Metric | Value |
+|---|---|
+| Total prompts | ~46 |
+| Days to build | 2 (April 12–13, 2026) |
+| Git commits | ~70 |
+| Pages built | 6 (Home, Find Food, Donate, Community, Volunteer, About) |
+| Components built | 22 |
+| Data sources scraped | 7+ (CAFB, 211MD, SNAP, Feeding America, Farmers Markets, Census tracts, County stats) |
+| Total food locations in catalog | 200+ (pantries, food banks, SNAP stores, farmers markets) |
+| Lines of code | ~5,000+ |
