@@ -131,12 +131,6 @@ export default function SurplusFoodBoard({ readOnly = false }: { readOnly?: bool
     [foodType, quantity, description, expiryHours, pickupZip, pickupAddress, contact]
   );
 
-  const claimPost = (id: string) => {
-    const updated = posts.map((p) => (p.id === id ? { ...p, claimed: true } : p));
-    savePosts(updated);
-    setPosts(updated);
-  };
-
   const deletePost = (id: string) => {
     const updated = posts.filter((p) => p.id !== id);
     savePosts(updated);
@@ -316,26 +310,10 @@ export default function SurplusFoodBoard({ readOnly = false }: { readOnly?: bool
                 <p className="text-xs text-gray-600 mb-2">{post.description}</p>
               )}
 
-              <div className="text-xs text-gray-500 space-y-0.5 mb-3">
+              <div className="text-xs text-gray-500 space-y-0.5">
                 <div>📍 ZIP {post.pickupZip}{post.pickupAddress ? ` — ${post.pickupAddress}` : ""}</div>
                 <div>📞 {post.contact}</div>
                 <div className="text-gray-400">Posted {formatPostedAt(post.postedAt)}</div>
-              </div>
-
-              <div className="flex gap-2">
-                <button
-                  onClick={() => claimPost(post.id)}
-                  className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold py-2 rounded-lg transition-colors"
-                >
-                  ✋ I Can Pick This Up
-                </button>
-                <button
-                  onClick={() => deletePost(post.id)}
-                  className="text-gray-400 hover:text-red-500 text-xs px-2 py-2 rounded-lg hover:bg-red-50 transition-colors"
-                  title="Remove post"
-                >
-                  🗑
-                </button>
               </div>
             </div>
           ))}

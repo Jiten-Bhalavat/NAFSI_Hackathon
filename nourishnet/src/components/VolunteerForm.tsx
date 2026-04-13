@@ -17,18 +17,31 @@ interface FormData {
   message: string;
 }
 
+const STORAGE_KEY = "nourishnet-volunteer-draft";
 const DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
+function loadDraft(): FormData {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch { /* ignore */ }
+  return { name: "", email: "", phone: "", zip: "", availability: [], interests: "", message: "" };
+}
+
 export default function VolunteerForm({ opportunity, onClose }: Props) {
-  const [form, setForm] = useState<FormData>({
-    name: "", email: "", phone: "", zip: "", availability: [], interests: "", message: "",
-  });
+  const [form, setForm] = useState<FormData>(loadDraft);
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
   const dialogRef = useRef<HTMLDivElement>(null);
 
+  // Auto-save draft
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(form));
+  }, [form]);
+
   useEffect(() => { dialogRef.current?.focus(); }, []);
+
   useEffect(() => {
     const handler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
     window.addEventListener("keydown", handler);
@@ -45,6 +58,21 @@ export default function VolunteerForm({ opportunity, onClose }: Props) {
         ? f.availability.filter((d) => d !== day)
         : [...f.availability, day],
     }));
+  };
+
+  const handleDownload = () => {
+    const data = {
+      ...form,
+      opportunity: opportunity ? { id: opportunity.id, title: opportunity.title } : null,
+      submittedAt: new Date().toISOString(),
+    };
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `volunteer-interest-${Date.now()}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -69,6 +97,7 @@ export default function VolunteerForm({ opportunity, onClose }: Props) {
     setSubmitting(false);
 
     if (!result) return setError("Something went wrong — please try again.");
+    localStorage.removeItem(STORAGE_KEY);
     setSubmitted(true);
   };
 
@@ -107,9 +136,17 @@ export default function VolunteerForm({ opportunity, onClose }: Props) {
               Your volunteer profile is now visible to food banks and pantries looking for help.
               They can reach out to coordinate with you directly.
             </p>
-            <button onClick={onClose} className="bg-blue-600 text-white font-medium px-6 py-2.5 rounded-xl hover:bg-blue-700">
-              Done
-            </button>
+            <div className="flex flex-col gap-2">
+              <button
+                onClick={handleDownload}
+                className="bg-blue-600 text-white font-medium px-4 py-2 rounded-xl hover:bg-blue-700"
+              >
+                📥 Download as JSON
+              </button>
+              <button onClick={onClose} className="text-gray-500 text-sm hover:text-gray-700">
+                Done
+              </button>
+            </div>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="p-6 space-y-5">
@@ -149,10 +186,26 @@ export default function VolunteerForm({ opportunity, onClose }: Props) {
               <label htmlFor="vol-message" className="block text-sm font-semibold text-gray-700 mb-1">Additional Message <span className="text-gray-400 font-normal">(optional)</span></label>
               <textarea id="vol-message" rows={3} value={form.message} onChange={(e) => update("message", e.target.value)} className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-100 resize-none" placeholder="Anything else you'd like to share…" />
             </div>
+
             {error && <p className="text-red-500 text-sm">{error}</p>}
-            <button type="submit" disabled={submitting} className="w-full bg-blue-600 text-white font-semibold py-3 rounded-xl hover:bg-blue-700 transition-colors shadow-md shadow-blue-200 disabled:opacity-50">
-              {submitting ? "Registering…" : "✋ Register as Volunteer"}
-            </button>
+
+            <div className="flex gap-3">
+              <button
+                type="submit"
+                disabled={submitting}
+                className="flex-1 bg-blue-600 text-white font-semibold py-3 rounded-xl hover:bg-blue-700 transition-colors shadow-md shadow-blue-200 disabled:opacity-50"
+              >
+                {submitting ? "Registering…" : "✋ Register as Volunteer"}
+              </button>
+              <button
+                type="button"
+                onClick={handleDownload}
+                className="px-4 py-3 rounded-xl border border-gray-300 text-gray-600 text-sm hover:bg-gray-50"
+                title="Download as JSON file"
+              >
+                📥
+              </button>
+            </div>
           </form>
         )}
       </div>
