@@ -3,7 +3,7 @@ import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
-  base: process.env.GITHUB_ACTIONS ? "/nourishnet/" : "/",
+  base: process.env.GITHUB_ACTIONS ? "/NAFSI_Track2/" : "/",
   plugins: [react(), tailwindcss()],
   optimizeDeps: {
     include: ["supercluster", "maplibre-gl"],
