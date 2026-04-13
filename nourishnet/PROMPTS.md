@@ -24,5 +24,5 @@ I want to overlay the region as well, for example if I select on college park ar
 
 ## Prompt 4 — Volunteer Interest Form & Visual Upgrade
 
-Also, should we creat a submit interest form or something on the volunteers page, so that volunteers can enter their availability or interest in donating their time and supporting at a particular location or within an area? and also make the website more user friendly and attractive, don't keep it basic
+Also, should we create a submit interest form or something on the volunteers page, so that volunteers can enter their availability or interest in donating their time and supporting at a particular location or within an area? and also make the website more user friendly and attractive, don't keep it basic
 
