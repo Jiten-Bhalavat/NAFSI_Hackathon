@@ -7,15 +7,23 @@ import { pointInGeoJSON } from "../utils/pointInPolygon";
 import NourishMap, { type MapPoint, type AddressLookup } from "../components/NourishMap";
 import PlaceCard from "../components/PlaceCard";
 import PlaceDetail from "../components/PlaceDetail";
+import EmergencyFoodModal from "../components/EmergencyFoodModal";
+import CommunityNeedsBoard from "../components/CommunityNeedsBoard";
+import LivePantryStatus from "../components/LivePantryStatus";
+import QuickFoodRequest from "../components/QuickFoodRequest";
+import { useLanguage } from "../contexts/LanguageContext";
 import type { Place } from "../types";
 
 export default function Consumer() {
   const { catalog, error } = useCatalog();
+  const { t } = useLanguage();
   const geo = useGeolocation();
   const [search, setSearch] = useState("");
   const [countyFilter, setCountyFilter] = useState("");
   const [dayFilter, setDayFilter] = useState("");
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [showEmergency, setShowEmergency] = useState(false);
+  const [showQuickRequest, setShowQuickRequest] = useState(false);
   const listRef = useRef<HTMLDivElement>(null);
 
   const geocode = useGeocode(search);
@@ -91,11 +99,25 @@ export default function Consumer() {
   return (
     <div>
       <div className="bg-gradient-to-r from-emerald-600 to-emerald-500 text-white py-8 px-4">
-        <div className="max-w-6xl mx-auto">
-          <h1 className="text-3xl font-bold mb-2">Find Food Near You</h1>
-          <p className="text-emerald-100 max-w-xl">
-            Search by city, ZIP, county, or address to find food pantries, banks, and meal programs in Maryland and DC.
-          </p>
+        <div className="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <h1 className="text-3xl font-bold mb-2">{t.consumerTitle}</h1>
+            <p className="text-emerald-100 max-w-xl">{t.consumerSub}</p>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-2">
+            <button
+              onClick={() => setShowEmergency(true)}
+              className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white font-bold px-6 py-3 rounded-2xl shadow-lg text-base animate-pulse-slow transition-colors"
+            >
+              {t.consumerEmergencyBtn}
+            </button>
+            <button
+              onClick={() => setShowQuickRequest(true)}
+              className="flex items-center gap-2 bg-white/20 hover:bg-white/30 text-white font-semibold px-5 py-3 rounded-2xl text-sm border border-white/30 transition-colors"
+            >
+              🍎 Request Food Anonymously
+            </button>
+          </div>
         </div>
       </div>
 
@@ -109,22 +131,38 @@ export default function Consumer() {
                 id="consumer-search"
                 type="text"
                 autoComplete="off"
-                placeholder="City, ZIP, county, or address…"
+                placeholder={t.consumerSearchPlaceholder}
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="w-full border border-gray-200 rounded-xl pl-10 pr-4 py-2.5 text-sm focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 bg-white"
               />
             </div>
-            <select aria-label="Filter by county" value={countyFilter} onChange={(e) => setCountyFilter(e.target.value)} className="border border-gray-200 rounded-xl px-4 py-2.5 text-sm bg-white">
-              <option value="">All counties</option>
+            <select
+              id="county-filter"
+              aria-label="Filter by county"
+              value={countyFilter}
+              onChange={(e) => setCountyFilter(e.target.value)}
+              className="border border-gray-200 rounded-xl px-4 py-2.5 text-sm bg-white"
+            >
+              <option value="">{t.consumerAllCounties}</option>
               {counties.map((c) => <option key={c} value={c}>{c}</option>)}
             </select>
-            <select aria-label="Filter by day" value={dayFilter} onChange={(e) => setDayFilter(e.target.value)} className="border border-gray-200 rounded-xl px-4 py-2.5 text-sm bg-white">
-              <option value="">Any day</option>
+            <select
+              id="day-filter"
+              aria-label="Filter by day"
+              value={dayFilter}
+              onChange={(e) => setDayFilter(e.target.value)}
+              className="border border-gray-200 rounded-xl px-4 py-2.5 text-sm bg-white"
+            >
+              <option value="">{t.consumerAnyDay}</option>
               {days.map((d) => <option key={d} value={d}>{d}</option>)}
             </select>
-            <button onClick={geo.requestLocation} disabled={geo.loading} className="bg-emerald-600 text-white px-5 py-2.5 rounded-xl text-sm font-medium hover:bg-emerald-700 disabled:opacity-50 shadow-sm">
-              {geo.loading ? "Locating…" : "📍 My Location"}
+            <button
+              onClick={geo.requestLocation}
+              disabled={geo.loading}
+              className="bg-emerald-600 text-white px-5 py-2.5 rounded-xl text-sm font-medium hover:bg-emerald-700 disabled:opacity-50 shadow-sm"
+            >
+              {geo.loading ? t.consumerLocating : t.consumerMyLocation}
             </button>
           </div>
           <div className="mt-3 min-h-[20px]">
@@ -139,6 +177,12 @@ export default function Consumer() {
             {geo.error && <p className="text-xs text-red-500">{geo.error}</p>}
           </div>
         </div>
+
+        {/* Live pantry status updates */}
+        <LivePantryStatus />
+
+        {/* Community Needs Board */}
+        <CommunityNeedsBoard />
 
         {selected && <PlaceDetail place={selected} onClose={() => setSelectedId(null)} />}
 
@@ -178,6 +222,19 @@ export default function Consumer() {
           </div>
         </div>
       </div>
+
+      {/* Emergency modal */}
+      {showEmergency && catalog && (
+        <EmergencyFoodModal
+          places={catalog.places}
+          onClose={() => setShowEmergency(false)}
+        />
+      )}
+
+      {/* Quick anonymous food request */}
+      {showQuickRequest && (
+        <QuickFoodRequest onClose={() => setShowQuickRequest(false)} />
+      )}
     </div>
   );
 }

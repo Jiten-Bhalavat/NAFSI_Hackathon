@@ -1,3 +1,18 @@
+export interface DayHours {
+  day: string;
+  hours: string;
+  byAppointment: boolean;
+  residentsOnly: boolean;
+  notes: string | null;
+}
+
+export interface SourceMeta {
+  id: string;
+  name: string;
+  recordCount: number;
+  lastUpdated: string;
+}
+
 export interface Place {
   id: string;
   name: string;
@@ -14,6 +29,13 @@ export interface Place {
   requirements: string | null;
   tags: string[];
   source: string;
+  // New fields — all optional-safe for backward compatibility
+  distributionModel: string[];
+  foodFormats: string[];
+  dietaryInfo: string[];
+  email: string | null;
+  website: string | null;
+  hoursStructured: DayHours[] | null;
 }
 
 export interface Opportunity {
@@ -32,6 +54,7 @@ export interface Opportunity {
 export interface Catalog {
   schemaVersion: string;
   generatedAt: string;
+  sources: SourceMeta[];
   places: Place[];
   opportunities: Opportunity[];
 }
