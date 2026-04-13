@@ -4,6 +4,7 @@ import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   base: process.env.GITHUB_ACTIONS ? "/NAFSI_Track2/" : "/",
+  envDir: "..",
   plugins: [react(), tailwindcss()],
   optimizeDeps: {
     include: ["supercluster", "maplibre-gl"],
