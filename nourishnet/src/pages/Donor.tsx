@@ -10,6 +10,7 @@ import { consumerIcon } from "../utils/leafletIcons";
 import RegionOverlay from "../components/RegionOverlay";
 import { FlyToMarker, FitBounds } from "../components/MapController";
 import type { DonorPlace, CountyStat } from "../types";
+import DonorChatbot from "../components/DonorChatbot";
 
 const MD_CENTER: [number, number] = [38.95, -77.05];
 const DONOR_TYPES = ["", "pantry", "food-bank", "farmers-market", "store"] as const;
@@ -297,6 +298,9 @@ export default function Donor() {
           </div>
         </div>
       </div>
+
+      {/* RAG Chatbot — donor only */}
+      <DonorChatbot />
     </div>
   );
 }
