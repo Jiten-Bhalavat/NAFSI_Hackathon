@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useCatalog } from "../hooks/useCatalog";
 
+const BASE = import.meta.env.BASE_URL;
+
 export default function Home() {
   const { catalog } = useCatalog();
   const [donateType, setDonateType] = useState<"one-time" | "monthly">("one-time");
@@ -18,28 +20,28 @@ export default function Home() {
       to: "/find-food",
       title: "Find Food Near You",
       desc: "Locate food pantries, banks, and meal programs near you in Maryland and the DC metro area.",
-      img: "/images/foodnearme.jpg",
+      img: `${BASE}images/foodnearme.jpg`,
       tag: "RESOURCES",
     },
     {
       to: "/donate",
       title: "Make a Donation",
       desc: "See what food and monetary donations are most needed in your area and how you can help.",
-      img: "/images/donate.png",
+      img: `${BASE}images/donate.png`,
       tag: "DONATE",
     },
     {
       to: "/food-post",
       title: "Community Board",
       desc: "Post surplus food, request help, and connect with neighbors in your community.",
-      img: "/images/community.avif",
+      img: `${BASE}images/community.avif`,
       tag: "COMMUNITY",
     },
     {
       to: "/volunteer",
       title: "Apply as Volunteer",
       desc: "Find volunteer shifts near you — sorting, distribution, gardening, client services, and more.",
-      img: "/images/volunteer.avif",
+      img: `${BASE}images/volunteer.avif`,
       tag: "VOLUNTEER",
     },
   ];
@@ -49,19 +51,19 @@ export default function Home() {
       title: "Community Food Drive",
       date: "MAY 15, 2026",
       location: "Baltimore, MD",
-      img: "/images/helpinghands.jpg",
+      img: `${BASE}images/helpinghands.jpg`,
     },
     {
       title: "Volunteer Distribution Day",
       date: "MAY 22, 2026",
       location: "Silver Spring, MD",
-      img: "/images/volunteer.avif",
+      img: `${BASE}images/volunteer.avif`,
     },
     {
       title: "Farmers Market Donation Day",
       date: "JUN 5, 2026",
       location: "Rockville, MD",
-      img: "/images/foodnearme.jpg",
+      img: `${BASE}images/foodnearme.jpg`,
     },
   ];
 
@@ -71,21 +73,21 @@ export default function Home() {
       role: "Food Distribution Volunteer",
       quote:
         "Volunteering with NourishNet has been one of the most rewarding experiences. I've seen firsthand how much impact a few hours a week can make in my community.",
-      img: "/images/helpinghands.jpg",
+      img: `${BASE}images/helpinghands.jpg`,
     },
     {
       name: "David Park",
       role: "Community Organizer",
       quote:
         "The platform made it incredibly easy to organize food pickups and connect donors with families who needed help the most. Truly a game changer.",
-      img: "/images/community.avif",
+      img: `${BASE}images/community.avif`,
     },
     {
       name: "Aisha Williams",
       role: "Pantry Coordinator",
       quote:
         "NourishNet helped us reach more families than ever before. The technology really amplifies our community's generosity.",
-      img: "/images/volunteer.avif",
+      img: `${BASE}images/volunteer.avif`,
     },
   ];
 
@@ -215,7 +217,7 @@ export default function Home() {
               {/* Hero image */}
               <div className="mt-10 lg:mt-12">
                 <img
-                  src="/images/helpinghands.jpg"
+                  src={`${BASE}images/helpinghands.jpg`}
                   alt="Food bank volunteer helping community"
                   className="rounded-2xl w-full max-w-xl object-cover shadow-2xl"
                 />
@@ -322,7 +324,7 @@ export default function Home() {
               <div className="bg-white rounded-2xl p-6 shadow-lg">
                 <div className="text-[#16a34a] text-5xl font-black leading-none mb-4">"</div>
                 <img
-                  src="/images/volunteer.avif"
+                  src={`${BASE}images/volunteer.avif`}
                   alt={testimonials[0].name}
                   className="w-14 h-14 rounded-full object-cover mb-4 ring-2 ring-green-100"
                 />
@@ -512,7 +514,7 @@ export default function Home() {
       <section className="relative overflow-hidden bg-[#0d1f15]">
         <div className="absolute inset-0" aria-hidden="true">
           <img
-            src="/images/helpinghands.jpg"
+            src={`${BASE}images/helpinghands.jpg`}
             alt=""
             className="w-full h-full object-cover opacity-25"
           />

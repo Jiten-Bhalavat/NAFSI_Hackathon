@@ -92,11 +92,13 @@ function CascadeSection() {
   );
 }
 
+const BASE = import.meta.env.BASE_URL;
+
 export default function About() {
   return (
     <div>
       <div className="relative text-white overflow-hidden">
-        <img src="/images/about-header.jpg" alt="Fresh fruits and vegetables"
+        <img src={`${BASE}images/about-header.jpg`} alt="Fresh fruits and vegetables"
           className="w-full h-[340px] object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-black/20" />
         <div className="absolute inset-0 flex items-center justify-center">
