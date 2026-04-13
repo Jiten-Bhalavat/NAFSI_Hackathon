@@ -484,6 +484,7 @@ export default function NourishMap({
           onClose={() => { setPopupPoint(null); setTempPin(null); }}
           closeButton
           closeOnClick={false}
+          focusAfterOpen={false}
           maxWidth="300px"
         >
           <RichPopup point={popupPoint} color={popupPoint.placeType && PLACE_TYPE_COLOR[popupPoint.placeType] ? PLACE_TYPE_COLOR[popupPoint.placeType] : color} />
