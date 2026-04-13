@@ -78,8 +78,7 @@ export default function Consumer() {
   // Stage 2: discrete filters
   const filtered = useMemo(() => {
     let list = geoFiltered;
-    // Only apply county filter to places that actually have a county set
-    if (countyFilter) list = list.filter((p) => !p.county || p.county === countyFilter);
+    if (countyFilter) list = list.filter((p) => p.county === countyFilter);
     if (dayFilter)    list = list.filter((p) => p.hours.toLowerCase().includes(dayFilter.toLowerCase()));
     if (typeFilters.size > 0) list = list.filter((p) => typeFilters.has(p.type as PlaceType));
     return list;

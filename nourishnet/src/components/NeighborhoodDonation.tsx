@@ -1,12 +1,12 @@
+import { useState } from "react";
 import type { CountyStat } from "../types";
 
 interface Props {
   countyStats: CountyStat[];
-  highlightedCounty?: string | null; // county selected by clicking heatmap bubble
+  highlightedCounty?: string | null;
   onSelectCounty: (county: string | null) => void;
 }
 
-// Most recent stat per county
 function latestPerCounty(stats: CountyStat[]): CountyStat[] {
   const map = new Map<string, CountyStat>();
   for (const s of stats) {
@@ -23,18 +23,16 @@ function urgencyColor(rate: number) {
   return { bg: "bg-green-50", border: "border-green-200", badge: "bg-green-100 text-green-700", bar: "bg-green-400" };
 }
 
-const FEEDING_AMERICA_BASE = "https://map.feedingamerica.org/county/2023/overall/maryland/county/";
-
-function countySlug(county: string) {
-  return county.toLowerCase().replace(/['\s]+/g, "-").replace(/[^a-z0-9-]/g, "");
-}
+const INITIAL_VISIBLE = 8;
 
 export default function NeighborhoodDonation({ countyStats, highlightedCounty, onSelectCounty }: Props) {
+  const [showAll, setShowAll] = useState(false);
+
   const latest = latestPerCounty(countyStats)
     .filter((s) => s.foodInsecurityRate != null)
     .sort((a, b) => (b.foodInsecurityRate ?? 0) - (a.foodInsecurityRate ?? 0));
 
-  const top8 = latest.slice(0, 8);
+  const visible = showAll ? latest : latest.slice(0, INITIAL_VISIBLE);
   const maxPop = Math.max(...latest.map((s) => s.foodInsecurePopulation));
 
   const highlighted = highlightedCounty
@@ -43,45 +41,34 @@ export default function NeighborhoodDonation({ countyStats, highlightedCounty, o
 
   return (
     <div className="mt-6 mb-8">
-      <div className="flex items-center justify-between mb-3">
+      {/* Header with clear purpose */}
+      <div className="flex items-start justify-between mb-1">
         <div>
           <h3 className="text-base font-bold text-gray-900">
-            📍 Donate to a Specific Neighborhood
+            📍 Where Your Donation Matters Most
           </h3>
-          <p className="text-xs text-gray-500 mt-0.5">
-            {highlightedCounty
-              ? `Showing ${highlightedCounty} — click another bubble or clear to see all`
-              : "Click a bubble on the map, or choose a county below to see exactly where your support goes."}
+          <p className="text-xs text-gray-500 mt-0.5 max-w-lg">
+            These Maryland counties have the highest food insecurity rates. Selecting a county shows how many people need help and what your donation can provide — so you can direct your support where it's needed most.
           </p>
         </div>
         {highlightedCounty && (
           <button
             onClick={() => onSelectCounty(null)}
-            className="text-xs text-gray-500 hover:text-gray-700 underline shrink-0"
+            className="text-xs text-gray-500 hover:text-gray-700 underline shrink-0 mt-1"
           >
-            ✕ Clear selection
+            ✕ Clear
           </button>
         )}
       </div>
 
       {/* Highlighted county detail panel */}
       {highlighted && (
-        <div className={`rounded-2xl border p-5 mb-4 ${urgencyColor(highlighted.foodInsecurityRate!).bg} ${urgencyColor(highlighted.foodInsecurityRate!).border}`}>
-          <div className="flex items-start justify-between gap-3 mb-3">
-            <div>
-              <h4 className="font-bold text-gray-900 text-lg">{highlighted.county}</h4>
-              <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${urgencyColor(highlighted.foodInsecurityRate!).badge}`}>
-                {highlighted.foodInsecurityRate}% food insecure ({highlighted.year})
-              </span>
-            </div>
-            <a
-              href={`${FEEDING_AMERICA_BASE}${countySlug(highlighted.county)}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="shrink-0 bg-amber-600 hover:bg-amber-700 text-white font-semibold text-sm px-4 py-2.5 rounded-xl shadow-sm transition-colors"
-            >
-              💛 Give Here
-            </a>
+        <div className={`rounded-2xl border p-5 my-4 ${urgencyColor(highlighted.foodInsecurityRate!).bg} ${urgencyColor(highlighted.foodInsecurityRate!).border}`}>
+          <div className="mb-3">
+            <h4 className="font-bold text-gray-900 text-lg">{highlighted.county}</h4>
+            <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${urgencyColor(highlighted.foodInsecurityRate!).badge}`}>
+              {highlighted.foodInsecurityRate}% food insecure ({highlighted.year})
+            </span>
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-3">
@@ -92,7 +79,7 @@ export default function NeighborhoodDonation({ countyStats, highlightedCounty, o
             {highlighted.annualFoodBudgetShortfall && (
               <div className="bg-white/70 rounded-xl p-3 text-center">
                 <div className="font-bold text-amber-600 text-xl">${(highlighted.annualFoodBudgetShortfall / 1_000_000).toFixed(1)}M</div>
-                <div className="text-xs text-gray-500">funding gap/year</div>
+                <div className="text-xs text-gray-500">funding gap / year</div>
               </div>
             )}
             {highlighted.averageMealCost && (
@@ -122,9 +109,9 @@ export default function NeighborhoodDonation({ countyStats, highlightedCounty, o
         </div>
       )}
 
-      {/* Top counties grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-        {top8.map((stat) => {
+      {/* County grid */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-3">
+        {visible.map((stat) => {
           const colors = urgencyColor(stat.foodInsecurityRate!);
           const isSelected = highlightedCounty === stat.county;
           const popPct = stat.foodInsecurePopulation / maxPop;
@@ -139,14 +126,12 @@ export default function NeighborhoodDonation({ countyStats, highlightedCounty, o
                   : `bg-white border-gray-200 hover:${colors.border}`
               }`}
             >
-              {/* Population bar */}
               <div className="absolute bottom-0 left-0 right-0 h-1 rounded-b-xl bg-gray-100 overflow-hidden">
                 <div
                   className={`h-full ${colors.bar} transition-all`}
                   style={{ width: `${popPct * 100}%` }}
                 />
               </div>
-
               <div className="font-semibold text-xs text-gray-900 leading-tight mb-1">{stat.county}</div>
               <div className={`text-lg font-bold ${isSelected ? "" : "text-gray-800"}`}>
                 {stat.foodInsecurityRate}%
@@ -157,8 +142,20 @@ export default function NeighborhoodDonation({ countyStats, highlightedCounty, o
         })}
       </div>
 
+      {/* See more / See less toggle */}
+      {latest.length > INITIAL_VISIBLE && (
+        <div className="text-center mt-3">
+          <button
+            onClick={() => setShowAll((v) => !v)}
+            className="text-sm text-amber-600 hover:text-amber-700 font-medium underline underline-offset-2"
+          >
+            {showAll ? `Show less` : `See all ${latest.length} counties`}
+          </button>
+        </div>
+      )}
+
       <p className="text-xs text-gray-400 mt-2 text-center">
-        Data: Feeding America {latest[0]?.year} · Bar = relative population affected · Click any county to see donation details
+        Data: Feeding America {latest[0]?.year} · Bar = relative population affected · Click any county for details
       </p>
     </div>
   );

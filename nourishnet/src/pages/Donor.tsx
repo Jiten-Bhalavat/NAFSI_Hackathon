@@ -7,7 +7,6 @@ import { pointInGeoJSON } from "../utils/pointInPolygon";
 import NourishMap, { type MapPoint, type AddressLookup } from "../components/NourishMap";
 import FoodInsecurityOverlay, { InsecurityLegend } from "../components/FoodInsecurityOverlay";
 import type { DonorPlace } from "../types";
-import DonorImpactPanel from "../components/DonorImpactPanel";
 import NeighborhoodDonation from "../components/NeighborhoodDonation";
 import DonorChatbot from "../components/DonorChatbot";
 
@@ -31,7 +30,6 @@ export default function Donor() {
   const [countyFilter, setCountyFilter] = useState("");
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [showHeatmap, setShowHeatmap] = useState(true);
-  const [showImpact, setShowImpact] = useState(false);
   const [selectedHeatmapCounty, setSelectedHeatmapCounty] = useState<string | null>(null);
   const [hoverCountyProps, setHoverCountyProps] = useState<Record<string, unknown> | null>(null);
 
@@ -81,7 +79,6 @@ export default function Donor() {
     [filtered]
   );
 
-  // Address lookup for items without coordinates (pantries)
   const addressLookup = useMemo<AddressLookup>(() => {
     const lookup: AddressLookup = {};
     for (const p of filtered) {
@@ -178,14 +175,6 @@ export default function Donor() {
             <button onClick={geo.requestLocation} disabled={geo.loading} className="w-full sm:w-auto bg-amber-600 text-white px-5 py-2.5 rounded-xl text-sm font-medium hover:bg-amber-700 disabled:opacity-50 shadow-sm">
               {geo.loading ? "Locating…" : "📍 My Location"}
             </button>
-            <button
-              onClick={() => setShowImpact(!showImpact)}
-              className={`px-4 py-2.5 rounded-xl text-sm font-medium border transition-colors ${
-                showImpact ? "bg-amber-100 text-amber-800 border-amber-300" : "bg-white text-gray-600 border-gray-200 hover:border-amber-300"
-              }`}
-            >
-              💛 My Impact
-            </button>
           </div>
           <div className="mt-3 min-h-[20px]">
             {geocode.loading && <p className="text-xs text-gray-400 animate-subtle-pulse">Searching…</p>}
@@ -200,18 +189,9 @@ export default function Donor() {
           </div>
         </div>
 
-        {/* Donor Impact Panel */}
-        {showImpact && (
-          <DonorImpactPanel
-            countyStats={catalog.countyStats}
-            selectedCounty={selectedHeatmapCounty || countyFilter || undefined}
-          />
-        )}
-
-
-        {/* List + Map — on mobile: map first (order-1), list second (order-2) */}
+        {/* List + Map */}
         <div className="flex flex-col lg:grid lg:grid-cols-5 gap-5 mb-8">
-          {/* List with inline expandable details */}
+          {/* List */}
           <div className="order-2 lg:order-none lg:col-span-2 max-h-[60vh] lg:max-h-[560px] overflow-y-auto space-y-1 styled-scrollbar pr-1" role="list" aria-label="Donor locations">
             <div className="text-xs text-gray-500 font-medium px-1 mb-2">
               {filtered.length.toLocaleString()} location{filtered.length !== 1 ? "s" : ""} found
@@ -229,7 +209,6 @@ export default function Donor() {
               const isOpen = selectedId === p.id;
               return (
                 <div key={p.id} role="listitem">
-                  {/* Card header — always visible */}
                   <button
                     onClick={() => setSelectedId(isOpen ? null : p.id)}
                     aria-expanded={isOpen}
@@ -251,8 +230,6 @@ export default function Donor() {
                       </div>
                     </div>
                   </button>
-
-                  {/* Inline detail panel — slides open */}
                   {isOpen && (
                     <div className="bg-amber-50 border border-amber-400 border-t-0 rounded-b-xl px-3 py-3 text-xs space-y-2">
                       {p.address && <p className="text-gray-600">📍 {p.address}, {p.city}, {p.state} {p.zip}</p>}
@@ -302,7 +279,7 @@ export default function Donor() {
             )}
           </div>
 
-          {/* Map — shows first on mobile */}
+          {/* Map */}
           <div className="order-1 lg:order-none lg:col-span-3 h-[45vh] sm:h-[50vh] lg:h-[560px] rounded-2xl overflow-hidden map-wrapper border border-gray-200 relative">
             <NourishMap
               points={mapPoints}
@@ -340,18 +317,14 @@ export default function Donor() {
           </div>
         </div>
 
-        {/* Neighborhood donation section — always visible on donor page */}
+        {/* Neighborhood donation section */}
         <NeighborhoodDonation
           countyStats={catalog.countyStats}
           highlightedCounty={selectedHeatmapCounty}
-          onSelectCounty={(c) => {
-            setSelectedHeatmapCounty(c);
-            if (c) setShowImpact(true);
-          }}
+          onSelectCounty={(c) => setSelectedHeatmapCounty(c)}
         />
       </div>
 
-      {/* RAG Chatbot — donor only */}
       <DonorChatbot />
     </div>
   );
